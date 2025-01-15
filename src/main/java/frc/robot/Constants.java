@@ -16,7 +16,8 @@ public final class Constants {
 
      public static final double LeftMinAngle = -20;
      public static final double LeftMaxAngle = 20;
-    
+     public static final double RightMinAngle = -20;
+     public static final double RightMaxAngle = 20;
 
 
     }
