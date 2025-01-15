@@ -18,17 +18,27 @@ public class LimelightSubsystem extends SubsystemBase {
   public LimelightSubsystem() {  }
 
 NetworkTable LeftLimelight = NetworkTableInstance.getDefault().getTable("Left");
-NetworkTableEntry tx = LeftLimelight.getEntry("tx");
+NetworkTable RightLimelight = NetworkTableInstance.getDefault().getTable("right");
+NetworkTableEntry ltx = LeftLimelight.getEntry("ltx");
+NetworkTableEntry rtx = RightLimelight.getEntry("rtx");
 
 
 /** @return Left limelight <b>tx</b> */
  public double getLeftTx(){
-  return tx.getDouble(0.0);
+  return ltx.getDouble(0.0);
+ }
+
+ public double getRightTx(){
+  return rtx.getDouble(0.0);
  }
 
 
- public double LeftLimelightTargetValue(){
+ public double getLeftLimelightTargetValue(){
   return (getLeftTx()/LimelightConstants.LeftMaxAngle);
+ }
+
+ public double getRightLimelightTargetValue(){
+  return (getRightTx()/LimelightConstants.RightMaxAngle);
  }
 
 

@@ -43,7 +43,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   @Override
   public void execute() {
  new SwerveRequest.RobotCentric()
-    .withVelocityY(MathUtil.applyDeadband(m_LimelightSubsystem.LeftLimelightTargetValue(),0.1)*(MaxSpeed/2))
+    .withVelocityY(MathUtil.applyDeadband(m_LimelightSubsystem.getLeftLimelightTargetValue(),0.1)*(MaxSpeed/2))
     .withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * MaxSpeed)
     .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   }
