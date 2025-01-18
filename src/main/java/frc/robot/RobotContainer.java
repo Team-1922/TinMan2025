@@ -18,9 +18,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.ClimbCommand;
+import frc.robot.Commands.Collect;
 import frc.robot.Commands.LeftAim;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LimelightSubsystem;
 
 public class RobotContainer {
@@ -39,11 +44,18 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
+    private final CommandXboxController joystick = new CommandXboxController(0); // DRIVER CONTROLLER
+    private final CommandXboxController m_operatorController = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
+    private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+    private final EndEffector m_EE = new EndEffector();
+    private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+
     private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, drivetrain,joystick);
+    private final Collect m_Collect = new Collect(m_EE);
+    private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
@@ -55,7 +67,7 @@ public class RobotContainer {
 
 
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser = AutoBuilder.buildAutoChooser("testAuto");
     SmartDashboard.putData("autoChooser", autoChooser);
     }
 
