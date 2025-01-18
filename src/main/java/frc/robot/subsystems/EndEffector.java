@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.EndEffectorConstants;
@@ -22,7 +23,7 @@ public class EndEffector extends SubsystemBase {
   public void collect(){
     m_leftCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
     m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
-    //spin motor relly fast
+
   }
 
   public void stopCollector(){
@@ -36,7 +37,33 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));
   }
 
-  public void setAngleAsReference(){}
+  public void setAngleAsReference(){
+    SmartDashboard.putNumber("EEReference", m_AngleMotor.getPosition().getValueAsDouble());
+  }
+
+  public double getCurrentAngle(){
+    return m_AngleMotor.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEReference", 0);
+  }
+
+  public void ToFloorAngle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.FloorAngle-SmartDashboard.getNumber("EEReference",0));
+  }
+
+  public void ToL1Angle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.L1Angle-SmartDashboard.getNumber("EEReference", 0));
+  }
+
+  public void ToL2Angle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.L2Angle-SmartDashboard.getNumber("EEReference",0));
+  }
+
+  public void ToL4Angle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.L4Angle-SmartDashboard.getNumber("EEReference",0));
+  }
+
+  public void ToStationAngle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
+  }
 
   @Override
   public void periodic() {

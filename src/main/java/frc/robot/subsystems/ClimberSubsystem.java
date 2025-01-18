@@ -6,11 +6,16 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
-  TalonFX m_climberMotor = new TalonFX(ClimberConstants.climberMotorID);
+
+  SparkMax m_climberMotor = new SparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
+ // m_climberMotor = new ;
   /** Creates a new Climber. */
   public ClimberSubsystem() {
 
@@ -18,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   /**   @param directionMultiplier Put a joystick axis here*/
   public void climb(double directionMultiplier){
-    m_climberMotor.setControl(new VelocityDutyCycle(directionMultiplier* ClimberConstants.ClimberMaxRPM));
+    m_climberMotor.setVoltage(ClimberConstants.ClimberMaxVoltage*directionMultiplier);
   }
 
 

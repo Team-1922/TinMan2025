@@ -15,12 +15,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.LeftAim;
+import frc.robot.Commands.RightAim;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -53,6 +54,7 @@ public class RobotContainer {
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
+    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, drivetrain, joystick);
     private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, drivetrain,joystick);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
@@ -67,7 +69,7 @@ public class RobotContainer {
 
 
 
-    autoChooser = AutoBuilder.buildAutoChooser("testAuto");
+    autoChooser = AutoBuilder.buildAutoChooser("1 piece center");
     SmartDashboard.putData("autoChooser", autoChooser);
     }
 

@@ -15,7 +15,7 @@ public final class Constants {
     public static class ClimberConstants{
       public static final int climberMotorID = 3; // placeholder
 
-      public static final double ClimberMaxRPM = 150; // PLACEHOLDER
+      public static final double ClimberMaxVoltage = 5; // PLACEHOLDER
       public static final int ClimbControllerAxis = 7;// placeholder, high number so it won't do anything until changed
 
     }
@@ -24,6 +24,12 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 4; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
+      public static final double FloorPosition = 2; // placeholder
+      public static final double L1Position = 3;// placeholder
+      public static final double L2Position = 5 ; // placeholder
+      public static final double L3Position = 6; // placeholder
+      public static final double L4Position = 10; // placeholder 
+      public static final double StationPosition = 30; // placeholder
 
     }
 
@@ -33,6 +39,14 @@ public final class Constants {
       public static final int endEffectorAngleMotorID = 6; // placeholder
 
       public static final double collectorRPM = 300; // check this 
+
+      public static final double FloorAngle = 10; // placeholder
+      public static final double L1Angle = 30; // placeholder
+      public static final double L2Angle = 50; // Placeholder
+      public static final double L4Angle = 20; // placeholder
+  
+
+      public static final double StationAngle = 20; // placeholder
     }
 
     public static class LimelightConstants{
