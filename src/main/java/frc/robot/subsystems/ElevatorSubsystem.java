@@ -20,6 +20,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new Elevator. */
   public ElevatorSubsystem() {
     m_rightElevatorMotor.setControl(new Follower(ElevatorConstants.leftElevatatorMotorID, false));
+    m_rightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorCurrentLimitConfigs);
+    m_leftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorCurrentLimitConfigs);
   }
 
   public void GoToFloor(){

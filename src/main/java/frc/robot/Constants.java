@@ -4,7 +4,8 @@
 
 package frc.robot;
 
-
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.VoltageConfigs;
 
 public final class Constants {
   /** Creates a new Constants. */
@@ -21,6 +22,8 @@ public final class Constants {
     }
 
     public static class ElevatorConstants{
+
+
       public static final int leftElevatatorMotorID = 4; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
@@ -30,6 +33,13 @@ public final class Constants {
       public static final double L3Position = 6; // placeholder
       public static final double L4Position = 10; // placeholder 
       public static final double StationPosition = 30; // placeholder
+
+      public static final CurrentLimitsConfigs ElevatorCurrentLimitConfigs = new CurrentLimitsConfigs()
+        .withStatorCurrentLimitEnable(true)
+        .withStatorCurrentLimit(40)
+        .withSupplyCurrentLimitEnable(true)
+        .withSupplyCurrentLimit(40) 
+        ;
 
     }
 
@@ -47,6 +57,13 @@ public final class Constants {
   
 
       public static final double StationAngle = 20; // placeholder
+
+      public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
+      .withStatorCurrentLimitEnable(true)
+      .withStatorCurrentLimit(40)
+      .withSupplyCurrentLimitEnable(true)
+      .withSupplyCurrentLimit(40)  
+      ;
     }
 
     public static class LimelightConstants{

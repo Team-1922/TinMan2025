@@ -18,7 +18,11 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID); // change these ids later
   TalonFX m_AngleMotor = new TalonFX(EndEffectorConstants.endEffectorAngleMotorID);
   /** Creates a new EndEffector. */
-  public EndEffector() {}
+  public EndEffector() {
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_AngleMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+  }
 
   public void collect(){
     m_leftCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
