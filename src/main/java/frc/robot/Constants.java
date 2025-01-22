@@ -66,6 +66,18 @@ public final class Constants {
       ;
     }
 
+
+    public static class LEDConstants{
+      public static final int CandleID = 1; // placeholder
+      public static final int TotalLEDs = 8; // placeholder
+    }
+
+    public static class TimeOfFlightConstants{
+      public static final int TOFID = 3; // placeholder
+      public static final double MaxRange = 100;// placeholder
+      public static final double MinRange = 20; // placeholder
+    }
+
     public static class LimelightConstants{
 
      public static final double LeftMinAngle = -20;

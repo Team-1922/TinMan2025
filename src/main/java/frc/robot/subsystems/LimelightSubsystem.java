@@ -27,6 +27,7 @@ NetworkTableEntry rtx = RightLimelight.getEntry("rtx");
   return ltx.getDouble(0.0);
  }
 
+/** @return Right limelight <b>tx</b> */
  public double getRightTx(){
   return rtx.getDouble(0.0);
  }

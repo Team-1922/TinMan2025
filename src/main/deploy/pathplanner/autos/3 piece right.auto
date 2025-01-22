@@ -11,15 +11,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "E to Station"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "E to Station"
           }
         },
         {
@@ -29,15 +29,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "D to station"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "D to station"
           }
         },
         {
