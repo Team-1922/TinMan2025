@@ -32,14 +32,12 @@ public class EndEffector extends SubsystemBase {
   public void collect(){
     m_leftCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
     m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
-
   }
 
   public void stopCollector(){
     m_rightCollect.set(0);
     m_leftCollect.set(0);
   }
-
 
   public void ReverseCollector(){
     m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
@@ -74,6 +72,10 @@ public class EndEffector extends SubsystemBase {
     m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
   }
 
+  public void ToStartingAngle(){
+    m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
+  }
+
   /** sets LEDs to a color
    * @param R Red 0-255
    * @param G Green 0-255
@@ -82,8 +84,15 @@ public class EndEffector extends SubsystemBase {
   public void SetColor(int R, int G, int B, int W){    
     m_Candle.setLEDs(R, G, B, W, 0, LEDConstants.TotalLEDs);
   }
+  
+  /** clears animation running in given animation slot */
+  public void stopAnimation(int AnimationSlot){
+    m_Candle.clearAnimation(AnimationSlot);
+  }
 
-  public  boolean HasCoral(){
+  /** @return if something is within the TOF target range
+   */
+  public boolean HasCoral(){
     return TimeOfFlightConstants.MaxRange > m_TOF.getRange() && m_TOF.getRange() >TimeOfFlightConstants.MinRange;
   }
 

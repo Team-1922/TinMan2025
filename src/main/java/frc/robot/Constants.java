@@ -33,6 +33,7 @@ public final class Constants {
       public static final double L3Position = 6; // placeholder
       public static final double L4Position = 10; // placeholder 
       public static final double StationPosition = 30; // placeholder
+      
 
       public static final CurrentLimitsConfigs ElevatorCurrentLimitConfigs = new CurrentLimitsConfigs()
         .withStatorCurrentLimitEnable(true)
@@ -51,9 +52,10 @@ public final class Constants {
       public static final double collectorRPM = 300; // check this 
 
       public static final double FloorAngle = 10; // placeholder
-      public static final double L1Angle = 30; // placeholder
+      public static final double L1Angle = 30; // placeholder, might not be used
       public static final double L2Angle = 50; // Placeholder
       public static final double L4Angle = 20; // placeholder
+      public static final double StoredAngle = 50; // the angle for starting configuration
   
 
       public static final double StationAngle = 20; // placeholder

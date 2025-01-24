@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.controls.VelocityDutyCycle;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -18,7 +16,6 @@ public class ClimberSubsystem extends SubsystemBase {
  // m_climberMotor = new ;
   /** Creates a new Climber. */
   public ClimberSubsystem() {
-
   }
 
   /**   @param directionMultiplier Put a joystick axis here*/

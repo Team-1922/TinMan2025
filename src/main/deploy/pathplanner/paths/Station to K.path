@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7918344476931747,
-        "y": 6.364247841810801
+        "x": 1.937226831375086,
+        "y": 6.343217630822522
       },
       "isLocked": false,
       "linkedName": "Left Station"
@@ -20,8 +20,8 @@
         "y": 5.199244737590751
       },
       "prevControl": {
-        "x": 2.853348636213253,
-        "y": 5.6020277977989466
+        "x": 2.2172376058913965,
+        "y": 5.788236854846674
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
