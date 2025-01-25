@@ -58,6 +58,7 @@ public class RobotContainer {
     private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, drivetrain,joystick);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
+    
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
@@ -65,7 +66,7 @@ public class RobotContainer {
 
 
 
-   // NamedCommands.registerCommand("command name", command);
+    NamedCommands.registerCommand("Collect", m_Collect);
 
 
 

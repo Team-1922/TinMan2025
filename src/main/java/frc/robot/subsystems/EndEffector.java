@@ -98,6 +98,7 @@ public class EndEffector extends SubsystemBase {
 
   @Override
   public void periodic() {
+    HasCoral();
     // This method will be called once per scheduler run
   }
 }

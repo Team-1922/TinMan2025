@@ -6,12 +6,10 @@ package frc.robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.VoltageConfigs;
+import com.pathplanner.lib.config.RobotConfig;
 
 public final class Constants {
   /** Creates a new Constants. */
-
-
-
 
     public static class ClimberConstants{
       public static final int climberMotorID = 3; // placeholder
@@ -30,9 +28,9 @@ public final class Constants {
       public static final double FloorPosition = 2; // placeholder
       public static final double L1Position = 3;// placeholder
       public static final double L2Position = 5 ; // placeholder
-      public static final double L3Position = 6; // placeholder
-      public static final double L4Position = 10; // placeholder 
-      public static final double StationPosition = 30; // placeholder
+      public static final double L3Position = 10; // placeholder
+      public static final double L4Position = 15; // placeholder 
+      public static final double StationPosition = 10; // placeholder
       
 
       public static final CurrentLimitsConfigs ElevatorCurrentLimitConfigs = new CurrentLimitsConfigs()
@@ -49,13 +47,13 @@ public final class Constants {
       public static final int leftCollectorMotorID = 2; // placeholder
       public static final int endEffectorAngleMotorID = 6; // placeholder
 
-      public static final double collectorRPM = 300; // check this 
+      public static final double collectorRPM = 100; // check this 
 
       public static final double FloorAngle = 10; // placeholder
       public static final double L1Angle = 30; // placeholder, might not be used
       public static final double L2Angle = 50; // Placeholder
       public static final double L4Angle = 20; // placeholder
-      public static final double StoredAngle = 50; // the angle for starting configuration
+      public static final double StoredAngle = 50; // the angle for starting configuration, placeholder
   
 
       public static final double StationAngle = 20; // placeholder
