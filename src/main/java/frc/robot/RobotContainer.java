@@ -70,7 +70,7 @@ public class RobotContainer {
 
 
 
-    autoChooser = AutoBuilder.buildAutoChooser("1 piece center");
+    autoChooser = AutoBuilder.buildAutoChooser("1 piece center (G)");
     SmartDashboard.putData("autoChooser", autoChooser);
     }
 

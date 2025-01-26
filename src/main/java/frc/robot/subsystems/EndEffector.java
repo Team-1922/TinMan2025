@@ -76,14 +76,7 @@ public class EndEffector extends SubsystemBase {
     m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
   }
 
-  /** sets LEDs to a color
-   * @param R Red 0-255
-   * @param G Green 0-255
-   * @param B Blue 0-255
-   * @param W White 0-255*/
-  public void SetColor(int R, int G, int B, int W){    
-    m_Candle.setLEDs(R, G, B, W, 0, LEDConstants.TotalLEDs);
-  }
+
   
   /** clears animation running in given animation slot */
   public void stopAnimation(int AnimationSlot){
@@ -96,9 +89,17 @@ public class EndEffector extends SubsystemBase {
     return TimeOfFlightConstants.MaxRange > m_TOF.getRange() && m_TOF.getRange() >TimeOfFlightConstants.MinRange;
   }
 
+  private void LEDControl(){
+    if(HasCoral()){
+      m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
+    } else{
+      m_Candle.setLEDs(255,0,0,0,0,LEDConstants.TotalLEDs); // doesn't have coral, turn LEDs red
+    }
+
+  }
   @Override
   public void periodic() {
-    HasCoral();
+    //LEDControl();
     // This method will be called once per scheduler run
   }
 }
