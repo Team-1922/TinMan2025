@@ -18,7 +18,7 @@ public class ClimbCommand extends Command {
   public ClimbCommand(ClimberSubsystem climberSubsystem, CommandXboxController operatorController) {
     m_ClimberSubsystem = climberSubsystem;
     m_Controller = operatorController;
-
+    addRequirements(climberSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

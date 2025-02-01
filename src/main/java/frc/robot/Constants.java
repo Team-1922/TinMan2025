@@ -12,17 +12,17 @@ public final class Constants {
   /** Creates a new Constants. */
 
     public static class ClimberConstants{
-      public static final int climberMotorID = 3; // placeholder
-
-      public static final double ClimberMaxVoltage = 5; // PLACEHOLDER
-      public static final int ClimbControllerAxis = 7;// placeholder, high number so it won't do anything until changed
+      public static final int climberMotorID = 1; // placeholder
+      public static final int climber2MotorID = 2; 
+      public static final double ClimberMaxVoltage = 2; // PLACEHOLDER
+      public static final int ClimbControllerAxis = 1;// placeholder, high number so it won't do anything until changed
 
     }
 
     public static class ElevatorConstants{
 
 
-      public static final int leftElevatatorMotorID = 4; // placeholder
+      public static final int leftElevatatorMotorID = 6; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
       public static final double FloorPosition = 2; // placeholder
@@ -43,9 +43,9 @@ public final class Constants {
     }
 
     public static class EndEffectorConstants{
-      public static final int rightCollectorMotorID = 1; // placeholder
-      public static final int leftCollectorMotorID = 2; // placeholder
-      public static final int endEffectorAngleMotorID = 6; // placeholder
+      public static final int rightCollectorMotorID = 7; // placeholder
+      public static final int leftCollectorMotorID = 8; // placeholder
+      public static final int endEffectorAngleMotorID = 9; // placeholder
 
       public static final double collectorRPM = 100; // check this 
 

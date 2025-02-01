@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
@@ -53,27 +54,27 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void ToFloorAngle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.FloorAngle-SmartDashboard.getNumber("EEReference",0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorAngle-SmartDashboard.getNumber("EEReference",0)));
   }
 
   public void ToL1Angle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.L1Angle-SmartDashboard.getNumber("EEReference", 0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1Angle-SmartDashboard.getNumber("EEReference", 0)));
   }
 
   public void ToL2Angle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.L2Angle-SmartDashboard.getNumber("EEReference",0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2Angle-SmartDashboard.getNumber("EEReference",0)));
   }
 
   public void ToL4Angle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.L4Angle-SmartDashboard.getNumber("EEReference",0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4Angle-SmartDashboard.getNumber("EEReference",0)));
   }
 
   public void ToStationAngle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0)));
   }
 
   public void ToStartingAngle(){
-    m_AngleMotor.setPosition(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0));
+    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0)));
   }
 
 

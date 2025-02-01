@@ -42,11 +42,11 @@ public class RobotContainer {
 
     //this is going to be the command that targets the apriltags with the left limelight
 
-
+    
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0); // DRIVER CONTROLLER
-    private final CommandXboxController m_operatorController = new CommandXboxController(1);
+    private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
@@ -75,6 +75,8 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+        m_ClimberSubsystem.setDefaultCommand(m_ClimbCommand);
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
