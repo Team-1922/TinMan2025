@@ -20,15 +20,20 @@ import frc.robot.Constants.EndEffectorConstants;
 public class EndEffector extends SubsystemBase {
   TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID);
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID); // change these ids later
-  TalonFX m_AngleMotor = new TalonFX(EndEffectorConstants.endEffectorAngleMotorID);
+  TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID);
+  TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID);
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
+
   /** Creates a new EndEffector. */
   public EndEffector() {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
-    m_AngleMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
   }
+
+            // COLLECTOR CODE
 
   public void collect(){
     m_leftCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
@@ -45,39 +50,84 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));
   }
 
-  public void setAngleAsReference(){
-    SmartDashboard.putNumber("EEReference", m_AngleMotor.getPosition().getValueAsDouble());
+            // WRIST CODE
+
+  /** sets the current angle of the end effector wrist as the reference angle */
+  public void setWristAngleAsReference(){
+    SmartDashboard.putNumber("EEReference", m_WristMotor.getPosition().getValueAsDouble());
   }
 
-  public double getCurrentAngle(){
-    return m_AngleMotor.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEReference", 0);
+  /** gets current angle of the end effector */
+  public double getCurrentWristAngle(){
+    return m_WristMotor.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEWristReference", 0);
   }
 
-  public void ToFloorAngle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorAngle-SmartDashboard.getNumber("EEReference",0)));
+  /**angles the end effector at the floor */
+  public void ToFloorWristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorWristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
-  public void ToL1Angle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1Angle-SmartDashboard.getNumber("EEReference", 0)));
+  public void ToL1WristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1WristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
-  public void ToL2Angle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2Angle-SmartDashboard.getNumber("EEReference",0)));
+  public void ToL2WristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
-  public void ToL4Angle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4Angle-SmartDashboard.getNumber("EEReference",0)));
+  public void ToL4WristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
-  public void ToStationAngle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0)));
+  public void ToStationWristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
-  public void ToStartingAngle(){
-    m_AngleMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationAngle-SmartDashboard.getNumber("EEReference", 0)));
+  public void ToStartingWristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+  }
+
+           // ARM CODE
+
+  /** sets the current angle of the end effector as the reference angle */
+  public void setArmAngleAsReference(){
+    SmartDashboard.putNumber("EEArmReference", m_ArmMotor.getPosition().getValueAsDouble());
+  }
+
+  /** gets current angle of the arm on the end effector */
+  public double getCurrentArmAngle(){
+    return m_ArmMotor.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
+  }
+
+  /**angles the end effector arm to the floor */
+  public void ToFloorArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+  }
+
+  public void ToL1ArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1ArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+  }
+
+  public void ToL2ArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+  }
+
+  public void ToL4ArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+  }
+
+  /**  angles arm to collect at station */
+  public void ToStationArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+  }
+
+  /** angles arm to starting configuration */
+  public void ToStartingArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
 
 
+            // LED+TOF CODE
   
   /** clears animation running in given animation slot */
   public void stopAnimation(int AnimationSlot){
@@ -90,7 +140,7 @@ public class EndEffector extends SubsystemBase {
     return TimeOfFlightConstants.MaxRange > m_TOF.getRange() && m_TOF.getRange() >TimeOfFlightConstants.MinRange;
   }
 
-  private void LEDControl(){
+  private void LEDControl(){ // placeholder
     if(HasCoral()){
       m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
     } else{

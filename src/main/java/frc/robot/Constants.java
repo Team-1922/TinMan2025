@@ -12,10 +12,10 @@ public final class Constants {
   /** Creates a new Constants. */
 
     public static class ClimberConstants{
-      public static final int climberMotorID = 1; // placeholder
+      public static final int climberMotorID = 1; 
       public static final int climber2MotorID = 2; 
-      public static final double ClimberMaxVoltage = 2; // PLACEHOLDER
-      public static final int ClimbControllerAxis = 1;// placeholder, high number so it won't do anything until changed
+      public static final double ClimberMaxVoltage = 2; // raise this later 
+      public static final int ClimbControllerAxis = 1;
 
     }
 
@@ -43,20 +43,30 @@ public final class Constants {
     }
 
     public static class EndEffectorConstants{
+      // motor ids 
       public static final int rightCollectorMotorID = 7; // placeholder
       public static final int leftCollectorMotorID = 8; // placeholder
-      public static final int endEffectorAngleMotorID = 9; // placeholder
+      public static final int endEffectorWristMotorID = 9; // placeholder
+      public static final int endEffectorArmMotorID = 10; // placeholder
 
       public static final double collectorRPM = 100; // check this 
 
-      public static final double FloorAngle = 10; // placeholder
-      public static final double L1Angle = 30; // placeholder, might not be used
-      public static final double L2Angle = 50; // Placeholder
-      public static final double L4Angle = 20; // placeholder
-      public static final double StoredAngle = 50; // the angle for starting configuration, placeholder
-  
 
-      public static final double StationAngle = 20; // placeholder
+      // wrist angles
+      public static final double FloorWristAngle = 10; // placeholder angle to collect off the floor
+      public static final double L1WristAngle = 30; // placeholder, angle to score L1
+      public static final double L2WristAngle = 50; // Placeholder
+      public static final double L4WristAngle = 20; // placeholder
+      public static final double StartingWristAngle = 50; // the angle for starting configuration, placeholder
+      public static final double StationWristAngle = 20; // placeholder angle for collecting at station
+
+      //arm angles
+      public static final double FloorArmAngle = 10; // placeholder
+      public static final double L1ArmAngle = 30; // placeholder, might not be used
+      public static final double L2ArmAngle = 50; // Placeholder
+      public static final double L4ArmAngle = 20; // placeholder
+      public static final double StartingArmAngle = 50; // the angle for starting configuration, placeholder
+      public static final double StationArmAngle = 20; // placeholder angle for collecting at the station
 
       public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
       .withStatorCurrentLimitEnable(true)
