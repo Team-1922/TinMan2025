@@ -43,6 +43,8 @@ public final class Constants {
     }
 
     public static class EndEffectorConstants{
+
+
       // motor ids 
       public static final int rightCollectorMotorID = 7; // placeholder
       public static final int leftCollectorMotorID = 8; // placeholder
@@ -53,7 +55,7 @@ public final class Constants {
 
 
       // wrist angles
-      public static final double FloorWristAngle = 10; // placeholder angle to collect off the floor
+      public static final double FloorWristAngle = 10; // placeholder angle to collect off the floor   
       public static final double L1WristAngle = 30; // placeholder, angle to score L1
       public static final double L2WristAngle = 50; // Placeholder
       public static final double L4WristAngle = 20; // placeholder

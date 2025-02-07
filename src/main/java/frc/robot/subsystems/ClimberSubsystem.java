@@ -12,6 +12,7 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
 
+  
   SparkMax m_climberMotor = new SparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
   SparkMax m_climberMotor2 = new SparkMax(ClimberConstants.climber2MotorID, MotorType.kBrushless);
   /** Creates a new Climber. */
