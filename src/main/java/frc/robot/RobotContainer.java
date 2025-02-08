@@ -78,16 +78,15 @@ public class RobotContainer {
 
 
     NamedCommands.registerCommand("Collect", m_Collect);
+    
+    // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
     try {
         PathPlannerPath TestPath = PathPlannerPath.fromChoreoTrajectory("choreoTest");
     } catch (FileVersionException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
     } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
     } catch (ParseException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
     }
    

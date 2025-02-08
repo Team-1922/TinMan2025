@@ -11,6 +11,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.TimeOfFlightConstants;
@@ -125,7 +127,36 @@ public class EndEffector extends SubsystemBase {
   public void ToStartingArmAngle(){
     m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
+  
+  /** angles EE at <b>L1 */
+  public void L1(){
+    ToL1ArmAngle();
+    ToL1WristAngle();
+  }
 
+  /** angles EE at <b>L2</b>, can also be used for <b>L3</b> */
+  public void L2(){
+    ToL2ArmAngle();
+    ToL2WristAngle();
+  }
+
+  /** angles EE at <b>L4 */
+  public void L4(){
+    ToL4ArmAngle();
+    ToL4WristAngle();
+  }
+
+  /**  angles EE at the station, to pickup */
+  public void EEStation(){
+    ToStationArmAngle();
+    ToStationWristAngle();
+  }
+
+  /** angles EE at the floor */
+  public void Floor(){
+    ToFloorArmAngle();
+    ToFloorWristAngle();
+  }
 
             // LED+TOF CODE
   
@@ -146,8 +177,8 @@ public class EndEffector extends SubsystemBase {
     } else{
       m_Candle.setLEDs(255,0,0,0,0,LEDConstants.TotalLEDs); // doesn't have coral, turn LEDs red
     }
-
   }
+
   @Override
   public void periodic() {
     //LEDControl();
