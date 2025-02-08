@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "center to G"
+            "waitTime": 1.0
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Pathplanner autos",
-  "choreoAuto": false
+  "folder": "Choreo Autos",
+  "choreoAuto": true
 }

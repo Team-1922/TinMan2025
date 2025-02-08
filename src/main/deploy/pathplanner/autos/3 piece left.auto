@@ -7,49 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "left to J"
+            "pathName": "C Left to J"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "J to Station"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "C J to Station"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Station to K"
+            "pathName": "C Station to K"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "K to Station"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "C K to Station"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Station to L"
+            "pathName": "C Station to L"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
-  "choreoAuto": false
+  "folder": "Choreo Autos",
+  "choreoAuto": true
 }

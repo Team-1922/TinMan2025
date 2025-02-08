@@ -1,0 +1,85 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Left to J"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C J to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to K"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C K to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to L"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Center to H"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Center to G"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Right to E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C E to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to D"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C D to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to C"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Choreo Autos",
+  "choreoAuto": true
+}

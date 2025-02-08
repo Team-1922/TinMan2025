@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right to E"
+            "pathName": "C Right to E"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
-  "choreoAuto": false
+  "folder": "Choreo Autos",
+  "choreoAuto": true
 }

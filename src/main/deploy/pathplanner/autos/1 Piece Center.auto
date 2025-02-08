@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "center to G"
+            "pathName": "C Center to G"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Pathplanner autos",
-  "choreoAuto": false
+  "folder": "Choreo Autos",
+  "choreoAuto": true
 }

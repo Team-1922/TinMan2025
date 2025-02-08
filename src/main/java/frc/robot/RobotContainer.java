@@ -5,13 +5,24 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
+
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import edu.wpi.first.math.MathUtil;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.FileVersionException;
+
+import choreo.Choreo;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -58,15 +69,28 @@ public class RobotContainer {
     private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, drivetrain,joystick);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
-    
+   
     private final SendableChooser<Command> autoChooser;
-
+    
     public RobotContainer() {
         configureBindings();
 
 
 
     NamedCommands.registerCommand("Collect", m_Collect);
+    try {
+        PathPlannerPath TestPath = PathPlannerPath.fromChoreoTrajectory("choreoTest");
+    } catch (FileVersionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (ParseException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+   
 
 
 
