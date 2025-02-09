@@ -5,8 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.VoltageConfigs;
-import com.pathplanner.lib.config.RobotConfig;
 
 public final class Constants {
   /** Creates a new Constants. */
