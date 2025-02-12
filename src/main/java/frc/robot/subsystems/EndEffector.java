@@ -86,6 +86,10 @@ public class EndEffector extends SubsystemBase {
     m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
+  public void ToAlgaeWristAngle(){
+    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.AlgaeWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+  }
+
            // ARM CODE
 
   /** sets the current angle of the end effector as the reference angle */
@@ -125,6 +129,10 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
   
+  public void ToAlgaeArmAngle(){
+    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.AlgaeArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+  }
+
   /** angles EE at <b>L1 */
   public void L1(){
     ToL1ArmAngle();
@@ -142,6 +150,12 @@ public class EndEffector extends SubsystemBase {
     ToL4ArmAngle();
     ToL4WristAngle();
   }
+
+    /** angles EE at <b>Algae */
+    public void Algae(){
+      ToAlgaeArmAngle();
+      ToAlgaeWristAngle();
+    }
 
   /**  angles EE at the station, to pickup */
   public void EEStation(){

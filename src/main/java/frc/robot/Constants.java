@@ -27,7 +27,9 @@ public final class Constants {
       public static final double L1Position = 3;// placeholder
       public static final double L2Position = 5 ; // placeholder
       public static final double L3Position = 10; // placeholder
-      public static final double L4Position = 15; // placeholder 
+      public static final double L4Position = 15;
+      public static final double AlgaeLowPosition = 7; // placeholder 
+      public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
       
 
@@ -57,6 +59,7 @@ public final class Constants {
       public static final double L1WristAngle = 30; // placeholder, angle to score L1
       public static final double L2WristAngle = 50; // Placeholder
       public static final double L4WristAngle = 20; // placeholder
+      public static final double AlgaeWristAngle = 25; // placeholder
       public static final double StartingWristAngle = 50; // the angle for starting configuration, placeholder
       public static final double StationWristAngle = 20; // placeholder angle for collecting at station
 
@@ -65,8 +68,11 @@ public final class Constants {
       public static final double L1ArmAngle = 30; // placeholder, might not be used
       public static final double L2ArmAngle = 50; // Placeholder
       public static final double L4ArmAngle = 20; // placeholder
+      public static final double AlgaeArmAngle = 25; // placeholder
       public static final double StartingArmAngle = 50; // the angle for starting configuration, placeholder
       public static final double StationArmAngle = 20; // placeholder angle for collecting at the station
+
+
 
       public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
       .withStatorCurrentLimitEnable(true)

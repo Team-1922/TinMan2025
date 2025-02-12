@@ -49,6 +49,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_leftElevatorMotor.setControl(new PositionDutyCycle(ElevatorConstants.StationPosition - SmartDashboard.getNumber("ElevatorReference", 0)));
   }
 
+  public void GoToLowAlgae(){
+    m_leftElevatorMotor.setControl(new PositionDutyCycle(ElevatorConstants.AlgaeLowPosition - SmartDashboard.getNumber("ElevatorReference", 0)));
+  }
+
+  public void GoToHighAlgae(){
+    m_leftElevatorMotor.setControl(new PositionDutyCycle(ElevatorConstants.AlgaeHighPosition - SmartDashboard.getNumber("ElevatorReference", 0)));
+  }
 
   /** Stops elevator */
   public void StopElevator(){
