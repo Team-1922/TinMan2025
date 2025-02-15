@@ -17,11 +17,12 @@ public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {  }
 
-NetworkTable LeftLimelight = NetworkTableInstance.getDefault().getTable("Left");
-NetworkTable RightLimelight = NetworkTableInstance.getDefault().getTable("right");
-NetworkTableEntry ltx = LeftLimelight.getEntry("ltx");
-NetworkTableEntry rtx = RightLimelight.getEntry("rtx");
-
+NetworkTable LeftLimelight = NetworkTableInstance.getDefault().getTable("limelight-left");
+NetworkTable RightLimelight = NetworkTableInstance.getDefault().getTable("limelight-right");
+NetworkTableEntry ltx = LeftLimelight.getEntry("tx");
+NetworkTableEntry rtx = RightLimelight.getEntry("tx");
+NetworkTableEntry ltv = LeftLimelight.getEntry("tv");
+NetworkTableEntry rtv = RightLimelight.getEntry("tv");
 
 /** @return Left limelight <b>tx</b> */
  public double getLeftTx(){
@@ -33,9 +34,12 @@ NetworkTableEntry rtx = RightLimelight.getEntry("rtx");
   return rtx.getDouble(0.0);
  }
 
+ public boolean rightHasTarget(){
+  return false;// fix this later
+ }
 
  public double getLeftLimelightTargetValue(){
-  return (getLeftTx()/LimelightConstants.LeftMaxAngle);
+  return (getLeftTx()/LimelightConstants.LeftMaxAngle/2);// divide by 2 so it doesn't go so fast, tune this later
  }
 
  public double getRightLimelightTargetValue(){
@@ -44,7 +48,7 @@ NetworkTableEntry rtx = RightLimelight.getEntry("rtx");
 
  /** */
  public void PutTXonDashboard(){
-  SmartDashboard.putNumber("LeftTarget", ltx.getDouble(0)/LimelightConstants.LeftMaxAngle);
+  SmartDashboard.putNumber("LeftTarget", ltx.getDouble(0)/LimelightConstants.LeftMaxAngle/2);
  }
 
   @Override

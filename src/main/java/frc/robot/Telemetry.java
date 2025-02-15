@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
+
 public class Telemetry {
     private final double MaxSpeed;
 
@@ -31,11 +32,12 @@ public class Telemetry {
     public Telemetry(double maxSpeed) {
         MaxSpeed = maxSpeed;
         SignalLogger.start();
+       // SignalLogger.setPath("/documents/ctre-logs/");
     }
 
     /* What to publish over networktables for telemetry */
     private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
-
+    
     /* Robot swerve drive state */
     private final NetworkTable driveStateTable = inst.getTable("DriveState");
     private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("Pose", Pose2d.struct).publish();

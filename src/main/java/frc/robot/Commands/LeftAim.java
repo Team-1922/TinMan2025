@@ -18,9 +18,10 @@ import static edu.wpi.first.units.Units.*;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class LeftAim extends Command {
   LimelightSubsystem m_LimelightSubsystem;
-  CommandSwerveDrivetrain m_Drivetrain;
+  CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
   CommandXboxController m_DriveController;
   double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+  private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
   public LeftAim(
 LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController
@@ -42,11 +43,19 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LimelightSubsystem.PutTXonDashboard();
- new SwerveRequest.RobotCentric()
-    .withVelocityY(MathUtil.applyDeadband(m_LimelightSubsystem.getLeftLimelightTargetValue(),0.1)*(MaxSpeed/2))
-    .withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * MaxSpeed)
-    .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+     /* Setting up bindings for necessary control of the swerve drive platform */
+       SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+     .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+     .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+  
+ m_LimelightSubsystem.PutTXonDashboard();
+
+    m_Drivetrain.applyRequest(() ->
+    drive.withVelocityX(-MathUtil.applyDeadband(m_LimelightSubsystem.getLeftLimelightTargetValue(),0.05) * MaxSpeed) // Drive forward with negative Y (forward)
+        .withVelocityY(-MathUtil.applyDeadband(m_DriveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
+        .withRotationalRate(-MathUtil.applyDeadband(m_DriveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+).execute(); // if .execute doesn't work try .initialize
   }
 
   // Called once the command ends or is interrupted.

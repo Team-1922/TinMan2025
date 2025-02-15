@@ -42,22 +42,22 @@ public class RobotContainer {
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
-    //this is going to be the command that targets the apriltags with the left limelight
+   
 
     
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0); // DRIVER CONTROLLER
+    private final CommandXboxController m_joystick = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
     private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
-    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, drivetrain, joystick);
-    private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, drivetrain,joystick);
+    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, m_drivetrain, m_joystick);
+    private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, m_drivetrain,m_joystick);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
@@ -93,32 +93,32 @@ public class RobotContainer {
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-MathUtil.applyDeadband(joystick.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        m_drivetrain.setDefaultCommand(
+            // m_drivetrain will execute this command periodically
+            m_drivetrain.applyRequest(() ->
+                drive.withVelocityX(-MathUtil.applyDeadband(m_joystick.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-MathUtil.applyDeadband(m_joystick.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-MathUtil.applyDeadband(m_joystick.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
+        m_joystick.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
+        m_joystick.b().whileTrue(m_drivetrain.applyRequest(() ->
+            point.withModuleDirection(new Rotation2d(-m_joystick.getLeftY(), -m_joystick.getLeftX()))
         ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        m_joystick.back().and(m_joystick.y()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kForward));
+        m_joystick.back().and(m_joystick.x()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kReverse));
+        m_joystick.start().and(m_joystick.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
+        m_joystick.start().and(m_joystick.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
-        joystick.y().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        m_joystick.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
-        joystick.button(5).whileTrue(m_LeftAim);
+        m_drivetrain.registerTelemetry(logger::telemeterize);
+        m_joystick.button(5).whileTrue(m_LeftAim);
     }
 
     public Command getAutonomousCommand() {
