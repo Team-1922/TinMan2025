@@ -10,6 +10,8 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -20,15 +22,16 @@ public class LeftAim extends Command {
   LimelightSubsystem m_LimelightSubsystem;
   CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
   CommandXboxController m_DriveController;
-  double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+  SwerveRequest.FieldCentric m_drive;
+ 
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
   public LeftAim(
-LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController
- ) {
+LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController,SwerveRequest.FieldCentric drive) {
   m_LimelightSubsystem = LimeLightSub;
   m_Drivetrain = drivetrain;
   m_DriveController = driveController;
+  m_drive = drive;
   addRequirements(m_LimelightSubsystem,m_Drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -43,19 +46,16 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     /* Setting up bindings for necessary control of the swerve drive platform */
-       SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-     .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-     .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
 
   
  m_LimelightSubsystem.PutTXonDashboard();
 
     m_Drivetrain.applyRequest(() ->
-    drive.withVelocityX(-MathUtil.applyDeadband(m_LimelightSubsystem.getLeftLimelightTargetValue(),0.05) * MaxSpeed) // Drive forward with negative Y (forward)
-        .withVelocityY(-MathUtil.applyDeadband(m_DriveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
+    m_drive.withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
+        .withVelocityY(MathUtil.applyDeadband( m_LimelightSubsystem.getLeftLimelightTargetValue(),0.05) * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(-MathUtil.applyDeadband(m_DriveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
-).execute(); // if .execute doesn't work try .initialize
+).execute();
   }
 
   // Called once the command ends or is interrupted.

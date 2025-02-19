@@ -35,7 +35,11 @@ NetworkTableEntry rtv = RightLimelight.getEntry("tv");
  }
 
  public boolean rightHasTarget(){
-  return false;// fix this later
+  return rtv.getDouble(0) ==1;
+ }
+
+ public boolean leftHasTarget(){
+  return ltv.getDouble(0) ==1;
  }
 
  public double getLeftLimelightTargetValue(){
@@ -43,7 +47,7 @@ NetworkTableEntry rtv = RightLimelight.getEntry("tv");
  }
 
  public double getRightLimelightTargetValue(){
-  return (getRightTx()/LimelightConstants.RightMaxAngle);
+  return (getRightTx()/LimelightConstants.RightMaxAngle/2);
  }
 
  /** */

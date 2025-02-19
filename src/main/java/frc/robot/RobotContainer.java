@@ -15,6 +15,9 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -56,8 +59,8 @@ public class RobotContainer {
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
-    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, m_drivetrain, m_joystick);
-    private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, m_drivetrain,m_joystick);
+    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, m_drivetrain, m_joystick,drive);
+    private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, m_drivetrain,m_joystick,drive);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
@@ -65,10 +68,11 @@ public class RobotContainer {
     
     public RobotContainer() {
         configureBindings();
+        
+    m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
 
-
-    NamedCommands.registerCommand("Collect", m_Collect);
+    NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
     
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
     try {
@@ -80,9 +84,8 @@ public class RobotContainer {
     } catch (ParseException e) {
         e.printStackTrace();
     }
-   
-
-
+ 
+ 
 
     autoChooser = AutoBuilder.buildAutoChooser("1 piece center");
     SmartDashboard.putData("autoChooser", autoChooser);
@@ -118,7 +121,7 @@ public class RobotContainer {
         m_joystick.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
         m_drivetrain.registerTelemetry(logger::telemeterize);
-        m_joystick.button(5).whileTrue(m_LeftAim);
+        m_joystick.button(5).whileTrue(m_LeftAim); // left bumper
     }
 
     public Command getAutonomousCommand() {

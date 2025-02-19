@@ -100,6 +100,8 @@ public final class Constants {
      public static final double LeftMaxAngle = 20;
      public static final double RightMinAngle = -20;
      public static final double RightMaxAngle = 20;
+      
+     public static final double MaxAimSpeed = 4;// meters per second
 
 
     }
