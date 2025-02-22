@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,7 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID);
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
+  CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID);
 
   /** Creates a new EndEffector. */
   public EndEffector() {
@@ -30,6 +32,7 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    //m_armEncoder.getAbsolutePosition();
   }
 
             // COLLECTOR CODE

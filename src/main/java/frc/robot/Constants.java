@@ -51,8 +51,9 @@ public final class Constants {
       public static final int endEffectorWristMotorID = 9; // placeholder
       public static final int endEffectorArmMotorID = 10; // placeholder
 
-      public static final double collectorRPM = 100; // check this 
+      public static final int endEffectorArmEncoderID = 5; // placeholder
 
+      public static final double collectorRPM = 100; // check this 
 
       // wrist angles
       public static final double FloorWristAngle = 10; // placeholder angle to collect off the floor   
