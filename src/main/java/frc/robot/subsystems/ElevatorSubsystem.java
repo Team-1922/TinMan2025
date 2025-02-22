@@ -8,25 +8,33 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-  TalonFX m_leftElevatorMotor = new TalonFX(ElevatorConstants.leftElevatatorMotorID); // lead
-  TalonFX m_rightElevatorMotor = new TalonFX(ElevatorConstants.rightElevatorMotorID); // follower
+  TalonFX m_leftElevatorMotor = new TalonFX(ElevatorConstants.rightElevatorMotorID); // lead
+  TalonFX m_rightElevatorMotor = new TalonFX(ElevatorConstants.leftElevatatorMotorID); // follower
+  
+  // logging values
+  NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
+  //DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
+  DoublePublisher m_elevatorPos = m_networkTable.getDoubleTopic("ElevatorPos").publish();
 
- 
+
   /** Creates a new Elevator. */
   public ElevatorSubsystem() {
    
     m_rightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorCurrentLimitConfigs);
     m_leftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorCurrentLimitConfigs);
-    m_rightElevatorMotor.setControl(new Follower(ElevatorConstants.leftElevatatorMotorID, false));
+    m_rightElevatorMotor.setControl(new Follower(ElevatorConstants.leftElevatatorMotorID, true));
   }
 
   public void GoToFloor(){
     m_leftElevatorMotor.setControl(new PositionDutyCycle(ElevatorConstants.FloorPosition - SmartDashboard.getNumber("ElevatorReference", 0)));
+ 
   }
 
   public void GoToL1(){
@@ -64,15 +72,20 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double getElevatorPos(){
-
+    
     return m_leftElevatorMotor.getPosition().getValueAsDouble()- SmartDashboard.getNumber("ElevatorReference", 0);
   };
 
   public void setPosAsReference(){
-
     SmartDashboard.putNumber("ElevatorReference", m_leftElevatorMotor.getPosition().getValueAsDouble());
 
   }
+
+
+  public void ElevatorLogging(){
+    m_elevatorPos.set(getElevatorPos());
+    //m_elevatorTarget.set(getElevatorPos());
+  };
 
   @Override
   public void periodic() {

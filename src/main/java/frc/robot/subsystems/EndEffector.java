@@ -10,6 +10,9 @@ import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
+
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
@@ -25,7 +28,8 @@ public class EndEffector extends SubsystemBase {
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID);
-
+  NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
+  
   /** Creates a new EndEffector. */
   public EndEffector() {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
