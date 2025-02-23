@@ -13,6 +13,7 @@ public class GotoFloor extends Command {
   /** Creates a new GotoL4. */
   public GotoFloor( ElevatorSubsystem elevatorSubsystem) {
     m_Elevator = elevatorSubsystem;
+    addRequirements(m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

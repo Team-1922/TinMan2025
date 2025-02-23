@@ -5,14 +5,13 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class GotoL4 extends Command {
+public class SetElevatorReference extends Command {
   ElevatorSubsystem m_Elevator;
   /** Creates a new GotoL4. */
-  public GotoL4( ElevatorSubsystem elevatorSubsystem) {
+  public SetElevatorReference( ElevatorSubsystem elevatorSubsystem) {
     m_Elevator = elevatorSubsystem;
     addRequirements(m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +24,7 @@ public class GotoL4 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.GoToL4();
+    m_Elevator.setPosAsReference();
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +36,6 @@ public class GotoL4 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Elevator.TargetPosition(ElevatorConstants.L4Position) - m_Elevator.getElevatorPos()) < 0.25;
+    return false;
   }
 }

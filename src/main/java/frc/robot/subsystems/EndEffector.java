@@ -15,9 +15,7 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LEDConstants;
-import frc.robot.Constants.TimeOfFlightConstants;
-import frc.robot.Constants.EndEffectorConstants;
+import frc.robot.Constants.*;
 
 
 public class EndEffector extends SubsystemBase {

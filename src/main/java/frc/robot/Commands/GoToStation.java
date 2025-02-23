@@ -16,6 +16,7 @@ public class GoToStation extends Command {
   public GoToStation(ElevatorSubsystem elevator) {
 
     m_ElevatorSubsystem = elevator;
+    addRequirements(m_ElevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

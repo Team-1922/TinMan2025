@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 
 public final class Constants {
   /** Creates a new Constants. */
@@ -23,15 +24,23 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
-      public static final double FloorPosition = 2; // placeholder
-      public static final double L1Position = 3;// placeholder
-      public static final double L2Position = 5 ; // placeholder
-      public static final double L3Position = 10; // placeholder
-      public static final double L4Position = 15;
+      public static final double FloorPosition = 1; // placeholder
+      public static final double L1Position = 5;// placeholder
+      public static final double L2Position = 10 ; // placeholder
+      public static final double L3Position = 15; // placeholder
+      public static final double L4Position = 24;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
       
+
+
+      // motion magic configs
+      
+      public static final double MotionMagicAcceleration = 1;
+      public static final double MotionMagicCruiseVelocity = 3;
+      
+      // motor configs (power/motion magic configs)
 
       public static final CurrentLimitsConfigs ElevatorCurrentLimitConfigs = new CurrentLimitsConfigs()
         .withStatorCurrentLimitEnable(true)
@@ -39,6 +48,10 @@ public final class Constants {
         .withSupplyCurrentLimitEnable(true)
         .withSupplyCurrentLimit(40) 
         ;
+
+      public static final MotionMagicConfigs ElevatorMotionMagicConfigs = new MotionMagicConfigs()
+      .withMotionMagicCruiseVelocity(0) // rotations per second, velocity control doens't use this, expo and position do.
+      ;
 
     }
 

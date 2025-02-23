@@ -25,8 +25,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
+import frc.robot.Commands.GotoL1;
+import frc.robot.Commands.GotoL2;
+import frc.robot.Commands.GotoL3;
+import frc.robot.Commands.GotoL4;
 import frc.robot.Commands.LeftAim;
 import frc.robot.Commands.RightAim;
+import frc.robot.Commands.SetElevatorReference;
+import frc.robot.Commands.StopElevator;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -64,6 +70,16 @@ public class RobotContainer {
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
+
+
+    //elevator commands
+    private final SetElevatorReference m_ElevatorReference = new SetElevatorReference(m_ElevatorSubsystem);
+    private final GotoL1 m_ElevatorL1 = new GotoL1(m_ElevatorSubsystem);
+    private final GotoL2 m_ElevatorL2 = new GotoL2(m_ElevatorSubsystem);
+    private final GotoL3 m_ElevatorL3 = new GotoL3(m_ElevatorSubsystem);
+    private final GotoL4 m_ElevatorL4 = new GotoL4(m_ElevatorSubsystem);
+    private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
+
     private final SendableChooser<Command> autoChooser;
     
     public RobotContainer() {
@@ -124,6 +140,13 @@ public class RobotContainer {
 
         m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
         m_driveController.button(6).whileTrue(m_RightAim); // right bumper
+        
+        m_operatorController.button(1).onTrue(m_ElevatorL1);
+        m_operatorController.button(2).onTrue(m_ElevatorL2);
+        m_operatorController.button(3).onTrue(m_ElevatorL3);
+        m_operatorController.button(4).onTrue(m_ElevatorL4);
+        m_operatorController.button(7).onTrue(m_ElevatorReference);
+        m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
     }
 
     public Command getAutonomousCommand() {
