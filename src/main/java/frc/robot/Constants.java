@@ -99,8 +99,8 @@ public final class Constants {
 
 
     public static class LEDConstants{
-      public static final int CandleID = 1; // placeholder
-      public static final int TotalLEDs = 8; // placeholder
+      public static final int CandleID = 0; // placeholder
+      public static final int TotalLEDs = 99; // placeholder
     }
 
     public static class TimeOfFlightConstants{

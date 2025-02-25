@@ -31,6 +31,7 @@ import frc.robot.Commands.GotoL1;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
+import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.LeftAim;
 import frc.robot.Commands.RightAim;
 import frc.robot.Commands.SetElevatorReference;
@@ -83,6 +84,7 @@ public class RobotContainer {
     private final GotoL4 m_ElevatorL4 = new GotoL4(m_ElevatorSubsystem);
     private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
+    private final LEDtest m_LeDtest = new LEDtest(m_EE);
 
     private final SendableChooser<Command> autoChooser;
     
@@ -145,12 +147,13 @@ public class RobotContainer {
         m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
         m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
-        m_operatorController.button(1).onTrue(m_ElevatorL1);
-        m_operatorController.button(2).onTrue(m_ElevatorL2);
-        m_operatorController.button(3).onTrue(m_ElevatorL3);
-        m_operatorController.button(4).onTrue(m_ElevatorL4);
-        m_operatorController.button(7).onTrue(m_ElevatorReference);
-        m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
+     //   m_operatorController.button(1).onTrue(m_ElevatorL1);
+     //   m_operatorController.button(2).onTrue(m_ElevatorL2);
+     //   m_operatorController.button(3).onTrue(m_ElevatorL3);
+     //   m_operatorController.button(4).onTrue(m_ElevatorL4);
+//m_operatorController.button(7).onTrue(m_ElevatorReference);
+    //    m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
+        m_operatorController.button(5).onTrue(m_LeDtest);
     }
 
     public Command getAutonomousCommand() {

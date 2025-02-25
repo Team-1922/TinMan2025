@@ -26,6 +26,8 @@ public class EndEffector extends SubsystemBase {
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
+  
+  
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
   
   /** Creates a new EndEffector. */
@@ -187,6 +189,10 @@ public class EndEffector extends SubsystemBase {
     return TimeOfFlightConstants.MaxRange > m_TOF.getRange() && m_TOF.getRange() >TimeOfFlightConstants.MinRange;
   }
 
+  public void LEDGreen(){
+    m_Candle.setLEDs(0, 255, 0, 0, 0, 99);
+  }
+
   private void LEDControl(){ // placeholder
     if(HasCoral()){
       m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
@@ -197,6 +203,7 @@ public class EndEffector extends SubsystemBase {
 
   @Override
   public void periodic() {
+    LEDGreen();
     //LEDControl();
     // This method will be called once per scheduler run
   }
