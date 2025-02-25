@@ -19,13 +19,13 @@ import frc.robot.Constants.*;
 
 
 public class EndEffector extends SubsystemBase {
-  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID);
-  TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID); // change these ids later
-  TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID);
-  TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID);
-  CANdle m_Candle = new CANdle(LEDConstants.CandleID);
+  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
+  TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
+  TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
+  TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
+  CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
-  CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID);
+  CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
   
   /** Creates a new EndEffector. */

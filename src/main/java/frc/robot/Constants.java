@@ -51,6 +51,7 @@ public final class Constants {
 
       public static final MotionMagicConfigs ElevatorMotionMagicConfigs = new MotionMagicConfigs()
       .withMotionMagicCruiseVelocity(0) // rotations per second, velocity control doens't use this, expo and position do.
+     
       ;
 
     }

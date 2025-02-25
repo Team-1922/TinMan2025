@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 
 public class ElevatorSubsystem extends SubsystemBase {
-  TalonFX m_RightElevatorMotor = new TalonFX(ElevatorConstants.rightElevatorMotorID); // lead
-  TalonFX m_LeftElevatorMotor = new TalonFX(ElevatorConstants.leftElevatatorMotorID); // follower
+  TalonFX m_RightElevatorMotor = new TalonFX(ElevatorConstants.rightElevatorMotorID, "Elevator"); // lead
+  TalonFX m_LeftElevatorMotor = new TalonFX(ElevatorConstants.leftElevatatorMotorID,"Elevator"); // follower
   
   // logging values
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();

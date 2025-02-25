@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
+import frc.robot.Commands.GoToStation;
+import frc.robot.Commands.GotoFloor;
 import frc.robot.Commands.GotoL1;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
@@ -74,10 +76,12 @@ public class RobotContainer {
 
     //elevator commands
     private final SetElevatorReference m_ElevatorReference = new SetElevatorReference(m_ElevatorSubsystem);
+    private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
     private final GotoL1 m_ElevatorL1 = new GotoL1(m_ElevatorSubsystem);
     private final GotoL2 m_ElevatorL2 = new GotoL2(m_ElevatorSubsystem);
     private final GotoL3 m_ElevatorL3 = new GotoL3(m_ElevatorSubsystem);
     private final GotoL4 m_ElevatorL4 = new GotoL4(m_ElevatorSubsystem);
+    private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
 
     private final SendableChooser<Command> autoChooser;
