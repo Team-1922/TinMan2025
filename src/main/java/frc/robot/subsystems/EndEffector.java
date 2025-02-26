@@ -5,6 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
+import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -26,7 +30,7 @@ public class EndEffector extends SubsystemBase {
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
   TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
-  
+  CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");
   
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
   
@@ -51,6 +55,21 @@ public class EndEffector extends SubsystemBase {
     m_leftCollect.set(0);
   }
 
+  public void stopWrist(){
+    m_WristMotor.set(0);
+  }
+
+  public void stopArm(){
+    m_ArmMotor.set(0);
+  }
+
+  public void stopEE(){
+    stopCollector();
+    stopWrist();
+    stopArm();
+  }
+
+
   public void ReverseCollector(){
     m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
     m_rightCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));
@@ -60,7 +79,7 @@ public class EndEffector extends SubsystemBase {
 
   /** sets the current angle of the end effector wrist as the reference angle */
   public void setWristAngleAsReference(){
-    SmartDashboard.putNumber("EEReference", m_WristMotor.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("EEReference", m_WristEncoder.getPosition().getValueAsDouble());
   }
 
   /** gets current angle of the end effector */
@@ -70,74 +89,76 @@ public class EndEffector extends SubsystemBase {
 
   /**angles the end effector at the floor */
   public void ToFloorWristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorWristAngle-SmartDashboard.getNumber("EEWristReference",0)));
+    
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorWristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
   public void ToL1WristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1WristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L1WristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
   public void ToL2WristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
   public void ToL4WristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4WristAngle-SmartDashboard.getNumber("EEWristReference",0)));
   }
 
   public void ToStationWristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
   public void ToStartingWristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StartingWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
   public void ToAlgaeWristAngle(){
-    m_WristMotor.setControl( new PositionDutyCycle(EndEffectorConstants.AlgaeWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeWristAngle-SmartDashboard.getNumber("EEWristReference", 0)));
   }
 
            // ARM CODE
 
   /** sets the current angle of the end effector as the reference angle */
   public void setArmAngleAsReference(){
-    SmartDashboard.putNumber("EEArmReference", m_ArmMotor.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("EEArmReference", m_armEncoder.getPosition().getValueAsDouble());
   }
 
   /** gets current angle of the arm on the end effector */
   public double getCurrentArmAngle(){
-    return m_ArmMotor.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
+    return m_armEncoder.getPosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
   }
 
   /**angles the end effector arm to the floor */
   public void ToFloorArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.FloorArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
   }
 
   public void ToL1ArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L1ArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L1ArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
 
   public void ToL2ArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L2ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
   }
 
   public void ToL4ArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.L4ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4ArmAngle-SmartDashboard.getNumber("EEArmReference",0)));
   }
 
-  /**  angles arm to collect at station */
+  /**  angles arm to collect at station 
+  */
   public void ToStationArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StationArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
 
   /** angles arm to starting configuration */
   public void ToStartingArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
   
   public void ToAlgaeArmAngle(){
-    m_ArmMotor.setControl( new PositionDutyCycle(EndEffectorConstants.AlgaeArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
   }
 
   /** angles EE at <b>L1 */
@@ -200,6 +221,13 @@ public class EndEffector extends SubsystemBase {
       m_Candle.setLEDs(255,0,0,0,0,LEDConstants.TotalLEDs); // doesn't have coral, turn LEDs red
     }
   }
+
+  public void disabledAnimation(){
+    m_Candle.animate( new RainbowAnimation()
+
+    );
+  }
+
 
   @Override
   public void periodic() {

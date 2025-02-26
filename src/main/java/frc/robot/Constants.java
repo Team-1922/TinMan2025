@@ -56,6 +56,7 @@ public final class Constants {
 
     }
 
+    /** constants for the Arm and Wrist of End Effector */
     public static class EndEffectorConstants{
 
 
@@ -65,7 +66,9 @@ public final class Constants {
       public static final int endEffectorWristMotorID = 9; // placeholder
       public static final int endEffectorArmMotorID = 10; // placeholder
 
-      public static final int endEffectorArmEncoderID = 5; // placeholder
+      public static final int endEffectorArmEncoderID = 5; // remember that the swerve encoders are the same device type so can't have the same ID
+      public static final int endEffectorWristEncoderID = 6;
+
 
       public static final double collectorRPM = 100; // check this 
 

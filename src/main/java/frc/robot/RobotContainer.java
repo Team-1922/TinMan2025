@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.AngleL1;
+import frc.robot.Commands.AngleL2;
+import frc.robot.Commands.AngleL4;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.GoToStation;
@@ -35,6 +38,7 @@ import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.LeftAim;
 import frc.robot.Commands.RightAim;
 import frc.robot.Commands.SetElevatorReference;
+import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -85,6 +89,15 @@ public class RobotContainer {
     private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final LEDtest m_LeDtest = new LEDtest(m_EE);
+
+
+    // EE commands
+
+    private final AngleL1 m_AngleL1 = new AngleL1(m_EE);
+    private final AngleL2 m_AngleL2 = new AngleL2(m_EE);
+    private final AngleL4 m_AngleL4 = new AngleL4(m_EE);
+
+    private final StopArm m_StopArm = new StopArm(m_EE);
 
     private final SendableChooser<Command> autoChooser;
     

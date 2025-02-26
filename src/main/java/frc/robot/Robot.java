@@ -7,14 +7,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.EndEffector;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   
   private final RobotContainer m_robotContainer;
+  private final EndEffector m_EE;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+    m_EE = new EndEffector();
   }
 
   @Override
@@ -23,13 +26,17 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    //m_EE.disabledAnimation();
+  }
 
   @Override
   public void disabledPeriodic() {}
 
   @Override
-  public void disabledExit() {}
+  public void disabledExit() {
+  //  m_EE.stopAnimation(0);
+  }
 
   @Override
   public void autonomousInit() {
