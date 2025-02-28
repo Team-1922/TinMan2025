@@ -5,7 +5,11 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 
 public final class Constants {
   /** Creates a new Constants. */
@@ -50,8 +54,17 @@ public final class Constants {
         ;
 
       public static final MotionMagicConfigs ElevatorMotionMagicConfigs = new MotionMagicConfigs()
-      .withMotionMagicCruiseVelocity(0) // rotations per second, velocity control doens't use this, expo and position do.
+      .withMotionMagicCruiseVelocity(0)
+      .withMotionMagicExpo_kA(0.1)
+      .withMotionMagicExpo_kV(0.1) // rotations per second, velocity control doens't use this, expo and position do.
      
+      ;
+
+
+      public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
+      .withKP(0.05)
+      .withKG(0.02)
+      
       ;
 
     }
@@ -63,8 +76,8 @@ public final class Constants {
       // motor ids 
       public static final int rightCollectorMotorID = 7; // placeholder
       public static final int leftCollectorMotorID = 8; // placeholder
-      public static final int endEffectorWristMotorID = 9; // placeholder
-      public static final int endEffectorArmMotorID = 10; // placeholder
+      public static final int endEffectorWristMotorID = 26; // placeholder
+      public static final int endEffectorArmMotorID = 19; // placeholder
 
       public static final int endEffectorArmEncoderID = 5; // remember that the swerve encoders are the same device type so can't have the same ID
       public static final int endEffectorWristEncoderID = 6;
@@ -73,24 +86,34 @@ public final class Constants {
       public static final double collectorRPM = 100; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = 10; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = 30; // placeholder, angle to score L1
-      public static final double L2WristAngle = 50; // Placeholder
-      public static final double L4WristAngle = 20; // placeholder
-      public static final double AlgaeWristAngle = 25; // placeholder
-      public static final double StartingWristAngle = 50; // the angle for starting configuration, placeholder
-      public static final double StationWristAngle = 20; // placeholder angle for collecting at station
+      public static final double FloorWristAngle = 1; // placeholder angle to collect off the floor   
+      public static final double L1WristAngle = 1; // placeholder, angle to score L1
+      public static final double L2WristAngle = 4; // Placeholder
+      public static final double L4WristAngle = 8; // placeholder
+      public static final double AlgaeWristAngle = 2; // placeholder
+      public static final double StartingWristAngle = 5; // the angle for starting configuration, placeholder
+      public static final double StationWristAngle = 2; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = 10; // placeholder
-      public static final double L1ArmAngle = 30; // placeholder, might not be used
-      public static final double L2ArmAngle = 50; // Placeholder
-      public static final double L4ArmAngle = 20; // placeholder
-      public static final double AlgaeArmAngle = 25; // placeholder
-      public static final double StartingArmAngle = 50; // the angle for starting configuration, placeholder
+      public static final double FloorArmAngle = 70; // placeholder
+      public static final double L1ArmAngle = 100; // placeholder, might not be used
+      public static final double L2ArmAngle = 120; // Placeholder
+      public static final double L4ArmAngle = 180; // placeholder
+      public static final double AlgaeArmAngle = -.325; // placeholder
+      public static final double StartingArmAngle = -0.05; // the angle for starting configuration, placeholder
       public static final double StationArmAngle = 20; // placeholder angle for collecting at the station
 
+      public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
+      .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
+      .withFeedbackRemoteSensorID(endEffectorArmEncoderID)
+      .withRotorToSensorRatio(50)
+      .withSensorToMechanismRatio(2)
+      ;
 
+      public static final FeedbackConfigs WristFeedbackConfigs = new FeedbackConfigs()
+      .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
+      .withFeedbackRemoteSensorID(endEffectorWristEncoderID)
+      ;
 
       public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
       .withStatorCurrentLimitEnable(true)
@@ -98,11 +121,16 @@ public final class Constants {
       .withSupplyCurrentLimitEnable(true)
       .withSupplyCurrentLimit(40)  
       ;
+
+      public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
+      .withGravityType(GravityTypeValue.Arm_Cosine)
+      .withKP(0.01)
+      .withKG(0.012);
     }
 
 
     public static class LEDConstants{
-      public static final int CandleID = 0; // placeholder
+      public static final int CandleID = 0;
       public static final int TotalLEDs = 99; // placeholder
     }
 
@@ -121,6 +149,7 @@ public final class Constants {
       
      public static final double MaxAimSpeed = 4;// meters per second
 
+     public static final double TargetYDeadband = 0.025; // meters
 
     }
 

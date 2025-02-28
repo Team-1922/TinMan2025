@@ -16,6 +16,7 @@ public class AngleFloor extends Command {
    */
   public AngleFloor(EndEffector EE) {
     m_EE = EE;
+    addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

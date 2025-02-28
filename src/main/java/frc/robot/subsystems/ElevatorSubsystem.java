@@ -36,8 +36,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorCurrentLimitConfigs);
     m_LeftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorMotionMagicConfigs);
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorMotionMagicConfigs);
+    m_LeftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorSlot0Configs);
+    m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorSlot0Configs);
 
-    m_LeftElevatorMotor.setControl(new Follower(ElevatorConstants.leftElevatatorMotorID, true));
+
+    m_LeftElevatorMotor.setControl(new Follower(ElevatorConstants.rightElevatorMotorID, true));
 
     
   }

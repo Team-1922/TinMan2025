@@ -16,6 +16,7 @@ public class AngleL4 extends Command {
    */
   public AngleL4(EndEffector EE) {
     m_EE = EE;
+    addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,7 +27,7 @@ public class AngleL4 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
- m_EE.ToL4ArmAngle();
+ m_EE.L4();
   }
 
   // Called once the command ends or is interrupted.

@@ -5,41 +5,43 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class StopArm extends Command {
-
+public class L1 extends Command {
+  ElevatorSubsystem m_Elevator;
   EndEffector m_EE;
-  /** Creates a new AngleFloor. <p>
-   * angles the collector to the <b>floor</b> to collect
-   */
-  public StopArm(EndEffector EE) {
+  /** Creates a new GotoL4. */
+  public L1( ElevatorSubsystem elevatorSubsystem,EndEffector EE) {
+    m_Elevator = elevatorSubsystem;
     m_EE = EE;
-    addRequirements(m_EE);
+    addRequirements(m_Elevator, m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_EE.stopArm();
-    m_EE.stopWrist();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_Elevator.GoToL1();
+    m_EE.L1();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Elevator.StopElevator();
+    m_EE.stopEE();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
