@@ -18,7 +18,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import static edu.wpi.first.units.Units.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class LeftAim extends Command {
+public class AprilTagAim extends Command {
   LimelightSubsystem m_LimelightSubsystem;
   CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
   CommandXboxController m_DriveController;
@@ -26,7 +26,7 @@ public class LeftAim extends Command {
  
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
-  public LeftAim(
+  public AprilTagAim(
 LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController,SwerveRequest.FieldCentric drive) {
   m_LimelightSubsystem = LimeLightSub;
   m_Drivetrain = drivetrain;
@@ -39,7 +39,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_LimelightSubsystem.getLeftTx();
+    m_LimelightSubsystem.getTx();
    
   }
 
@@ -49,12 +49,12 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
 
 
   
- m_LimelightSubsystem.PutTXonDashboard();
+
 
     m_Drivetrain.applyRequest(() ->
     m_drive.withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
-        .withVelocityY(MathUtil.applyDeadband( m_LimelightSubsystem.LeftAimTargetYDutyCycle(),0.05) * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
-        .withRotationalRate(-MathUtil.applyDeadband(m_DriveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        .withVelocityY(m_LimelightSubsystem.AimTargetYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
+        .withRotationalRate(m_LimelightSubsystem.AimTargetYawDutyCycle() * MaxAngularRate) // Drive counterclockwise with negative X (left)
 ).execute();
   }
 

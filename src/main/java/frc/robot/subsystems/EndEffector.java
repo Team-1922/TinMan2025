@@ -8,6 +8,7 @@ import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
@@ -33,7 +34,10 @@ public class EndEffector extends SubsystemBase {
   CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");
   
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
+  DoublePublisher m_armPos = m_networkTable.getDoubleTopic("ArmPos").publish();
+  DoublePublisher m_wristPos = m_networkTable.getDoubleTopic("WristPos").publish();
   
+
   /** Creates a new EndEffector. */
   public EndEffector() {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
@@ -43,12 +47,14 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
 
+    m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+
   }
 
             // COLLECTOR CODE
 
   public void collect(){
-    m_leftCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
+ 
     m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
   }
 
@@ -213,6 +219,15 @@ public class EndEffector extends SubsystemBase {
     ToFloorWristAngle();
   }
 
+
+/** logging method for this subsystem */
+  public void EELogging(){
+    m_armPos.set(getCurrentArmAngle());
+    m_wristPos.set(getCurrentWristAngle());
+  }
+
+
+
             // LED+TOF CODE
   
   /** clears animation running in given animation slot */
@@ -227,11 +242,13 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void LEDGreen(){
-    m_Candle.setLEDs(0, 255, 0, 0, 0, 99);
+    int LedCount = (int) SmartDashboard.getNumber("LedCount", 8);
+    m_Candle.setLEDs(0, 255, 0, 0, 0,LedCount);
   }
 
   private void LEDControl(){ // placeholder
     if(HasCoral()){
+      
       m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
     } else{
       m_Candle.setLEDs(255,0,0,0,0,LEDConstants.TotalLEDs); // doesn't have coral, turn LEDs red
@@ -239,15 +256,14 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void disabledAnimation(){
-    m_Candle.animate( new RainbowAnimation()
-
-    );
+    m_Candle.animate( new RainbowAnimation());
   }
 
 
   @Override
   public void periodic() {
     LEDGreen();
+    EELogging();
     //LEDControl();
     // This method will be called once per scheduler run
   }

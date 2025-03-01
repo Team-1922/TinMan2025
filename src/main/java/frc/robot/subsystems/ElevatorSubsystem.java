@@ -25,7 +25,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   // logging values
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
-  //DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
+ // DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
   DoublePublisher m_elevatorPos = m_networkTable.getDoubleTopic("ElevatorPos").publish();
 
 
@@ -118,7 +118,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  //  ElevatorLogging();
+    ElevatorLogging();
     // This method will be called once per scheduler run
   }
 }

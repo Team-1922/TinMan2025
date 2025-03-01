@@ -150,6 +150,7 @@ public final class Constants {
      public static final double MaxAimSpeed = 4;// meters per second
 
      public static final double TargetYDeadband = 0.025; // meters
+     public static final double TargetYawDeadband = 5; // deg
 
     }
 

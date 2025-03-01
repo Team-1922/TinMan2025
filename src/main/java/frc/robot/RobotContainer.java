@@ -38,8 +38,7 @@ import frc.robot.Commands.L1;
 import frc.robot.Commands.L2;
 import frc.robot.Commands.L4;
 import frc.robot.Commands.LEDtest;
-import frc.robot.Commands.LeftAim;
-import frc.robot.Commands.RightAim;
+import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.SetElevatorReference;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
@@ -70,13 +69,14 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final LimelightSubsystem m_LimelightSubsystem = new LimelightSubsystem();
+    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("Left");
+    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("Right");
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
-    private final RightAim m_RightAim = new RightAim(m_LimelightSubsystem, m_drivetrain, m_driveController,drive);
-    private final LeftAim m_LeftAim = new LeftAim(m_LimelightSubsystem, m_drivetrain,m_driveController,drive);
+    private final AprilTagAim m_RightAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain, m_driveController,drive);
+    private final AprilTagAim m_LeftAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain,m_driveController,drive);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
