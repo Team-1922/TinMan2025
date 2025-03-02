@@ -64,8 +64,8 @@ public final class Constants {
 
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
-      .withKP(0.05)
-      .withKG(0.02)
+      .withKP(0.15)
+      .withKG(0.0225)
       
       ;
 

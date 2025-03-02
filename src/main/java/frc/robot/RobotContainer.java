@@ -193,9 +193,9 @@ public class RobotContainer {
 //        m_operatorController.button(5).onTrue();
       //  m_operatorController.button()
 
-     //   m_operatorController.button(1).onTrue(m_ElevatorL1);
-     //   m_operatorController.button(2).onTrue(m_ElevatorL2);
-     //   m_operatorController.button(3).onTrue(m_ElevatorL3);
+       m_operatorController.button(10).onTrue(m_ElevatorL1);
+        m_operatorController.button(7).onTrue(m_ElevatorL2);
+        m_operatorController.button(8).onTrue(m_ElevatorL3);
      //   m_operatorController.button(4).onTrue(m_ElevatorL4);
 //m_operatorController.button(7).onTrue(m_ElevatorReference);
       // m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
