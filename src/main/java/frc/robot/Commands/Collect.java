@@ -20,13 +20,13 @@ public class Collect extends Command {
   @Override
   public void initialize() {
 
-
+  m_EE.collect();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_EE.collect();
+    
   }
 
   // Called once the command ends or is interrupted.

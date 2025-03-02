@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -30,8 +32,8 @@ public final class Constants {
 
       public static final double FloorPosition = 1; // placeholder
       public static final double L1Position = 5;// placeholder
-      public static final double L2Position = 10 ; // placeholder
-      public static final double L3Position = 15; // placeholder
+      public static final double L2Position = 4.4 ; // placeholder
+      public static final double L3Position = 11.3; // placeholder
       public static final double L4Position = 24;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
@@ -83,25 +85,27 @@ public final class Constants {
       public static final int endEffectorWristEncoderID = 6;
 
 
-      public static final double collectorRPM = 100; // check this 
+      public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = 1; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = 1; // placeholder, angle to score L1
-      public static final double L2WristAngle = 4; // Placeholder
-      public static final double L4WristAngle = 8; // placeholder
-      public static final double AlgaeWristAngle = 2; // placeholder
-      public static final double StartingWristAngle = 5; // the angle for starting configuration, placeholder
+      public static final double FloorWristAngle = 0; // placeholder angle to collect off the floor   
+      public static final double L1WristAngle = -.24; // placeholder, angle to score L1
+      public static final double L2WristAngle = -.11; // Placeholder
+      public static final double L4WristAngle = -0.1; // placeholder
+      public static final double AlgaeWristAngle = 0.1; // placeholder
+      public static final double StowedWristAngle =  .007; // the angle for defence, placeholder
+      public static final double VerticalWristAngle = 0.02;
       public static final double StationWristAngle = 2; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = 70; // placeholder
-      public static final double L1ArmAngle = 100; // placeholder, might not be used
-      public static final double L2ArmAngle = 120; // Placeholder
-      public static final double L4ArmAngle = 180; // placeholder
-      public static final double AlgaeArmAngle = -.325; // placeholder
-      public static final double StartingArmAngle = -0.05; // the angle for starting configuration, placeholder
-      public static final double StationArmAngle = 20; // placeholder angle for collecting at the station
+      public static final double FloorArmAngle = -0.09; // placeholder
+      public static final double L1ArmAngle = .095; // placeholder, might not be used
+      public static final double L2ArmAngle = .13; // Placeholder
+      public static final double L4ArmAngle = .1; // placeholder
+      public static final double AlgaeArmAngle = .32; // placeholder
+      public static final double StowedArmAngle = 0.25; // the angle for starting configuration, placeholder
+      public static final double VerticalArmAngle = 0.185;
+      public static final double StationArmAngle = .20; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -113,6 +117,7 @@ public final class Constants {
       public static final FeedbackConfigs WristFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
       .withFeedbackRemoteSensorID(endEffectorWristEncoderID)
+      .withRotorToSensorRatio(20)
       ;
 
       public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
@@ -124,8 +129,19 @@ public final class Constants {
 
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
-      .withKP(0.01)
-      .withKG(0.012);
+      .withKP(11)
+      .withKG(0.0175);
+
+
+      public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
+      .withKP(1.5)
+      ;
+
+
+      public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration().withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49853515625));
+      public static final CANcoderConfiguration ArmCanCoderConfig = 
+      new CANcoderConfiguration().withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875).withAbsoluteSensorDiscontinuityPoint(0.8));
+    
     }
 
 

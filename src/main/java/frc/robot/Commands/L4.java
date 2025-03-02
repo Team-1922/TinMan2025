@@ -27,7 +27,7 @@ public class L4 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.GoToL4();
+  //  m_Elevator.GoToL4();
     m_EE.L4();
     
   }
@@ -35,7 +35,7 @@ public class L4 extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Elevator.StopElevator();
+    //m_Elevator.StopElevator();
     m_EE.stopEE();
   }
 

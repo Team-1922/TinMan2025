@@ -6,14 +6,17 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class SetElevatorReference extends Command {
+public class Floor extends Command {
   ElevatorSubsystem m_Elevator;
+  EndEffector m_EE;
   /** Creates a new GotoL4. */
-  public SetElevatorReference( ElevatorSubsystem elevatorSubsystem) {
+  public Floor( ElevatorSubsystem elevatorSubsystem,EndEffector EE) {
     m_Elevator = elevatorSubsystem;
-    addRequirements(m_Elevator);
+    m_EE = EE;
+    addRequirements(m_Elevator, m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,13 +27,16 @@ public class SetElevatorReference extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.setPosAsReference();
+  //  m_Elevator.GoToL4();
+    m_EE.Floor();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Elevator.StopElevator();
+    //m_Elevator.StopElevator();
+    m_EE.stopEE();
   }
 
   // Returns true when the command should end.

@@ -21,13 +21,14 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Commands.AngleL1;
-import frc.robot.Commands.AngleL2;
-import frc.robot.Commands.AngleL4;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
+import frc.robot.Commands.EEVertical;
+import frc.robot.Commands.Floor;
 import frc.robot.Commands.GoToStation;
 import frc.robot.Commands.GotoFloor;
 import frc.robot.Commands.GotoL1;
@@ -39,9 +40,9 @@ import frc.robot.Commands.L2;
 import frc.robot.Commands.L4;
 import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.AprilTagAim;
-import frc.robot.Commands.SetElevatorReference;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
+import frc.robot.Commands.StoweEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -69,8 +70,8 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("Left");
-    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("Right");
+    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("Left"); // left limelight subsystem
+    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("Right"); // right limelight subsystem
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
@@ -83,7 +84,7 @@ public class RobotContainer {
 
 
     //elevator commands
-    private final SetElevatorReference m_ElevatorReference = new SetElevatorReference(m_ElevatorSubsystem);
+    
     private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
     private final GotoL1 m_ElevatorL1 = new GotoL1(m_ElevatorSubsystem);
     private final GotoL2 m_ElevatorL2 = new GotoL2(m_ElevatorSubsystem);
@@ -96,9 +97,7 @@ public class RobotContainer {
 
     // EE commands
 
-    private final AngleL1 m_AngleL1 = new AngleL1(m_EE);
-    private final AngleL2 m_AngleL2 = new AngleL2(m_EE);
-    private final AngleL4 m_AngleL4 = new AngleL4(m_EE);
+ 
 
     private final StopArm m_StopArm = new StopArm(m_EE);
 
@@ -111,6 +110,18 @@ public class RobotContainer {
     private final L1 m_L1 = new L1(m_ElevatorSubsystem, m_EE);
     private final L2 m_L2 = new L2(m_ElevatorSubsystem, m_EE);
     private final L4 m_L4 = new L4(m_ElevatorSubsystem, m_EE);
+    private final Floor m_Floor = new Floor(m_ElevatorSubsystem, m_EE);
+    private final StoweEE m_StoweEE = new StoweEE(m_ElevatorSubsystem, m_EE);
+    private final EEVertical m_EeVertical = new EEVertical(m_ElevatorSubsystem, m_EE);
+
+
+    // sequential command groups
+   // private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL1,m_L1);
+   // private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL2,m_L2);
+   // private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(m_EeVertical, new WaitCommand(0.5),m_ElevatorL3,new WaitCommand(0.5),m_L2);
+  //  private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL4,m_L4);
+
+
     public RobotContainer() {
         configureBindings();
         
@@ -170,17 +181,24 @@ public class RobotContainer {
         m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
         m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
-        m_operatorController.button(1).onTrue(m_AngleL1);
-        m_operatorController.button(2).onTrue(m_AngleL2);
-        m_operatorController.button(3).onTrue(m_AngleL4);
-        m_operatorController.button(8).onTrue(m_StopArm);
+        m_operatorController.button(1).onTrue(m_L1); // a
+       m_operatorController.button(2).onTrue(m_L2); // b
+        m_operatorController.button(3).onTrue(m_StoweEE); // x 
+        m_operatorController.button(4).onTrue(m_EeVertical); // y 
+        m_operatorController.button(5).onTrue(m_Floor); // left bumper
+   //     m_operatorController.button(3).onTrue(m_AngleL4); // x 
+        //m_operatorController.button(8).onTrue(m_StopArm); // 3 lines button
+      
+        m_operatorController.button(6).whileTrue(m_Collect); // RB
+//        m_operatorController.button(5).onTrue();
+      //  m_operatorController.button()
 
      //   m_operatorController.button(1).onTrue(m_ElevatorL1);
      //   m_operatorController.button(2).onTrue(m_ElevatorL2);
      //   m_operatorController.button(3).onTrue(m_ElevatorL3);
      //   m_operatorController.button(4).onTrue(m_ElevatorL4);
 //m_operatorController.button(7).onTrue(m_ElevatorReference);
-       m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
+      // m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
    //     m_operatorController.button(5).onTrue(m_LeDtest);
     }
 

@@ -46,6 +46,11 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
+
+    m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
+    m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
 
@@ -55,12 +60,13 @@ public class EndEffector extends SubsystemBase {
 
   public void collect(){
  
-    m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
+   // m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
+    m_rightCollect.set(-0.5);
   }
 
   public void stopCollector(){
     m_rightCollect.set(0);
-    m_leftCollect.set(0);
+
   }
 
   public void stopWrist(){
@@ -79,7 +85,7 @@ public class EndEffector extends SubsystemBase {
 
 
   public void ReverseCollector(){
-    m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
+  //  m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
     m_rightCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));
   }
 
@@ -87,12 +93,13 @@ public class EndEffector extends SubsystemBase {
 
   /** sets the current angle of the end effector wrist as the reference angle */
   public void setWristAngleAsReference(){
-    SmartDashboard.putNumber("EEReference", m_WristEncoder.getPosition().getValueAsDouble());
+   // SmartDashboard.putNumber("EEReference", m_WristEncoder.getPosition().getValueAsDouble());
   }
 
   /** gets current angle of the end effector */
   public double getCurrentWristAngle(){
     return m_WristMotor.getPosition().getValueAsDouble();
+    //m_ArmMotor.getpo
   }
 
   /**angles the end effector at the floor */
@@ -117,12 +124,16 @@ public class EndEffector extends SubsystemBase {
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationWristAngle));
   }
 
-  public void ToStartingWristAngle(){
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StartingWristAngle));
+  public void ToStowedWristAngle(){
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StowedWristAngle));
   }
 
   public void ToAlgaeWristAngle(){
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeWristAngle));
+  }
+
+  public void ToVerticalWristAngle(){
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalWristAngle));
   }
 
            // ARM CODE
@@ -130,25 +141,25 @@ public class EndEffector extends SubsystemBase {
       /** checks if the arm encoders absolute position has overflowed, this is to prevent the arm going to far back and thinking it's in the floor 
        * @return if the absolute position of the arm has overflowed to 0
       */
-  public boolean checkPositionOverflow(){
+ /*  public boolean checkPositionOverflow(){
 
     if(m_armEncoder.getAbsolutePosition().getValueAsDouble() < 0.1){
       return true;
     }
     else{return false;}
-  }
+  }*/
 
 
   /** sets the current angle of the end effector as the reference angle */
   public void setArmAngleAsReference(){
-    SmartDashboard.putNumber("EEArmReference", m_armEncoder.getPosition().getValueAsDouble());
+    //SmartDashboard.putNumber("EEArmReference", m_armEncoder.getPosition().getValueAsDouble());
   }
 
   /** gets current angle of the arm on the end effector */
-  public double getCurrentArmAngle(){
+ // public double getCurrentArmAngle(){
     
-    return m_armEncoder.getAbsolutePosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
-  }
+   // return m_armEncoder.getAbsolutePosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
+ // }
 
   
   /**angles the end effector arm to the floor */
@@ -171,16 +182,20 @@ public class EndEffector extends SubsystemBase {
   /**  angles arm to collect at station 
   */
   public void ToStationArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle));
   }
 
   /** angles arm to starting configuration */
-  public void ToStartingArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StartingArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+  public void ToStowedArmAngle(){
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StowedArmAngle));
   }
   
   public void ToAlgaeArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeArmAngle-SmartDashboard.getNumber("EEArmReference", 0)));
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeArmAngle));
+  }
+
+  public void ToVerticalArmAngle(){
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalArmAngle));
   }
 
   /** angles EE at <b>L1 */
@@ -219,10 +234,19 @@ public class EndEffector extends SubsystemBase {
     ToFloorWristAngle();
   }
 
+  public void stowe(){
+    ToStowedArmAngle();
+    ToStowedWristAngle();
+  }
+  
+  public void Vertical(){
+    ToVerticalArmAngle();
+    ToVerticalWristAngle();
+  }
 
 /** logging method for this subsystem */
   public void EELogging(){
-    m_armPos.set(getCurrentArmAngle());
+    //m_armPos.set(getCurrentArmAngle());
     m_wristPos.set(getCurrentWristAngle());
   }
 
