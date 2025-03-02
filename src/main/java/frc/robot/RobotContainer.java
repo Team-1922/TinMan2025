@@ -37,6 +37,7 @@ import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
 import frc.robot.Commands.L1;
 import frc.robot.Commands.L2;
+import frc.robot.Commands.L3;
 import frc.robot.Commands.L4;
 import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.AprilTagAim;
@@ -109,6 +110,7 @@ public class RobotContainer {
 
     private final L1 m_L1 = new L1(m_ElevatorSubsystem, m_EE);
     private final L2 m_L2 = new L2(m_ElevatorSubsystem, m_EE);
+    private final L3 m_L3 = new L3(m_ElevatorSubsystem, m_EE);
     private final L4 m_L4 = new L4(m_ElevatorSubsystem, m_EE);
     private final Floor m_Floor = new Floor(m_ElevatorSubsystem, m_EE);
     private final StoweEE m_StoweEE = new StoweEE(m_ElevatorSubsystem, m_EE);
@@ -116,9 +118,28 @@ public class RobotContainer {
 
 
     // sequential command groups
-   // private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL1,m_L1);
-   // private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL2,m_L2);
-   // private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(m_EeVertical, new WaitCommand(0.5),m_ElevatorL3,new WaitCommand(0.5),m_L2);
+    private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new WaitCommand(0.5),
+        new GotoL1(m_ElevatorSubsystem),
+        new WaitCommand(0.5),
+        new L1(m_ElevatorSubsystem,m_EE)
+    );
+
+    private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new WaitCommand(0.5),
+        new GotoL2(m_ElevatorSubsystem),
+        new WaitCommand(0.5),
+        new L2(m_ElevatorSubsystem,m_EE)
+    );
+    private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new WaitCommand(0.5),
+        new GotoL3(m_ElevatorSubsystem),
+        new WaitCommand(0.5),
+        new L3(m_ElevatorSubsystem,m_EE)
+    );
   //  private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL4,m_L4);
 
 
@@ -181,10 +202,12 @@ public class RobotContainer {
         m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
         m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
-        m_operatorController.button(1).onTrue(m_L1); // a
-       m_operatorController.button(2).onTrue(m_L2); // b
+        
+    //    m_operatorController.button(1).onTrue(m_L1Group); // a
+        m_operatorController.button(2).onTrue(m_L2Group); // b
+       // m_operatorController.pov(180).onTrue(m_L3Group);
         m_operatorController.button(3).onTrue(m_StoweEE); // x 
-        m_operatorController.button(4).onTrue(m_EeVertical); // y 
+    //    m_operatorController.button(4).onTrue(m_EeVertical); // y 
         m_operatorController.button(5).onTrue(m_Floor); // left bumper
    //     m_operatorController.button(3).onTrue(m_AngleL4); // x 
         //m_operatorController.button(8).onTrue(m_StopArm); // 3 lines button
@@ -193,9 +216,9 @@ public class RobotContainer {
 //        m_operatorController.button(5).onTrue();
       //  m_operatorController.button()
 
-       m_operatorController.button(10).onTrue(m_ElevatorL1);
-        m_operatorController.button(7).onTrue(m_ElevatorL2);
-        m_operatorController.button(8).onTrue(m_ElevatorL3);
+       m_operatorController.button(10).onTrue(m_GotoFloor);
+    //    m_operatorController.button(7).onTrue(m_ElevatorL2);
+   //     m_operatorController.button(8).onTrue(m_ElevatorL3);
      //   m_operatorController.button(4).onTrue(m_ElevatorL4);
 //m_operatorController.button(7).onTrue(m_ElevatorReference);
       // m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button

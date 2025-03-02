@@ -5,6 +5,8 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 
@@ -22,13 +24,15 @@ public class L1 extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_Elevator.GoToL1();
+    m_EE.L1();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //  m_Elevator.GoToL1();
-    m_EE.L1();
+
     
   }
 
@@ -36,12 +40,15 @@ public class L1 extends Command {
   @Override
   public void end(boolean interrupted) {
    // m_Elevator.StopElevator();
-    m_EE.stopEE();
+   
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return 
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L1WristAngle) <0.05 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L1ArmAngle) <0.05 
+   ;// Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
   }
 }

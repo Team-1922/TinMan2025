@@ -9,9 +9,12 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public final class Constants {
   /** Creates a new Constants. */
@@ -30,8 +33,8 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
-      public static final double FloorPosition = 1; // placeholder
-      public static final double L1Position = 5;// placeholder
+      public static final double FloorPosition = 0.2; // placeholder
+      public static final double L1Position = 0.2;// placeholder
       public static final double L2Position = 4.4 ; // placeholder
       public static final double L3Position = 11.3; // placeholder
       public static final double L4Position = 24;
@@ -65,8 +68,13 @@ public final class Constants {
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
       .withKP(0.15)
-      .withKG(0.0225)
+      .withKG(0.04)
       
+      ;
+
+      public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
+      .withNeutralMode(NeutralModeValue.Brake)
+      .withInverted(InvertedValue.CounterClockwise_Positive)
       ;
 
     }
@@ -138,10 +146,22 @@ public final class Constants {
       ;
 
 
-      public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration().withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49853515625));
+      public static final CANcoderConfiguration WristCanCoderConfig =
+       new CANcoderConfiguration()
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49853515625));
+
       public static final CANcoderConfiguration ArmCanCoderConfig = 
-      new CANcoderConfiguration().withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875).withAbsoluteSensorDiscontinuityPoint(0.8));
+      new CANcoderConfiguration()
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875).withAbsoluteSensorDiscontinuityPoint(0.8));
     
+      public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
+      .withNeutralMode(NeutralModeValue.Brake)
+      .withInverted(InvertedValue.Clockwise_Positive);
+
+      public static final MotorOutputConfigs WristMotorConfig = new MotorOutputConfigs()
+      .withNeutralMode(NeutralModeValue.Brake)
+      .withInverted(InvertedValue.CounterClockwise_Positive);
+
     }
 
 

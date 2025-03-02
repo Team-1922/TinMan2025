@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 
@@ -41,7 +42,9 @@ public class EEVertical extends Command {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    return false;
+  public boolean isFinished() { 
+        return     
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.VerticalWristAngle) <0.05 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.VerticalArmAngle) <0.05 ;
   }
 }

@@ -38,7 +38,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorMotionMagicConfigs);
     m_LeftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorSlot0Configs);
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorSlot0Configs);
-
+    m_LeftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorMotorOutputConfigs);
+    m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorMotorOutputConfigs);
 
     m_LeftElevatorMotor.setControl(new Follower(ElevatorConstants.rightElevatorMotorID, true));
 
@@ -102,7 +103,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getElevatorPos(){
     
-    return m_RightElevatorMotor.getPosition().getValueAsDouble()- SmartDashboard.getNumber("ElevatorReference", 0);
+    return m_RightElevatorMotor.getPosition().getValueAsDouble();
   };
 
   public void setPosAsReference(){

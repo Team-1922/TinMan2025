@@ -5,41 +5,44 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class GotoL1 extends Command {
+public class L3 extends Command {
   ElevatorSubsystem m_Elevator;
+  EndEffector m_EE;
   /** Creates a new GotoL4. */
-  public GotoL1( ElevatorSubsystem elevatorSubsystem) {
+  public L3( ElevatorSubsystem elevatorSubsystem,EndEffector EE) {
     m_Elevator = elevatorSubsystem;
-    addRequirements(m_Elevator);
+    m_EE = EE;
+    addRequirements(m_Elevator, m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-        m_Elevator.GoToL1();
-  }
+   // m_Elevator.GoToL3();
+    m_EE.L2();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Elevator.StopElevator();
+   // m_Elevator.StopElevator();
+    m_EE.stopEE();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return 
-    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
+    return false;
   }
 }

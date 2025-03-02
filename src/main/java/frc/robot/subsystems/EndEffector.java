@@ -48,11 +48,14 @@ public class EndEffector extends SubsystemBase {
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
-
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+
+    
 
   }
 
@@ -136,6 +139,7 @@ public class EndEffector extends SubsystemBase {
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalWristAngle));
   }
 
+
            // ARM CODE
 
       /** checks if the arm encoders absolute position has overflowed, this is to prevent the arm going to far back and thinking it's in the floor 
@@ -156,10 +160,10 @@ public class EndEffector extends SubsystemBase {
   }
 
   /** gets current angle of the arm on the end effector */
- // public double getCurrentArmAngle(){
-    
-   // return m_armEncoder.getAbsolutePosition().getValueAsDouble()-SmartDashboard.getNumber("EEArmReference", 0);
- // }
+  public double getCurrentArmAngle(){
+    return m_ArmMotor.getPosition().getValueAsDouble();
+//   return m_armEncoder.getAbsolutePosition().getValueAsDouble();
+  }
 
   
   /**angles the end effector arm to the floor */
@@ -247,8 +251,11 @@ public class EndEffector extends SubsystemBase {
 /** logging method for this subsystem */
   public void EELogging(){
     //m_armPos.set(getCurrentArmAngle());
-    m_wristPos.set(getCurrentWristAngle());
+    SmartDashboard.putNumber("WristAngle", getCurrentWristAngle());
+    SmartDashboard.putNumber("ArmAngle", getCurrentArmAngle());
+    //m_wristPos.set(getCurrentWristAngle());
   }
+
 
 
 
