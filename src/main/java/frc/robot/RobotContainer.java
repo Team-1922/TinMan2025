@@ -15,30 +15,26 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.EEVertical;
-import frc.robot.Commands.Floor;
+import frc.robot.Commands.EeFloor;
 import frc.robot.Commands.GoToStation;
 import frc.robot.Commands.GotoFloor;
 import frc.robot.Commands.GotoL1;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
-import frc.robot.Commands.L1;
-import frc.robot.Commands.L2;
-import frc.robot.Commands.L3;
-import frc.robot.Commands.L4;
+import frc.robot.Commands.EeL1;
+import frc.robot.Commands.EeL2;
+import frc.robot.Commands.EeL3;
+import frc.robot.Commands.EeL4;
 import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.StopArm;
@@ -108,11 +104,11 @@ public class RobotContainer {
 
     // EE+elevator commands
 
-    private final L1 m_L1 = new L1(m_ElevatorSubsystem, m_EE);
-    private final L2 m_L2 = new L2(m_ElevatorSubsystem, m_EE);
-    private final L3 m_L3 = new L3(m_ElevatorSubsystem, m_EE);
-    private final L4 m_L4 = new L4(m_ElevatorSubsystem, m_EE);
-    private final Floor m_Floor = new Floor(m_ElevatorSubsystem, m_EE);
+    private final EeL1 m_L1 = new EeL1(m_EE);
+    private final EeL2 m_L2 = new EeL2( m_EE);
+    private final EeL3 m_L3 = new EeL3(m_EE);
+    private final EeL4 m_L4 = new EeL4( m_EE);
+    private final EeFloor m_Floor = new EeFloor( m_EE);
     private final StoweEE m_StoweEE = new StoweEE(m_ElevatorSubsystem, m_EE);
     private final EEVertical m_EeVertical = new EEVertical(m_ElevatorSubsystem, m_EE);
 
@@ -120,27 +116,33 @@ public class RobotContainer {
     // sequential command groups
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
         new EEVertical(m_ElevatorSubsystem, m_EE),
-        new WaitCommand(0.5),
         new GotoL1(m_ElevatorSubsystem),
-        new WaitCommand(0.5),
-        new L1(m_ElevatorSubsystem,m_EE)
+        new EeL1(m_EE)
     );
 
     private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(
-        new EEVertical(m_ElevatorSubsystem, m_EE),
-        new WaitCommand(0.5),
+        new EEVertical(m_ElevatorSubsystem, m_EE),    
         new GotoL2(m_ElevatorSubsystem),
-        new WaitCommand(0.5),
-        new L2(m_ElevatorSubsystem,m_EE)
+        new EeL2(m_EE)
     );
     private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(
         new EEVertical(m_ElevatorSubsystem, m_EE),
-        new WaitCommand(0.5),
         new GotoL3(m_ElevatorSubsystem),
-        new WaitCommand(0.5),
-        new L3(m_ElevatorSubsystem,m_EE)
+        new EeL3(m_EE)
     );
-  //  private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(m_EeVertical,m_ElevatorL4,m_L4);
+
+    private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new GotoL4(m_ElevatorSubsystem),
+        new EeL4(m_EE)
+    );
+
+    private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new GotoFloor(m_ElevatorSubsystem),
+        new EeFloor(m_EE)
+    );
+
 
 
     public RobotContainer() {
@@ -150,6 +152,8 @@ public class RobotContainer {
 
 
     NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
+    NamedCommands.registerCommand("GoL4", m_L4Group);
+
     
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
     try {
@@ -205,8 +209,12 @@ public class RobotContainer {
         
     //    m_operatorController.button(1).onTrue(m_L1Group); // a
         m_operatorController.button(2).onTrue(m_L2Group); // b
-       // m_operatorController.pov(180).onTrue(m_L3Group);
-        m_operatorController.button(3).onTrue(m_StoweEE); // x 
+       // m_operatorController.button(2).onTrue(m_ElevatorL2);
+
+        m_operatorController.pov(180).onTrue(m_L3Group);
+        m_operatorController.pov(90).onTrue(m_L4Group);
+        m_operatorController.pov(270).onTrue(m_FloorGroup);
+       // m_operatorController.button(3).onTrue(m_StoweEE); // x 
     //    m_operatorController.button(4).onTrue(m_EeVertical); // y 
         m_operatorController.button(5).onTrue(m_Floor); // left bumper
    //     m_operatorController.button(3).onTrue(m_AngleL4); // x 

@@ -5,48 +5,46 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.EndEffectorConstants;
-import frc.robot.subsystems.ElevatorSubsystem;
+
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class L2 extends Command {
-  ElevatorSubsystem m_Elevator;
+public class EeL4 extends Command {
+
   EndEffector m_EE;
   /** Creates a new GotoL4. */
-  public L2( ElevatorSubsystem elevatorSubsystem,EndEffector EE) {
-    m_Elevator = elevatorSubsystem;
+  public EeL4(EndEffector EE) {
+   // m_Elevator = elevatorSubsystem;
     m_EE = EE;
-    addRequirements(m_Elevator, m_EE);
+    addRequirements( m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-   // m_Elevator.GoToL2();
-    m_EE.L2();}
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+  //  m_Elevator.GoToL4();
+    m_EE.L4();
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // m_Elevator.StopElevator();
-    m_EE.stopEE();
+    //m_Elevator.StopElevator();
+   // m_EE.stopEE();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return     Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L1WristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L1ArmAngle) <0.05 
- ;//   Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
+        return 
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L4WristAngle) <0.05 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L4ArmAngle) <0.05;
   }
 }

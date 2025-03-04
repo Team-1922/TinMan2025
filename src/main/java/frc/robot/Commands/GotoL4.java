@@ -32,7 +32,7 @@ public class GotoL4 extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Elevator.StopElevator();
+  //  m_Elevator.StopElevator();
   }
 
   // Returns true when the command should end.

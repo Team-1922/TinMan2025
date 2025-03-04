@@ -33,11 +33,11 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
-      public static final double FloorPosition = 0.2; // placeholder
-      public static final double L1Position = 0.2;// placeholder
-      public static final double L2Position = 4.4 ; // placeholder
-      public static final double L3Position = 11.3; // placeholder
-      public static final double L4Position = 24;
+      public static final double FloorPosition = 0.4; // placeholder
+      public static final double L1Position = 0.4;// placeholder
+      public static final double L2Position = 10.25 ; // placeholder
+      public static final double L3Position = 27.24; // placeholder
+      public static final double L4Position = 54.53;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
@@ -68,7 +68,7 @@ public final class Constants {
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
       .withKP(0.15)
-      .withKG(0.04)
+      .withKG(0.0225)
       
       ;
 
@@ -98,7 +98,7 @@ public final class Constants {
       // wrist angles
       public static final double FloorWristAngle = 0; // placeholder angle to collect off the floor   
       public static final double L1WristAngle = -.24; // placeholder, angle to score L1
-      public static final double L2WristAngle = -.11; // Placeholder
+      public static final double L2WristAngle = -.11; // also for L3
       public static final double L4WristAngle = -0.1; // placeholder
       public static final double AlgaeWristAngle = 0.1; // placeholder
       public static final double StowedWristAngle =  .007; // the angle for defence, placeholder
@@ -108,7 +108,7 @@ public final class Constants {
       //arm angles
       public static final double FloorArmAngle = -0.09; // placeholder
       public static final double L1ArmAngle = .095; // placeholder, might not be used
-      public static final double L2ArmAngle = .13; // Placeholder
+      public static final double L2ArmAngle = .12; // also for L3
       public static final double L4ArmAngle = .1; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration, placeholder

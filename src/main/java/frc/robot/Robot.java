@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 
 public class Robot extends TimedRobot {
@@ -14,10 +15,12 @@ public class Robot extends TimedRobot {
   
   private final RobotContainer m_robotContainer;
   private final EndEffector m_EE;
+  private final ElevatorSubsystem m_Elevator;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
     m_EE = new EndEffector();
+    m_Elevator = new ElevatorSubsystem();
   }
 
   @Override
@@ -36,6 +39,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledExit() {
   //  m_EE.stopAnimation(0);
+
   }
 
   @Override
@@ -65,7 +69,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {}
 
   @Override
-  public void teleopExit() {}
+  public void teleopExit() {
+    m_EE.stopEE(); 
+    m_Elevator.StopElevator(); 
+  }
 
   @Override
   public void testInit() {
