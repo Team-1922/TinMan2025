@@ -15,6 +15,9 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +38,7 @@ import frc.robot.Commands.EeL1;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
+import frc.robot.Commands.GoToLimelightPos;
 import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.StopArm;
@@ -59,7 +63,7 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
    
-
+    
     
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -67,8 +71,8 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("Left"); // left limelight subsystem
-    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("Right"); // right limelight subsystem
+    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("left"); // left limelight subsystem
+    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("right"); // right limelight subsystem
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
@@ -89,6 +93,7 @@ public class RobotContainer {
     private final GotoL4 m_ElevatorL4 = new GotoL4(m_ElevatorSubsystem);
     private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
+    private final GoToLimelightPos m_ElevatorLL = new GoToLimelightPos(m_ElevatorSubsystem);
     private final LEDtest m_LeDtest = new LEDtest(m_EE);
 
 
@@ -103,6 +108,7 @@ public class RobotContainer {
 
 
     // EE+elevator commands
+
 
     private final EeL1 m_L1 = new EeL1(m_EE);
     private final EeL2 m_L2 = new EeL2( m_EE);
@@ -143,11 +149,19 @@ public class RobotContainer {
         new EeFloor(m_EE)
     );
 
+    private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
+
+        new EEVertical(m_ElevatorSubsystem, m_EE),
+        new GoToLimelightPos(m_ElevatorSubsystem)
+    );
+
+
+
 
 
     public RobotContainer() {
         configureBindings();
-        
+        DriverStation.silenceJoystickConnectionWarning(true);
     m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
 
@@ -211,6 +225,7 @@ public class RobotContainer {
         m_operatorController.button(2).onTrue(m_L2Group); // b
        // m_operatorController.button(2).onTrue(m_ElevatorL2);
 
+       m_operatorController.pov(0).onTrue(m_AimGroup);
         m_operatorController.pov(180).onTrue(m_L3Group);
         m_operatorController.pov(90).onTrue(m_L4Group);
         m_operatorController.pov(270).onTrue(m_FloorGroup);

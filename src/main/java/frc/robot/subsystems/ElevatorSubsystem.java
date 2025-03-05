@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.lang.annotation.Target;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.DynamicMotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
@@ -95,6 +96,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     
   }
 
+  /** moves elevator up to a position so the limelights can see the apriltags */
+  public void GoToAimingPosition(){
+
+    m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.LlAimPosition)));
+    SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.LlAimPosition));
+  }
+
   /** Stops elevator */
   public void StopElevator(){
   //  m_rightElevatorMotor.set(0);
@@ -113,13 +121,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
   public void ElevatorLogging(){
-    m_elevatorPos.set(getElevatorPos());
+   // m_elevatorPos = getElevatorPos();
+    SignalLogger.writeDouble("ElevatorPosition", getElevatorPos());
     //m_elevatorTarget.set(getElevatorPos());
   };
 
   @Override
   public void periodic() {
-  //  ElevatorLogging();
+    ElevatorLogging();
     // This method will be called once per scheduler run
   }
 }

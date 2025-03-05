@@ -18,7 +18,7 @@ public class LimelightSubsystem extends SubsystemBase {
   double[] m_Pos;
   NetworkTableEntry m_tv;
     /** Creates a new LimelightSubsystem.
-     * @param LimelightSide the limelight called, either <b>"Left"</b> or <b>"Right"
+     * @param LimelightSide the limelight called, either <b>"left"</b> or <b>"right"
      */
   public LimelightSubsystem(String LimelightSide) { 
     m_LimelightSide = LimelightSide;
@@ -54,6 +54,8 @@ public class LimelightSubsystem extends SubsystemBase {
   return m_tv.getDouble(0) ==1;
  }
 
+
+ // -3 for the left LL, -4 for the right one...
  /** the value to use for apriltag aiming, applies a deadband in method */
  public double AimTargetYDutyCycle(){
   return (MathUtil.applyDeadband(getTy(),LimelightConstants.TargetYDeadband));

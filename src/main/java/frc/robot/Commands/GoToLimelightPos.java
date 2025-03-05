@@ -5,43 +5,39 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.EndEffector;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Collect extends Command {
-  EndEffector m_EE = new EndEffector();
-  boolean m_StartedWithCoral;
-  /** Creates a new Collect. */
-  public Collect( EndEffector collector) {
-    m_EE = collector;
-    
-    m_StartedWithCoral = m_EE.HasCoral();
+public class GoToLimelightPos extends Command {
+  ElevatorSubsystem m_Elevator;
+  /** Creates a new GotoL4. */
+  public GoToLimelightPos( ElevatorSubsystem elevatorSubsystem) {
+    m_Elevator = elevatorSubsystem;
+    addRequirements(m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  
-  m_EE.collect();
-  }
+       m_Elevator.GoToAimingPosition();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+ 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_EE.stopCollector();
+  //  m_Elevator.StopElevator();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_EE.HasCoral() != m_StartedWithCoral; 
-    // because this command will be used for collecting and scoring, this should end the command when the opposite happens
+    return Math.abs(m_Elevator.TargetPosition(ElevatorConstants.LlAimPosition) - m_Elevator.getElevatorPos()) < 0.25;
   }
 }

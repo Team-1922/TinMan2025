@@ -41,7 +41,7 @@ public final class Constants {
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
-      
+      public static final double LlAimPosition = 16.5; // position used while aiming using the limelights 
 
 
       // motion magic configs
@@ -152,7 +152,8 @@ public final class Constants {
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875).withAbsoluteSensorDiscontinuityPoint(0.8));
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875)
+      .withAbsoluteSensorDiscontinuityPoint(0.8));
     
       public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Brake)
@@ -170,10 +171,11 @@ public final class Constants {
       public static final int TotalLEDs = 99; // placeholder
     }
 
-    public static class TimeOfFlightConstants{
-      public static final int TOFID = 3; // placeholder
-      public static final double MaxRange = 100;// placeholder
-      public static final double MinRange = 20; // placeholder
+    public static class LazerCanConstants{
+      public static final int LcID = 0; // placeholder
+      public static final int LcMaxDistance = 50; // mm
+      public static final int LcMinDistance = 10; //mm
+
     }
 
     public static class LimelightConstants{

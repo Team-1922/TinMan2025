@@ -48,9 +48,6 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   public void execute() {
 
 
-  
-
-
     m_Drivetrain.applyRequest(() ->
     m_drive.withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
         .withVelocityY(m_LimelightSubsystem.AimTargetYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)

@@ -11,7 +11,9 @@ import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.playingwithfusion.TimeOfFlight;
+import au.grapplerobotics.LaserCan;
+import au.grapplerobotics.interfaces.LaserCanInterface.Measurement;
+import au.grapplerobotics.ConfigurationFailedException;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,7 +27,9 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
-  TimeOfFlight m_TOF = new TimeOfFlight(TimeOfFlightConstants.TOFID);
+  LaserCan m_CollectorSensor = new LaserCan(LazerCanConstants.LcID);
+  
+  
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
   CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");
   
@@ -36,22 +40,25 @@ public class EndEffector extends SubsystemBase {
 
   /** Creates a new EndEffector. */
   public EndEffector() {
-    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
-    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
-    m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+ 
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);
-    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
-    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
+    
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
+    
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
 
-    
+
 
   }
 
@@ -256,19 +263,34 @@ public class EndEffector extends SubsystemBase {
 
 
 
-            // LED+TOF CODE
+            // LED+LazerCan CODE
   
   /** clears animation running in given animation slot */
   public void stopAnimation(int AnimationSlot){
     m_Candle.clearAnimation(AnimationSlot);
   }
 
-  /** @return if something is within the TOF target range
+  /** @return if something is within the Lc target range
    */
   public boolean HasCoral(){
-    return TimeOfFlightConstants.MaxRange > m_TOF.getRange() && m_TOF.getRange() >TimeOfFlightConstants.MinRange;
+Measurement measurement = m_CollectorSensor.getMeasurement();
+if(measurement != null)
+{
+  return
+  measurement.distance_mm > LazerCanConstants.LcMinDistance 
+  && measurement.distance_mm < LazerCanConstants.LcMaxDistance;
+  // do it the right way
+}
+else
+{
+  return false;
+  // do it the failsafe way
+}
+  
+
   }
 
+  /** turns LEDs green, mainly for testing if the wiring is correct */
   public void LEDGreen(){
     int LedCount = (int) SmartDashboard.getNumber("LedCount", 8);
     m_Candle.setLEDs(0, 255, 0, 0, 0,LedCount);
@@ -291,7 +313,7 @@ public class EndEffector extends SubsystemBase {
   @Override
   public void periodic() {
     LEDGreen();
-    EELogging();
+    //EELogging();
     //LEDControl();
     // This method will be called once per scheduler run
   }
