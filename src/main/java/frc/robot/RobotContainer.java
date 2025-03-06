@@ -50,6 +50,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.Constants.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -77,8 +78,8 @@ public class RobotContainer {
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
-    private final AprilTagAim m_RightAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain, m_driveController,drive);
-    private final AprilTagAim m_LeftAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain,m_driveController,drive);
+    private final AprilTagAim m_RightAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain, m_driveController,drive);
+    private final AprilTagAim m_LeftAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain,m_driveController,drive);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
@@ -218,7 +219,7 @@ public class RobotContainer {
         m_drivetrain.registerTelemetry(logger::telemeterize);
 
         m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
-        m_driveController.button(6).whileTrue(m_RightAim); // right bumper
+      m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
         
     //    m_operatorController.button(1).onTrue(m_L1Group); // a

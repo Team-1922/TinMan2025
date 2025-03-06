@@ -8,8 +8,10 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
+
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -17,13 +19,31 @@ public class LimelightSubsystem extends SubsystemBase {
   NetworkTable m_LLNetworkTable;
   double[] m_Pos;
   NetworkTableEntry m_tv;
+  double m_TargetLeftEdge;
+  double m_TargetRightEdge;
+  double m_TargetCenter;
+  double m_AimingSpeedMultiplier;
+
     /** Creates a new LimelightSubsystem.
      * @param LimelightSide the limelight called, either <b>"left"</b> or <b>"right"
      */
-  public LimelightSubsystem(String LimelightSide) { 
+  public LimelightSubsystem(String LimelightSide ) { 
     m_LimelightSide = LimelightSide;
     m_LLNetworkTable =NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
-    
+    if(LimelightSide == "left")
+    {
+      m_TargetLeftEdge = LimelightConstants.rightTargetLeftEdge; 
+      m_TargetRightEdge = LimelightConstants.rightTargetRightEdge;
+      m_TargetCenter = LimelightConstants.rightTargetCenter;
+      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
+    }
+    else{
+      m_TargetLeftEdge = LimelightConstants.leftTargetLeftEdge; 
+      m_TargetRightEdge = LimelightConstants.leftTargetRightEdge;
+      m_TargetCenter = LimelightConstants.leftTargetCenter;
+      m_AimingSpeedMultiplier = -LimelightConstants.AimingSpeedMultiplier;
+    }
+
    }
 
 /** updates the target values */ 
@@ -55,10 +75,24 @@ public class LimelightSubsystem extends SubsystemBase {
  }
 
 
- // -3 for the left LL, -4 for the right one...
+ // 
  /** the value to use for apriltag aiming, applies a deadband in method */
- public double AimTargetYDutyCycle(){
-  return (MathUtil.applyDeadband(getTy(),LimelightConstants.TargetYDeadband));
+ public double AimTargetXDutyCycle(){
+ double target= 
+ (MathUtil.applyDeadband((
+     m_TargetCenter-getTx())
+      /(m_TargetLeftEdge-m_TargetRightEdge)
+      *m_AimingSpeedMultiplier
+
+  ,LimelightConstants.TargetYDeadband)
+  );
+ SmartDashboard.putNumber("LLtarget", target);
+ if(HasTarget()){
+ return target;
+ } else{
+  return 0; // so it wont move if you cant see an apriltag
+ }
+ 
  }
 
  /** the value to use for apriltag aiming rotation, applies a deadband in method */

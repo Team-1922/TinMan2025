@@ -184,11 +184,24 @@ public final class Constants {
      public static final double LeftMaxAngle = 20;
      public static final double RightMinAngle = -20;
      public static final double RightMaxAngle = 20;
-      
-     public static final double MaxAimSpeed = 4;// meters per second
 
-     public static final double TargetYDeadband = 0.025; // meters
-     public static final double TargetYawDeadband = 5; // deg
+
+     public static final double rightTargetLeftEdge = 0.41; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
+     public static final double rightTargetRightEdge = -0.66; //meters 
+     public static final double rightTargetCenter = -0.22; // meters 
+    
+
+     public static final double leftTargetLeftEdge = 0.53; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
+     public static final double leftTargetRightEdge = -0.23; //meters 
+     public static final double leftTargetCenter = 0.53; // meters
+
+     public static final double AimingSpeedMultiplier = 1.35; 
+     public static final double AimingTurnSpeedMultiplier = 0.25;
+      
+     public static final double MaxAimSpeed = 3;// meters per second
+
+     public static final double TargetYDeadband = 0.05; // meters
+     public static final double TargetYawDeadband = 4; // deg
 
     }
 

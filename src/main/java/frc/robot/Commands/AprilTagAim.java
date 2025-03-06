@@ -39,7 +39,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_LimelightSubsystem.getTx();
+    m_LimelightSubsystem.AimTargetYawDutyCycle();
    
   }
 
@@ -50,8 +50,8 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
 
     m_Drivetrain.applyRequest(() ->
     m_drive.withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
-        .withVelocityY(m_LimelightSubsystem.AimTargetYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
-        .withRotationalRate(m_LimelightSubsystem.AimTargetYawDutyCycle() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        .withVelocityY(m_LimelightSubsystem.AimTargetXDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
+        .withRotationalRate(m_LimelightSubsystem.AimTargetYawDutyCycle() * MaxAngularRate *LimelightConstants.AimingTurnSpeedMultiplier) // Drive counterclockwise with negative X (left)
 ).execute();
   }
 
