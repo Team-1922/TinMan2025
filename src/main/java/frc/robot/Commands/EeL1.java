@@ -32,23 +32,20 @@ public class EeL1 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
    // m_Elevator.StopElevator();
-   
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return 
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L1WristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L1ArmAngle) <0.05 
-   ;// Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
+      Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L1WristAngle) < 0.05 &&
+      Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L1ArmAngle) < 0.05;
+    // Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
   }
 }

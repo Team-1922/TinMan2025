@@ -21,7 +21,7 @@ public class GotoL3 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() { 
-     m_Elevator.GoToL3();}
+    m_Elevator.GoToL3();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -32,13 +32,12 @@ public class GotoL3 extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // m_Elevator.StopElevator();
+  // m_Elevator.StopElevator();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return 
-    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L3Position) <0.1;
+    return Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L3Position) <0.1;
   }
 }

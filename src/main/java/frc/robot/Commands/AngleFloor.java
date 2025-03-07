@@ -27,7 +27,7 @@ public class AngleFloor extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
- m_EE.ToFloorWristAngle();
+    m_EE.ToFloorWristAngle();
   }
 
   // Called once the command ends or is interrupted.

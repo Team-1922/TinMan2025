@@ -28,9 +28,8 @@ public class EEVertical extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //  m_Elevator.GoToL4();
+    // m_Elevator.GoToL4();
     m_EE.Vertical();
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -43,8 +42,8 @@ public class EEVertical extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() { 
-        return     
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.VerticalWristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.VerticalArmAngle) <0.05 ;
+    return     
+      Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.VerticalWristAngle) < 0.05 &&
+      Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.VerticalArmAngle) < 0.05;
   }
 }

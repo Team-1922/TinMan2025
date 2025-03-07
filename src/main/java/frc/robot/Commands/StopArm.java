@@ -9,7 +9,6 @@ import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class StopArm extends Command {
-
   EndEffector m_EE;
   /** Creates a new AngleFloor. <p>
    * angles the collector to the <b>floor</b> to collect
@@ -30,7 +29,6 @@ public class StopArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
 
   // Called once the command ends or is interrupted.

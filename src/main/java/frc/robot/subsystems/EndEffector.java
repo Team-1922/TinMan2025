@@ -57,9 +57,6 @@ public class EndEffector extends SubsystemBase {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
-
-
-
   }
 
             // COLLECTOR CODE
@@ -166,7 +163,7 @@ public class EndEffector extends SubsystemBase {
   /** gets current angle of the arm on the end effector */
   public double getCurrentArmAngle(){
     return m_ArmMotor.getPosition().getValueAsDouble();
-//   return m_armEncoder.getAbsolutePosition().getValueAsDouble();
+    // return m_armEncoder.getAbsolutePosition().getValueAsDouble();
   }
 
   
@@ -187,8 +184,7 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4ArmAngle));
   }
 
-  /**  angles arm to collect at station 
-  */
+  /**  angles arm to collect at station */
   public void ToStationArmAngle(){
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle));
   }
@@ -224,11 +220,11 @@ public class EndEffector extends SubsystemBase {
     ToL4WristAngle();
   }
 
-    /** angles EE at <b>Algae */
-    public void Algae(){
-      ToAlgaeArmAngle();
-      ToAlgaeWristAngle();
-    }
+  /** angles EE at <b>Algae */
+  public void Algae(){
+    ToAlgaeArmAngle();
+    ToAlgaeWristAngle();
+  }
 
   /**  angles EE at the station, to pickup */
   public void EEStation(){
@@ -252,7 +248,7 @@ public class EndEffector extends SubsystemBase {
     ToVerticalWristAngle();
   }
 
-/** logging method for this subsystem */
+  /** logging method for this subsystem */
   public void EELogging(){
     //m_armPos.set(getCurrentArmAngle());
     SmartDashboard.putNumber("WristAngle", getCurrentWristAngle());
@@ -273,21 +269,17 @@ public class EndEffector extends SubsystemBase {
   /** @return if something is within the Lc target range
    */
   public boolean HasCoral(){
-Measurement measurement = m_CollectorSensor.getMeasurement();
-if(measurement != null)
-{
-  return
-  measurement.distance_mm > LazerCanConstants.LcMinDistance 
-  && measurement.distance_mm < LazerCanConstants.LcMaxDistance;
-  // do it the right way
-}
-else
-{
-  return false;
-  // do it the failsafe way
-}
-  
-
+    Measurement measurement = m_CollectorSensor.getMeasurement();
+    if(measurement != null)
+    {
+      return
+      measurement.distance_mm > LazerCanConstants.LcMinDistance 
+      && measurement.distance_mm < LazerCanConstants.LcMaxDistance;
+      // do it the right way
+    } else {
+      return false;
+      // do it the failsafe way
+    }
   }
 
   /** turns LEDs green, mainly for testing if the wiring is correct */

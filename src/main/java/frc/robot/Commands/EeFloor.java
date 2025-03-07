@@ -23,7 +23,7 @@ public class EeFloor extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      m_EE.Floor();
+    m_EE.Floor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,9 +43,8 @@ public class EeFloor extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-       return 
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.FloorWristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.FloorArmAngle) <0.05 
-   ;
+    return 
+      Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.FloorWristAngle) < 0.05 &&
+      Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.FloorArmAngle) < 0.05;
   }
 }

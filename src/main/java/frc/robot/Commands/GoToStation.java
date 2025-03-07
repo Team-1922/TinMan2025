@@ -14,7 +14,6 @@ public class GoToStation extends Command {
    * raises elevator so the EndEffector is at the height of the station
   */
   public GoToStation(ElevatorSubsystem elevator) {
-
     m_ElevatorSubsystem = elevator;
     addRequirements(m_ElevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.

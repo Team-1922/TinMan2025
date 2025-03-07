@@ -10,11 +10,9 @@ import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class EeL2 extends Command {
- 
   EndEffector m_EE;
   /** Creates a new GotoL4. */
   public EeL2(EndEffector EE) {
-   
     m_EE = EE;
     addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,12 +23,9 @@ public class EeL2 extends Command {
   public void initialize() {
    // m_Elevator.GoToL2();
     m_EE.L2();}
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -44,7 +39,7 @@ public class EeL2 extends Command {
   @Override
   public boolean isFinished() {
     return 
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L2WristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L2ArmAngle) <0.05;
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L2WristAngle) < 0.05 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L2ArmAngle) < 0.05;
   }
 }

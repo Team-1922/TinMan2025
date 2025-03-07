@@ -15,7 +15,7 @@ public class EeL4 extends Command {
   EndEffector m_EE;
   /** Creates a new GotoL4. */
   public EeL4(EndEffector EE) {
-   // m_Elevator = elevatorSubsystem;
+    // m_Elevator = elevatorSubsystem;
     m_EE = EE;
     addRequirements( m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,7 +28,7 @@ public class EeL4 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //  m_Elevator.GoToL4();
+    //  m_Elevator.GoToL4();
     m_EE.L4();
     
   }
@@ -37,14 +37,14 @@ public class EeL4 extends Command {
   @Override
   public void end(boolean interrupted) {
     //m_Elevator.StopElevator();
-   // m_EE.stopEE();
+    // m_EE.stopEE();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-        return 
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L4WristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L4ArmAngle) <0.05;
+    return 
+      Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L4WristAngle) <0.05 &&
+      Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L4ArmAngle) <0.05;
   }
 }

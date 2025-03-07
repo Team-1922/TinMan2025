@@ -26,33 +26,28 @@ public class AprilTagAim extends Command {
  
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
-  public AprilTagAim(
-LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController,SwerveRequest.FieldCentric drive) {
+  public AprilTagAim(LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController,SwerveRequest.FieldCentric drive) {
   m_LimelightSubsystem = LimeLightSub;
   m_Drivetrain = drivetrain;
   m_DriveController = driveController;
   m_drive = drive;
   addRequirements(m_LimelightSubsystem,m_Drivetrain);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_LimelightSubsystem.AimTargetYawDutyCycle();
-   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-
     m_Drivetrain.applyRequest(() ->
     m_drive.withVelocityX(-MathUtil.applyDeadband(m_DriveController.getLeftY(),0.15) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
         .withVelocityY(m_LimelightSubsystem.AimTargetXDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(m_LimelightSubsystem.AimTargetYawDutyCycle() * MaxAngularRate *LimelightConstants.AimingTurnSpeedMultiplier) // Drive counterclockwise with negative X (left)
-).execute();
+    ).execute();
   }
 
   // Called once the command ends or is interrupted.

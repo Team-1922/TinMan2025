@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    //m_EE.disabledAnimation();
+    // m_EE.disabledAnimation();
   }
 
   @Override
@@ -38,14 +38,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledExit() {
-  //  m_EE.stopAnimation(0);
-
+    // m_EE.stopAnimation(0);
   }
 
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -62,7 +60,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
   }
 
   @Override

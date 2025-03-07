@@ -21,7 +21,7 @@ public class GotoL4 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-       m_Elevator.GoToL4();}
+    m_Elevator.GoToL4();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -32,7 +32,7 @@ public class GotoL4 extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  //  m_Elevator.StopElevator();
+  // m_Elevator.StopElevator();
   }
 
   // Returns true when the command should end.

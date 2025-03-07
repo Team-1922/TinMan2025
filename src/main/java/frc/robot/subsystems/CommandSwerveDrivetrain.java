@@ -65,9 +65,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
     private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
         new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
+            null,         // Use default ramp rate (1 V/s)
             Volts.of(7), // Use dynamic voltage of 7 V
-            null,        // Use default timeout (10 s)
+            null,          // Use default timeout (10 s)
             // Log state with SignalLogger class
             state -> SignalLogger.writeString("SysIdSteer_State", state.toString())
         ),
@@ -133,28 +133,28 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         try{
         var config = RobotConfig.fromGUISettings();
         AutoBuilder.configure(
-                () -> getState().Pose,   // Supplier of current robot pose
-                this::resetPose,         // Consumer for seeding pose against auto
-                () -> getState().Speeds, // Supplier of current robot speeds
-                // Consumer of ChassisSpeeds and feedforwards to drive the robot
-                (speeds, feedforwards) -> setControl(
-                    m_pathApplyRobotSpeeds.withSpeeds(speeds)
-                        .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
-                        .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())
-                ),
-                new PPHolonomicDriveController(
-                    // PID constants for translation
-                    new PIDConstants(10, 0, 0),
-                    // PID constants for rotation
-                    new PIDConstants(7, 0, 0)
-                ),
-                config,
-                // Assume the path needs to be flipped for Red vs Blue, this is normally the case
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                this // Subsystem for requirements
-            );
+            () -> getState().Pose,   // Supplier of current robot pose
+            this::resetPose,         // Consumer for seeding pose against auto
+            () -> getState().Speeds, // Supplier of current robot speeds
+            // Consumer of ChassisSpeeds and feedforwards to drive the robot
+            (speeds, feedforwards) -> setControl(
+                m_pathApplyRobotSpeeds.withSpeeds(speeds)
+                    .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                    .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())
+            ),
+            new PPHolonomicDriveController(
+                // PID constants for translation
+                new PIDConstants(10, 0, 0),
+                // PID constants for rotation
+                new PIDConstants(7, 0, 0)
+            ),
+            config,
+            // Assume the path needs to be flipped for Red vs Blue, this is normally the case
+            () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+            this // Subsystem for requirements
+        );
 
-        }catch(Exception ex){
+        } catch(Exception ex) {
             DriverStation.reportError("Pathplanner config and Autobuilder config failed", ex.getStackTrace());
         }
 

@@ -11,7 +11,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class GotoL2 extends Command {
   ElevatorSubsystem m_Elevator;
-  /** Creates a new GotoL4. */
+  /** Creates a new GotoL2. */
   public GotoL2( ElevatorSubsystem elevatorSubsystem) {
     m_Elevator = elevatorSubsystem;
     addRequirements(m_Elevator);
@@ -21,7 +21,7 @@ public class GotoL2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     m_Elevator.GoToL2();}
+    m_Elevator.GoToL2();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,6 +38,6 @@ public class GotoL2 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return   Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L2Position) <0.1;
+    return Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L2Position) <0.1;
   }
 }
