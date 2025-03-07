@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
@@ -146,27 +147,13 @@ public class EndEffector extends SubsystemBase {
 
            // ARM CODE
 
-      /** checks if the arm encoders absolute position has overflowed, this is to prevent the arm going to far back and thinking it's in the floor 
-       * @return if the absolute position of the arm has overflowed to 0
-      */
- /*  public boolean checkPositionOverflow(){
-
-    if(m_armEncoder.getAbsolutePosition().getValueAsDouble() < 0.1){
-      return true;
-    }
-    else{return false;}
-  }*/
 
 
-  /** sets the current angle of the end effector as the reference angle */
-  public void setArmAngleAsReference(){
-    //SmartDashboard.putNumber("EEArmReference", m_armEncoder.getPosition().getValueAsDouble());
-  }
 
   /** gets current angle of the arm on the end effector */
   public double getCurrentArmAngle(){
     return m_ArmMotor.getPosition().getValueAsDouble();
-//   return m_armEncoder.getAbsolutePosition().getValueAsDouble();
+
   }
 
   
@@ -252,12 +239,14 @@ public class EndEffector extends SubsystemBase {
     ToVerticalWristAngle();
   }
 
-/** logging method for this subsystem */
+/** logging method for this subsystem it logs 
+ * <ul>
+ * <p> Wrist Position
+ * <p> Arm Position
+ */
   public void EELogging(){
-    //m_armPos.set(getCurrentArmAngle());
-    SmartDashboard.putNumber("WristAngle", getCurrentWristAngle());
-    SmartDashboard.putNumber("ArmAngle", getCurrentArmAngle());
-    //m_wristPos.set(getCurrentWristAngle());
+    SignalLogger.writeDouble("WristPosition", getCurrentWristAngle());
+    SignalLogger.writeDouble("ArmPosition", getCurrentArmAngle());
   }
 
 

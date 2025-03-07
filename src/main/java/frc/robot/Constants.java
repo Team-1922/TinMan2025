@@ -191,9 +191,9 @@ public final class Constants {
      public static final double rightTargetCenter = -0.22; // meters 
     
 
-     public static final double leftTargetLeftEdge = 0.53; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
-     public static final double leftTargetRightEdge = -0.23; //meters 
-     public static final double leftTargetCenter = 0.53; // meters
+     public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
+     public static final double leftTargetRightEdge = -0.46; //meters 
+     public static final double leftTargetCenter = 0.14; // meters
 
      public static final double AimingSpeedMultiplier = 1.35; 
      public static final double AimingTurnSpeedMultiplier = 0.25;

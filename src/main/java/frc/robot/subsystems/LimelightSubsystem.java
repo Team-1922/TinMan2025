@@ -41,7 +41,7 @@ public class LimelightSubsystem extends SubsystemBase {
       m_TargetLeftEdge = LimelightConstants.leftTargetLeftEdge; 
       m_TargetRightEdge = LimelightConstants.leftTargetRightEdge;
       m_TargetCenter = LimelightConstants.leftTargetCenter;
-      m_AimingSpeedMultiplier = -LimelightConstants.AimingSpeedMultiplier;
+      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     }
 
    }
@@ -78,17 +78,37 @@ public class LimelightSubsystem extends SubsystemBase {
  // 
  /** the value to use for apriltag aiming, applies a deadband in method */
  public double AimTargetXDutyCycle(){
- double target= 
+  double target;
+  if (m_LimelightSide == "left"){
+    
+    target= 
  (MathUtil.applyDeadband((
      m_TargetCenter-getTx())
       /(m_TargetLeftEdge-m_TargetRightEdge)
       *m_AimingSpeedMultiplier
 
   ,LimelightConstants.TargetYDeadband)
-  );
- SmartDashboard.putNumber("LLtarget", target);
+  ); 
+
+  } else{
+     target= 
+    (MathUtil.applyDeadband((
+        m_TargetCenter-getTx())
+         /(m_TargetRightEdge-m_TargetLeftEdge)
+         *m_AimingSpeedMultiplier
+   
+     ,LimelightConstants.TargetYDeadband)
+     );
+   
+  }
+
+  SmartDashboard.putNumber("LLtarget", target);
+
+
+
  if(HasTarget()){
- return target;
+ return 
+ target;
  } else{
   return 0; // so it wont move if you cant see an apriltag
  }
@@ -97,7 +117,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
  /** the value to use for apriltag aiming rotation, applies a deadband in method */
  public double AimTargetYawDutyCycle(){
-  return (MathUtil.applyDeadband(getYaw(),LimelightConstants.TargetYawDeadband));
+  return 0;
+  //(MathUtil.applyDeadband(getYaw(),LimelightConstants.TargetYawDeadband));
  }
 
   @Override
