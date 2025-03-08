@@ -35,13 +35,13 @@ public final class Constants {
 
       public static final double FloorPosition = 0.4; // placeholder
       public static final double L1Position = 0.4;// placeholder
-      public static final double L2Position = 10.25 ; // placeholder
-      public static final double L3Position = 27.24; // placeholder
-      public static final double L4Position = 54.53;
+      public static final double L2Position = 34.45 ; // placeholder
+      public static final double L3Position = 23.87; // placeholder
+      public static final double L4Position = 52.5;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
-      public static final double LlAimPosition = 16.5; // position used while aiming using the limelights 
+      public static final double LlAimPosition = 17; // position used while aiming using the limelights 
 
 
       // motion magic configs
@@ -96,30 +96,32 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = 0; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = -.24; // placeholder, angle to score L1
+      public static final double FloorWristAngle = -0.09; // placeholder angle to collect off the floor   
+      public static final double L1WristAngle = -0.43; // placeholder, angle to score L1
       public static final double L2WristAngle = -.11; // also for L3
-      public static final double L4WristAngle = -0.1; // placeholder
+      public static final double L3WristAngle = -0.177;
+      public static final double L4WristAngle = -0.14; // placeholder
       public static final double AlgaeWristAngle = 0.1; // placeholder
-      public static final double StowedWristAngle =  .007; // the angle for defence, placeholder
-      public static final double VerticalWristAngle = 0.02;
+      public static final double StowedWristAngle =  -.09; // the angle for defence, placeholder
+      public static final double VerticalWristAngle = -0.11 ;
       public static final double StationWristAngle = 2; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.09; // placeholder
-      public static final double L1ArmAngle = .095; // placeholder, might not be used
-      public static final double L2ArmAngle = .12; // also for L3
+      public static final double L1ArmAngle = 0.09; // placeholder, might not be used
+      public static final double L2ArmAngle = -0.15; // also for L3
+      public static final double L3ArmAngle = 0.127;
       public static final double L4ArmAngle = .1; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
-      public static final double StowedArmAngle = 0.25; // the angle for starting configuration, placeholder
-      public static final double VerticalArmAngle = 0.185;
+      public static final double StowedArmAngle = 0.14; // the angle for starting configuration, placeholder
+      public static final double VerticalArmAngle = 0.13;
       public static final double StationArmAngle = .20; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
       .withFeedbackRemoteSensorID(endEffectorArmEncoderID)
       .withRotorToSensorRatio(50)
-      .withSensorToMechanismRatio(2)
+      .withSensorToMechanismRatio(1.5)
       ;
 
       public static final FeedbackConfigs WristFeedbackConfigs = new FeedbackConfigs()
@@ -138,7 +140,7 @@ public final class Constants {
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
       .withKP(11)
-      .withKG(0.0175);
+      .withKG(0); // 0.0175
 
 
       public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
@@ -148,11 +150,11 @@ public final class Constants {
 
       public static final CANcoderConfiguration WristCanCoderConfig =
        new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49853515625));
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.303955078125));
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.06201171875)
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.28173828125)
       .withAbsoluteSensorDiscontinuityPoint(0.8));
     
       public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
@@ -180,28 +182,32 @@ public final class Constants {
 
     public static class LimelightConstants{
 
-     public static final double LeftMinAngle = -20;
-     public static final double LeftMaxAngle = 20;
-     public static final double RightMinAngle = -20;
-     public static final double RightMaxAngle = 20;
+
 
 
      public static final double rightTargetLeftEdge = 0.41; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
      public static final double rightTargetRightEdge = -0.66; //meters 
-     public static final double rightTargetCenter = -0.22; // meters 
+     public static final double rightTargetCenter = -0.205; // meters 
     
 
      public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
      public static final double leftTargetRightEdge = -0.46; //meters 
      public static final double leftTargetCenter = 0.14; // meters
+    
+     public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming        0.84 for the right target/left limelight/LL3
+     public static final double AimingTurnSpeedMultiplier = 1.1;
+     public static final double RightLateralFF = 0.01; // feed forward on aiming right target
+     public static final double LeftLateralFF = 0.005;
 
-     public static final double AimingSpeedMultiplier = 1.35; 
-     public static final double AimingTurnSpeedMultiplier = 0.25;
-      
      public static final double MaxAimSpeed = 3;// meters per second
 
      public static final double TargetYDeadband = 0.05; // meters
      public static final double TargetYawDeadband = 4; // deg
+     public static final double TargetYaw = 0;// RAD
+      public static final double TargetZ = 0.43
+      ; // meters
+      public static final double MaxTargetZ = 1.85; // meters
+      public static final double TargetZSpeedMultiplier = 1.1;
 
     }
 
