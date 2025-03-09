@@ -24,7 +24,7 @@ public class EeL3 extends Command {
   @Override
   public void initialize() {
    // m_Elevator.GoToL3();
-    m_EE.L2();}
+    m_EE.L3();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

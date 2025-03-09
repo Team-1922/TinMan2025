@@ -73,7 +73,7 @@ public final class Constants {
       ;
 
       public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
-      .withNeutralMode(NeutralModeValue.Brake)
+      .withNeutralMode(NeutralModeValue.Coast)
       .withInverted(InvertedValue.CounterClockwise_Positive)
       ;
 
@@ -113,8 +113,8 @@ public final class Constants {
       public static final double L3ArmAngle = 0.127;
       public static final double L4ArmAngle = .1; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
-      public static final double StowedArmAngle = 0.14; // the angle for starting configuration, placeholder
-      public static final double VerticalArmAngle = 0.13;
+      public static final double StowedArmAngle = 0.23; // the angle for starting configuration, placeholder
+      public static final double VerticalArmAngle = 0.15;
       public static final double StationArmAngle = .20; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
@@ -139,7 +139,7 @@ public final class Constants {
 
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
-      .withKP(11)
+      .withKP(5) //11
       .withKG(0); // 0.0175
 
 
@@ -158,8 +158,8 @@ public final class Constants {
       .withAbsoluteSensorDiscontinuityPoint(0.8));
     
       public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
-      .withNeutralMode(NeutralModeValue.Brake)
-      .withInverted(InvertedValue.Clockwise_Positive);
+      .withNeutralMode(NeutralModeValue.Coast)
+      .withInverted(InvertedValue.CounterClockwise_Positive);
 
       public static final MotorOutputConfigs WristMotorConfig = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Brake)

@@ -124,6 +124,10 @@ public class EndEffector extends SubsystemBase {
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2WristAngle));
   }
 
+  public void ToL3WristAngle(){
+    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L3WristAngle));
+  }
+
   public void ToL4WristAngle(){
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4WristAngle));
   }
@@ -169,6 +173,10 @@ public class EndEffector extends SubsystemBase {
   public void ToL2ArmAngle(){
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2ArmAngle));
   }
+  
+  public void ToL3ArmAngle(){
+    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L3ArmAngle));
+  }
 
   public void ToL4ArmAngle(){
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4ArmAngle));
@@ -199,10 +207,16 @@ public class EndEffector extends SubsystemBase {
     ToL1WristAngle();
   }
 
-  /** angles EE at <b>L2</b>, can also be used for <b>L3</b> */
+  /** angles EE at <b>L2</b>*/
   public void L2(){
     ToL2ArmAngle();
     ToL2WristAngle();
+  }
+
+   /** angles EE at <b>L3</b>*/
+  public void L3(){
+    ToL3ArmAngle();
+    ToL3WristAngle();
   }
 
   /** angles EE at <b>L4 */

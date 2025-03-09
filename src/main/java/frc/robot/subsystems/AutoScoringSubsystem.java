@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LimelightConstants;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.EEVertical;
-import frc.robot.Commands.EeL1;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
@@ -30,8 +30,14 @@ public class AutoScoringSubsystem extends SubsystemBase {
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
    CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
      SwerveRequest.RobotCentric m_drive;
+     AprilTagAim m_Aim;
+     LimelightSubsystem m_LimelightSubsystem;
+    CommandXboxController m_driveController = new CommandXboxController(0);
+
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem exists
-  /** Creates a new AutoScoringSubsystem. */
+  /** Creates a new AutoScoringSubsystem. 
+   * @param side "left" to score left side, "right" to score right side 
+  */
   public AutoScoringSubsystem() {
     TargetLevel = 0;
   }
@@ -42,7 +48,11 @@ public class AutoScoringSubsystem extends SubsystemBase {
   }
 
 
-
+/** returns the current target level
+  * <p> 0 = L2
+   * <p> 1 = L3
+   * <p> 2 = L4
+ */
   public int GetTargetLevel(){
     return TargetLevel;
   }
@@ -51,7 +61,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("TargetLevel", TargetLevel+2);
   }
 
-  /** @return
+  /** @param Target put {@code GetTargetLevel()} here
+   *  @return sequential command group for scoring on L2-4, as scoring on L1 is manual
    * <ul>
    * <p> 0 = L2
    * <p> 1 = L3
@@ -60,11 +71,13 @@ public class AutoScoringSubsystem extends SubsystemBase {
   public SequentialCommandGroup GetTargetCommandGroup(int Target){
     
     if(Target ==0){
+
    return new SequentialCommandGroup(
         new EEVertical( m_EE),    
         new GotoL2(m_Elevator),
         new EeL2(m_EE))
     ;}else if(Target == 1){
+
      return new SequentialCommandGroup(
         new EEVertical( m_EE),
         new GotoL3(m_Elevator),
@@ -80,19 +93,17 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
   }
 
-  public ParallelCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,LimelightSubsystem m_LimelightSubsystem){
+  /**
+   * 
+   * @param TargetCommandGroup use {@code GetTargetCommandGroup()}
+   * @param side "left" or "right"
+   * @return parralel command group that will both aim and move the EE to the position for scoring
+   */
+  public ParallelCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side){
     return new ParallelCommandGroup(
 
-    m_Drivetrain.applyRequest(() ->
-    m_drive.withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
-   
-    .withVelocityY(m_LimelightSubsystem.RobotYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
-        .withRotationalRate(
-          
-        m_LimelightSubsystem.AimTargetYawDutyCycle()
-          
-          * MaxAngularRate) // Drive counterclockwise with negative X (left)
-)
+  
+    new AprilTagAim(new LimelightSubsystem(side), m_Drivetrain, m_driveController, m_drive)
     ,
     TargetCommandGroup
     );

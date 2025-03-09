@@ -90,8 +90,9 @@ public class RobotContainer {
    
 
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem();
-    private final AutoScoreCommand m_AutoScoreCommand = new AutoScoreCommand(m_AutoScoringSubsystem, m_LeftLimelightSubsystem);
-    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
+    private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
+    private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
+    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem); // doesn't matter which side you give it
     //elevator commands
     
     private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
@@ -225,33 +226,39 @@ public class RobotContainer {
 
         m_drivetrain.registerTelemetry(logger::telemeterize);
 
-        m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
-      m_driveController.button(6).whileTrue(m_RightAim); // right bumper
+       // m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
+     // m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
      //  m_driveController.pov(180).onTrue(m_AutoScoreCommand);
-        m_operatorController.button(1).onTrue(m_L1Group); // a
+       m_operatorController.button(1).onTrue(m_L1Group); // a
         m_operatorController.button(2).onTrue(m_L2Group); // b
        // m_operatorController.button(2).onTrue(m_ElevatorL2);
+        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // 3
+        m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
+        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
 
-       m_driveController.pov(0).onTrue(m_AimGroup);
+      // m_driveController.pov(0).onTrue(m_AimGroup);
         m_operatorController.pov(180).onTrue(m_L3Group);
         m_operatorController.pov(90).onTrue(m_L4Group);
-        m_operatorController.pov(270).onTrue(m_FloorGroup);
+        m_operatorController.button(3).onTrue(m_FloorGroup);
+   //     m_operatorController.pov(270).onTrue(m_FloorGroup);
     //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
-        m_operatorController.button(3).onTrue(m_StoweEE); // x 
-        m_operatorController.button(4).onTrue(m_EeVertical); // y 
-        m_operatorController.button(4).onTrue(m_L1); // y 
-        m_operatorController.button(5).onTrue(m_L3);
-        
+     //   m_operatorController.button(3).onTrue(m_StoweEE); // x 
+     //   m_operatorController.button(7).onTrue(m_EeVertical); // y 
+     //   m_operatorController.button(4).onTrue(m_L1); // y 
+     //   m_operatorController.button(5).onTrue(m_L3); // two squares
+ //       m_operatorController.button(2).onTrue(m_L2); //b
+     //   m_operatorController.button(1).onTrue(m_L4); // a
+     //   m_operatorController.button(2).onTrue(m_Floor); // b
    //     m_operatorController.button(5).onTrue(m_Floor); // left bumper
    //     m_operatorController.button(3).onTrue(m_AngleL4); // x 
         //m_operatorController.button(8).onTrue(m_StopArm); // 3 lines button
       
-        m_operatorController.button(6).whileTrue(m_Collect); // RB
+    //    m_operatorController.button(6).whileTrue(m_Collect); // RB
 //        m_operatorController.button(5).onTrue();
       //  m_operatorController.button()
 
-       m_operatorController.button(10).onTrue(m_GotoFloor);
+      // m_operatorController.button(10).onTrue(m_GotoFloor);
     //    m_operatorController.button(7).onTrue(m_ElevatorL2);
    //     m_operatorController.button(8).onTrue(m_ElevatorL3);
      //   m_operatorController.button(4).onTrue(m_ElevatorL4);
