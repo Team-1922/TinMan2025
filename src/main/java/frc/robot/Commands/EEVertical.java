@@ -36,7 +36,7 @@ public class EEVertical extends Command {
   @Override
   public void end(boolean interrupted) {
     //m_Elevator.StopElevator();
-    m_EE.stopEE();
+    // m_EE.stopEE();
   }
 
   // Returns true when the command should end.

@@ -46,6 +46,8 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmClosedLoopRampConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmOpenLoopRampConfigs);
     
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
@@ -68,7 +70,7 @@ public class EndEffector extends SubsystemBase {
   public void collect(){
  
    // m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
-    m_rightCollect.set(-0.5);
+    m_rightCollect.set(-0.2);
   }
 
   public void stopCollector(){
@@ -94,7 +96,7 @@ public class EndEffector extends SubsystemBase {
 
   public void ReverseCollector(){
   //  m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
-    m_rightCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));
+    m_rightCollect.set(0.2);
   }
 
             // WRIST CODE
@@ -315,7 +317,7 @@ else
 
   @Override
   public void periodic() {
-    LEDGreen();
+   // LEDGreen();
     //EELogging();
     //LEDControl();
     // This method will be called once per scheduler run

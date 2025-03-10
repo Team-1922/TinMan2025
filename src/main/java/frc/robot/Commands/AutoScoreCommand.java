@@ -34,12 +34,15 @@ public class AutoScoreCommand extends Command {
   @Override
   public void initialize() {
     target = m_AutoScoringSubsystem.GetTargetLevel();
+    m_AutoScoringSubsystem.TargetAndAim(
+      m_AutoScoringSubsystem.GetTargetCommandGroup(target), m_side).schedule();
+  //  m_AutoScoringSubsystem.GetTargetCommandGroup(target).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_AutoScoringSubsystem.TargetAndAim(m_AutoScoringSubsystem.GetTargetCommandGroup(target),m_side);
+    //m_AutoScoringSubsystem.TargetAndAim(m_AutoScoringSubsystem.GetTargetCommandGroup(target),m_side);
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +52,6 @@ public class AutoScoreCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

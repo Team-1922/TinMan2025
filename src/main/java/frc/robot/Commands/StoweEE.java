@@ -5,18 +5,17 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class StoweEE extends Command {
-  ElevatorSubsystem m_Elevator;
   EndEffector m_EE;
   /** Creates a new GotoL4. */
-  public StoweEE( ElevatorSubsystem elevatorSubsystem,EndEffector EE) {
-    m_Elevator = elevatorSubsystem;
+  public StoweEE(EndEffector EE) {
     m_EE = EE;
-    addRequirements(m_Elevator, m_EE);
+    addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -36,12 +35,14 @@ public class StoweEE extends Command {
   @Override
   public void end(boolean interrupted) {
     //m_Elevator.StopElevator();
-    m_EE.stopEE();
+    //m_EE.stopEE();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return  
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L2WristAngle) <0.5 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L2ArmAngle) <0.5 ;
   }
 }

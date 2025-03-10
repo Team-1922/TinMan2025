@@ -21,17 +21,13 @@ import static edu.wpi.first.units.Units.*;
 public class AprilTagAim extends Command {
   LimelightSubsystem m_LimelightSubsystem;
   CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
-  CommandXboxController m_DriveController;
-  SwerveRequest.RobotCentric m_drive;
  
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
   public AprilTagAim(
-LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxController driveController,SwerveRequest.RobotCentric drive) {
+LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
   m_LimelightSubsystem = LimeLightSub;
   m_Drivetrain = drivetrain;
-  m_DriveController = driveController;
-  m_drive = drive;
   addRequirements(m_LimelightSubsystem,m_Drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -49,7 +45,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
 
 
     m_Drivetrain.applyRequest(() ->
-    m_drive.withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
+    new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
    
     .withVelocityY(m_LimelightSubsystem.RobotYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(
@@ -67,6 +63,10 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain,CommandXboxC
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return 
+        Math.abs(m_LimelightSubsystem.targetXError()) < 0.1 //0.05
+        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.45 //0.108
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.1//0.05
+    ;
   }
 }

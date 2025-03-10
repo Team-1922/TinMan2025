@@ -10,17 +10,23 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.AprilTagAim;
+import frc.robot.Commands.Collect;
 import frc.robot.Commands.EEVertical;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
+import frc.robot.Commands.GotoFloor;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
+import frc.robot.Commands.ReverseCollector;
+import frc.robot.Commands.StoweEE;
 import frc.robot.generated.TunerConstants;
 
 public class AutoScoringSubsystem extends SubsystemBase {
@@ -28,23 +34,23 @@ public class AutoScoringSubsystem extends SubsystemBase {
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   private final EndEffector m_EE = new EndEffector();
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
-   CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
-     SwerveRequest.RobotCentric m_drive;
-     AprilTagAim m_Aim;
-     LimelightSubsystem m_LimelightSubsystem;
-    CommandXboxController m_driveController = new CommandXboxController(0);
+   CommandSwerveDrivetrain m_Drivetrain;
+     LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("left");
+     LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("right");
 
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem exists
   /** Creates a new AutoScoringSubsystem. 
    * @param side "left" to score left side, "right" to score right side 
   */
-  public AutoScoringSubsystem() {
+  public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain) {
     TargetLevel = 0;
+    m_Drivetrain = drivetrain;
   }
 
   /** increments target level by 1 */
   public void incrementTarget(){
     TargetLevel=(TargetLevel+1)%3;
+    PutTargetOnDashboard();
   }
 
 
@@ -99,21 +105,42 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * @param side "left" or "right"
    * @return parralel command group that will both aim and move the EE to the position for scoring
    */
-  public ParallelCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side){
-    return new ParallelCommandGroup(
-
-  
-    new AprilTagAim(new LimelightSubsystem(side), m_Drivetrain, m_driveController, m_drive)
-    ,
-    TargetCommandGroup
+  public SequentialCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side){
+    LimelightSubsystem LL;
+    if (side == "left") {
+      LL = m_LimelightSubsystemLeft;
+    } else {
+      LL = m_LimelightSubsystemRight;
+    }
+    if (GetTargetLevel() == 0) {
+      return
+          new SequentialCommandGroup(
+              TargetCommandGroup, 
+              new AprilTagAim(LL, m_Drivetrain),
+              new ParallelDeadlineGroup(new WaitCommand(0.25),new ReverseCollector(m_EE))//,
+              // new EEVertical( m_EE),
+              // new GotoFloor(m_Elevator),
+              // new StoweEE(m_EE)
+      );
+    } else {
+      return new SequentialCommandGroup(
+          new ParallelCommandGroup(
+              new AprilTagAim(m_LimelightSubsystemLeft, m_Drivetrain),
+              TargetCommandGroup
+          ),
+           new ParallelDeadlineGroup(new WaitCommand(0.25),new Collect(m_EE)),
+          new EEVertical( m_EE),
+          new GotoFloor(m_Elevator),
+          new StoweEE(m_EE)
     );
+    }
   }
 
 
 
   @Override
   public void periodic() {
-    PutTargetOnDashboard();
+  //  PutTargetOnDashboard();
     // This method will be called once per scheduler run
   }
 }

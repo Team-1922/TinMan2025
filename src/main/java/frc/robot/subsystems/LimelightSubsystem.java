@@ -42,8 +42,7 @@ public class LimelightSubsystem extends SubsystemBase {
       m_TargetRightEdge = LimelightConstants.leftTargetRightEdge;
       m_TargetCenter = LimelightConstants.leftTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
-    }
-
+    };
    }
 
 /** updates the target values */ 
@@ -79,10 +78,25 @@ public class LimelightSubsystem extends SubsystemBase {
 
  }
 
+ public double targetXError() {
+  return m_TargetCenter-getTx();
+ }
+
+ public double targetZError() {
+  return GetTz();
+ }
+
+ public double targetYawError() {
+  return LimelightConstants.TargetYaw-getYaw();
+ }
+
  /** the value to use for apriltag aiming lattarlly  */
  public double AimTargetXDutyCycle(){
+  if (! HasTarget()) {
+    return 0;
+  }
   double target;
-  double Error =  m_TargetCenter-getTx();
+  double Error =  targetXError();
   double FF;
   if(m_LimelightSide == "left"){
     FF= LimelightConstants.RightLateralFF;
@@ -100,39 +114,34 @@ public class LimelightSubsystem extends SubsystemBase {
   ),-0.8,0.8); 
 
 
-  SmartDashboard.putNumber("LLtarget", target);
-
-
-
- if(HasTarget()){
- return 
- target;
- } else{
-  return 0; // so it wont move if you cant see an apriltag
- }
+  SmartDashboard.putNumber("LLtarget", Error);
+ return target;
  
  }
 
  /** the value to use for apriltag aiming rotation, applies a deadband in method, Target Angle is 0 */
  public double AimTargetYawDutyCycle(){
-  double target = MathUtil.clamp( ((LimelightConstants.TargetYaw-getYaw())*LimelightConstants.AimingTurnSpeedMultiplier),-0.8,0.8);
-  SmartDashboard.putNumber("YeeHaw Target", target);
+  if (! HasTarget()) return 0;
+  double target = MathUtil.clamp( ((targetYawError())*LimelightConstants.AimingTurnSpeedMultiplier),-0.8,0.8);
+  SmartDashboard.putNumber("YeeHaw Target", targetYawError());
   return target;
  
  }
 
  public double AimTargetZDutyCycle(){
+  if (! HasTarget()) return 0;
 double target =
- MathUtil.clamp(  GetTz()
+ MathUtil.clamp(targetZError()
  /(LimelightConstants.MaxTargetZ/LimelightConstants.TargetZ) * LimelightConstants.TargetZSpeedMultiplier,-0.8,0.8);
 
- SmartDashboard.putNumber("ZSpeed", target);
+ SmartDashboard.putNumber("ZSpeed", targetZError());
   return 
    
   target;
  }
 
 public double RobotXDutyCycle(){
+  if (!HasTarget()) return 0;
  double target = MathUtil.clamp((-Math.sin(getYaw())*AimTargetXDutyCycle())+(Math.cos(getYaw())
  
  *AimTargetZDutyCycle()),-.8,.8);
@@ -143,7 +152,9 @@ SmartDashboard.putNumber("LlRobotX", target);
 
 
 public double RobotYDutyCycle(){
-  double target = MathUtil.clamp((Math.cos(getYaw())*AimTargetXDutyCycle())+(Math.sin(getYaw())*AimTargetZDutyCycle()),-.8,.8);
+  if (!HasTarget()) return 0;
+  double target = MathUtil.clamp((Math.cos(getYaw())*AimTargetXDutyCycle())+
+  (Math.sin(getYaw())*AimTargetZDutyCycle()),-.8,.8);
  SmartDashboard.putNumber("LlRobotY", target);
   return 
    target;

@@ -39,6 +39,6 @@ public class GotoL3 extends Command {
   @Override
   public boolean isFinished() {
     return 
-    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L3Position) <0.1;
+    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L3Position) <0.5;
   }
 }

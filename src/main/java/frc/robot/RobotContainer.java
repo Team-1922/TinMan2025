@@ -77,19 +77,19 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
 
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("left"); // left limelight subsystem
-    private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("right"); // right limelight subsystem
+    // private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("left"); // left limelight subsystem
+    // private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("right"); // right limelight subsystem
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
 
-    private final AprilTagAim m_RightAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain, m_driveController,RcDrive);
-    private final AprilTagAim m_LeftAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain,m_driveController,RcDrive);
+    // private final AprilTagAim m_RightAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain, m_driveController,RcDrive);
+    // private final AprilTagAim m_LeftAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain,m_driveController,RcDrive);
     private final Collect m_Collect = new Collect(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
 
-    private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem();
+    private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem); // doesn't matter which side you give it
@@ -124,7 +124,7 @@ public class RobotContainer {
     private final EeL3 m_L3 = new EeL3(m_EE);
     private final EeL4 m_L4 = new EeL4( m_EE);
     private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final StoweEE m_StoweEE = new StoweEE(m_ElevatorSubsystem, m_EE);
+    private final StoweEE m_StoweEE = new StoweEE(m_EE);
     private final EEVertical m_EeVertical = new EEVertical( m_EE);
 
 
@@ -209,10 +209,10 @@ public class RobotContainer {
             )
         );
 
-        m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
-        m_driveController.b().whileTrue(m_drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-m_driveController.getLeftY(), -m_driveController.getLeftX()))
-        ));
+       // m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
+    //   m_driveController.b().whileTrue(m_drivetrain.applyRequest(() ->
+     //      point.withModuleDirection(new Rotation2d(-m_driveController.getLeftY(), -m_driveController.getLeftX()))
+       // ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -233,14 +233,15 @@ public class RobotContainer {
        m_operatorController.button(1).onTrue(m_L1Group); // a
         m_operatorController.button(2).onTrue(m_L2Group); // b
        // m_operatorController.button(2).onTrue(m_ElevatorL2);
-        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // 3
+        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
         m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
         m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
 
       // m_driveController.pov(0).onTrue(m_AimGroup);
         m_operatorController.pov(180).onTrue(m_L3Group);
         m_operatorController.pov(90).onTrue(m_L4Group);
-        m_operatorController.button(3).onTrue(m_FloorGroup);
+        m_driveController.button(1).onTrue(m_FloorGroup); // a
+        m_driveController.pov(270).whileTrue(m_Collect);
    //     m_operatorController.pov(270).onTrue(m_FloorGroup);
     //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
      //   m_operatorController.button(3).onTrue(m_StoweEE); // x 

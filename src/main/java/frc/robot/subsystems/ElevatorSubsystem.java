@@ -128,7 +128,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    ElevatorLogging();
+  //  ElevatorLogging();
     // This method will be called once per scheduler run
   }
 }

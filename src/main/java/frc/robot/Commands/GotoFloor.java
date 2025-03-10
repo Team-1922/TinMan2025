@@ -38,6 +38,6 @@ public class GotoFloor extends Command {
   @Override
   public boolean isFinished() {
     return 
-    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.FloorPosition) <0.2;
+    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.FloorPosition) <0.3;
   }
 }
