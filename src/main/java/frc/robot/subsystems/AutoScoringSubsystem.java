@@ -47,9 +47,10 @@ public class AutoScoringSubsystem extends SubsystemBase {
     m_Drivetrain = drivetrain;
   }
 
-  /** increments target level by 1 */
+  /** increments target level by 1 
+  */
   public void incrementTarget(){
-    TargetLevel=(TargetLevel+1)%3;
+    TargetLevel=((TargetLevel+1)%3); // adding 2 would not work because to get from L2 to L3 it would go, (0+1)%3, which = 0, then add 2, so it would be stuck at 2 
     PutTargetOnDashboard();
   }
 
@@ -97,6 +98,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     );}
 
 
+
   }
 
   /**
@@ -135,6 +137,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     );
     }
   }
+
 
 
 

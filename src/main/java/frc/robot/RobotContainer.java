@@ -40,9 +40,9 @@ import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
 import frc.robot.Commands.GoToLimelightPos;
-import frc.robot.Commands.LEDtest;
 import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.AutoScoreCommand;
+import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StoweEE;
@@ -90,8 +90,11 @@ public class RobotContainer {
    
 
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
+    private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
+    private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
+
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem); // doesn't matter which side you give it
     //elevator commands
     
@@ -103,7 +106,6 @@ public class RobotContainer {
     private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final GoToLimelightPos m_ElevatorLL = new GoToLimelightPos(m_ElevatorSubsystem);
-    private final LEDtest m_LeDtest = new LEDtest(m_EE);
 
 
     // EE commands
@@ -175,7 +177,8 @@ public class RobotContainer {
 
 
     NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
-    NamedCommands.registerCommand("GoL4", m_L4Group);
+    NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
+    NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
 
     
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
@@ -259,11 +262,7 @@ public class RobotContainer {
 //        m_operatorController.button(5).onTrue();
       //  m_operatorController.button()
 
-      // m_operatorController.button(10).onTrue(m_GotoFloor);
-    //    m_operatorController.button(7).onTrue(m_ElevatorL2);
-   //     m_operatorController.button(8).onTrue(m_ElevatorL3);
-     //   m_operatorController.button(4).onTrue(m_ElevatorL4);
-//m_operatorController.button(7).onTrue(m_ElevatorReference);
+
       // m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
    //     m_operatorController.button(5).onTrue(m_LeDtest);
     }

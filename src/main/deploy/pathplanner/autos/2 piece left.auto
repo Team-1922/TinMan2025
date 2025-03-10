@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "LeftL4"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "C J to Station"
