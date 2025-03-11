@@ -11,6 +11,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -119,7 +120,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new SequentialCommandGroup(
               TargetCommandGroup, 
               new AprilTagAim(LL, m_Drivetrain),
-              new ParallelDeadlineGroup(new WaitCommand(0.25),new ReverseCollector(m_EE))//,
+              new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE))//,
               // new EEVertical( m_EE),
               // new GotoFloor(m_Elevator),
               // new StoweEE(m_EE)
@@ -130,7 +131,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
               new AprilTagAim(m_LimelightSubsystemLeft, m_Drivetrain),
               TargetCommandGroup
           ),
-           new ParallelDeadlineGroup(new WaitCommand(0.25),new Collect(m_EE)),
+           new ParallelRaceGroup(new WaitCommand(0.75),new Collect(m_EE)),
           new EEVertical( m_EE),
           new GotoFloor(m_Elevator),
           new StoweEE(m_EE)

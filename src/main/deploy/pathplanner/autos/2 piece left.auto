@@ -13,19 +13,50 @@
         {
           "type": "named",
           "data": {
+            "name": "RightL4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C J to Left algae.0"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C J to Left algae.1"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C J to Left algae.2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Left Algae to K"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "LeftL4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C J to Station"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Station to K"
           }
         }
       ]

@@ -58,15 +58,21 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Drivetrain.applyRequest(() ->
+    new SwerveRequest.RobotCentric().withVelocityX(0) // Drive forward with negative Y (forward)
+    .withVelocityY(0) // Drive left with negative X (left)
+    .withRotationalRate(0) // Drive counterclockwise with negative X (left)
+).execute();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return 
-        Math.abs(m_LimelightSubsystem.targetXError()) < 0.1 //0.05
-        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.45 //0.108
-        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.1//0.05
+        Math.abs(m_LimelightSubsystem.targetXError()) < 0.001 //0.05
+        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.02 //0.108
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.05//0.05
     ;
   }
 }

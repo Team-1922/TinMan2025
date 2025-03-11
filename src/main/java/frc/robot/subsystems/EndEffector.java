@@ -14,6 +14,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import au.grapplerobotics.LaserCan;
 import au.grapplerobotics.interfaces.LaserCanInterface.Measurement;
+import au.grapplerobotics.interfaces.LaserCanInterface.RangingMode;
 import au.grapplerobotics.ConfigurationFailedException;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -46,8 +47,7 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmClosedLoopRampConfigs);
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmOpenLoopRampConfigs);
+
     
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
@@ -61,7 +61,12 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
 
-
+    try {
+      m_CollectorSensor.setRegionOfInterest(new LaserCan.RegionOfInterest(8, 8, 4, 4));
+      m_CollectorSensor.setRangingMode(LaserCan.RangingMode.SHORT);
+    } catch (ConfigurationFailedException e) {
+      System.out.println("Configuration failed! " + e);
+    }
 
   }
 
@@ -282,8 +287,8 @@ Measurement measurement = m_CollectorSensor.getMeasurement();
 if(measurement != null)
 {
   return
-  measurement.distance_mm > LazerCanConstants.LcMinDistance 
-  && measurement.distance_mm < LazerCanConstants.LcMaxDistance;
+  measurement.distance_mm >= LazerCanConstants.LcMinDistance 
+  && measurement.distance_mm <= LazerCanConstants.LcMaxDistance;
   // do it the right way
 }
 else
@@ -293,6 +298,11 @@ else
 }
   
 
+  }
+  public void putGrappleTargetOnDashboard(){
+    Measurement measurement = m_CollectorSensor.getMeasurement();
+    if(measurement != null){
+    SmartDashboard.putNumber("GrappleValue", measurement.distance_mm);}
   }
 
   /** turns LEDs green, mainly for testing if the wiring is correct */
@@ -317,6 +327,7 @@ else
 
   @Override
   public void periodic() {
+    putGrappleTargetOnDashboard();
    // LEDGreen();
     //EELogging();
     //LEDControl();

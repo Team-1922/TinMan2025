@@ -83,7 +83,7 @@ public class LimelightSubsystem extends SubsystemBase {
  }
 
  public double targetZError() {
-  return GetTz();
+  return -LimelightConstants.TargetZ+GetTz();
  }
 
  public double targetYawError() {
@@ -131,8 +131,7 @@ public class LimelightSubsystem extends SubsystemBase {
  public double AimTargetZDutyCycle(){
   if (! HasTarget()) return 0;
 double target =
- MathUtil.clamp(targetZError()
- /(LimelightConstants.MaxTargetZ/LimelightConstants.TargetZ) * LimelightConstants.TargetZSpeedMultiplier,-0.8,0.8);
+ MathUtil.clamp(targetZError()* LimelightConstants.TargetZSpeedMultiplier,-0.8,0.8);
 
  SmartDashboard.putNumber("ZSpeed", targetZError());
   return 

@@ -44,7 +44,7 @@ public class EeL3 extends Command {
   @Override
   public boolean isFinished() {
     return 
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L2WristAngle) <0.5 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L2ArmAngle) <0.5 ;
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L3WristAngle) <0.05 &&
+    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L3ArmAngle) <0.05 ;
   }
 }

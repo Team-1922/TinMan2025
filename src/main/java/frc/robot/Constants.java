@@ -36,9 +36,9 @@ public final class Constants {
 
       public static final double FloorPosition = 0.25; // placeholder
       public static final double L1Position = 0.25;// placeholder
-      public static final double L2Position = 39 ; // placeholder
-      public static final double L3Position = 25.69; // placeholder
-      public static final double L4Position = 53.5;
+      public static final double L2Position = 39.19 ; // placeholder
+      public static final double L3Position = 27.18; // placeholder
+      public static final double L4Position = 54.3;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
@@ -65,7 +65,7 @@ public final class Constants {
 
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
-      .withKP(0.15)
+      .withKP(0.5)
       .withKG(0.022)   ;
 
       public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
@@ -91,25 +91,25 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = .15; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = -0.1; // placeholder, angle to score L1
-      public static final double L2WristAngle = 0.23; // also for L3
-      public static final double L3WristAngle = 0.07;
-      public static final double L4WristAngle = 0.11; // placeholder
+      public static final double FloorWristAngle = .145; // placeholder angle to collect off the floor   
+      public static final double L1WristAngle = -0.11; // placeholder, angle to score L1
+      public static final double L2WristAngle = 0.139; // also for L3
+      public static final double L3WristAngle = 0.04;
+      public static final double L4WristAngle = 0.78; // placeholder
       public static final double AlgaeWristAngle = 0.1; // placeholder
-      public static final double StowedWristAngle =  .23; // the angle for defence, placeholder
-      public static final double VerticalWristAngle = .17 ;
+      public static final double StowedWristAngle =  .03; // the angle for defence, placeholder
+      public static final double VerticalWristAngle = .23 ;
       public static final double StationWristAngle = 2; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.077; // placeholder
-      public static final double L1ArmAngle = 0.08; // placeholder, might not be used
-      public static final double L2ArmAngle = -0.16; // also for L3
-      public static final double L3ArmAngle = 0.13;
-      public static final double L4ArmAngle = .12; // placeholder
+      public static final double L1ArmAngle = 0.1; // placeholder, might not be used
+      public static final double L2ArmAngle = -0.176; // also for L3
+      public static final double L3ArmAngle = 0.12;
+      public static final double L4ArmAngle = .1; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
       public static final double StowedArmAngle = 0.23; // the angle for starting configuration, placeholder
-      public static final double VerticalArmAngle = 0.17;
+      public static final double VerticalArmAngle = 0.22;
       public static final double StationArmAngle = .20; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
@@ -134,14 +134,10 @@ public final class Constants {
 
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
-      .withKP(5) //11
-      .withKG(0.0175); // 0.0175
+      .withKP(4) //
+      .withKG(0.02); // 
 
-      public static final OpenLoopRampsConfigs ArmOpenLoopRampConfigs = new OpenLoopRampsConfigs()
-      .withDutyCycleOpenLoopRampPeriod(0.5);
-
-      public static final OpenLoopRampsConfigs ArmClosedLoopRampConfigs = new OpenLoopRampsConfigs()
-      .withDutyCycleOpenLoopRampPeriod(0.5);
+      
 
       public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
       .withKP(1.5)
@@ -150,7 +146,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration WristCanCoderConfig =
        new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.15185546875));
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.15771484375));
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
@@ -175,8 +171,8 @@ public final class Constants {
 
     public static class LazerCanConstants{
       public static final int LcID = 0; // placeholder
-      public static final int LcMaxDistance = 50; // mm
-      public static final int LcMinDistance = 10; //mm
+      public static final double LcMaxDistance = 75; // mm
+      public static final double LcMinDistance = 0; //mm
 
     }
 
@@ -192,7 +188,7 @@ public final class Constants {
 
      public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
      public static final double leftTargetRightEdge = -0.46; //meters 
-     public static final double leftTargetCenter = 0.14; // meters
+     public static final double leftTargetCenter = 0.15; // meters
     
      public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming        0.84 for the right target/left limelight/LL3
      public static final double AimingTurnSpeedMultiplier = 1.1;
@@ -207,7 +203,7 @@ public final class Constants {
       public static final double TargetZ = 0.43
       ; // meters
       public static final double MaxTargetZ = 1.85; // meters
-      public static final double TargetZSpeedMultiplier = 1.1;
+      public static final double TargetZSpeedMultiplier = 0.25;
 
     }
 

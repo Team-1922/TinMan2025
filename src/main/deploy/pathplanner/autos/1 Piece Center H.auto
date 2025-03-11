@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C Right to E"
+            "pathName": "C Center to H"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "C E to Station"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Station to D"
+            "name": "RightL4"
           }
         }
       ]
