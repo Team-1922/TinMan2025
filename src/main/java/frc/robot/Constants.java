@@ -93,9 +93,9 @@ public final class Constants {
       // wrist angles
       public static final double FloorWristAngle = .145; // placeholder angle to collect off the floor   
       public static final double L1WristAngle = -0.11; // placeholder, angle to score L1
-      public static final double L2WristAngle = 0.139; // also for L3
+      public static final double L2WristAngle = 0.139; // 
       public static final double L3WristAngle = 0.04;
-      public static final double L4WristAngle = 0.78; // placeholder
+      public static final double L4WristAngle = 0.05; // placeholder
       public static final double AlgaeWristAngle = 0.1; // placeholder
       public static final double StowedWristAngle =  .03; // the angle for defence, placeholder
       public static final double VerticalWristAngle = .23 ;
@@ -104,7 +104,7 @@ public final class Constants {
       //arm angles
       public static final double FloorArmAngle = -0.077; // placeholder
       public static final double L1ArmAngle = 0.1; // placeholder, might not be used
-      public static final double L2ArmAngle = -0.176; // also for L3
+      public static final double L2ArmAngle = -0.176; // underflows at -0.2
       public static final double L3ArmAngle = 0.12;
       public static final double L4ArmAngle = .1; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
@@ -169,10 +169,10 @@ public final class Constants {
       public static final int TotalLEDs = 99; // placeholder
     }
 
-    public static class LazerCanConstants{
-      public static final int LcID = 0; // placeholder
-      public static final double LcMaxDistance = 75; // mm
-      public static final double LcMinDistance = 0; //mm
+    public static class TOFConstants{
+      public static final int TOFID = 0; // placeholder
+      public static final double TOFMaxDistance = 50; // mm
+      public static final double TOFMinDistance = 0; //mm
 
     }
 
@@ -192,8 +192,8 @@ public final class Constants {
     
      public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming        0.84 for the right target/left limelight/LL3
      public static final double AimingTurnSpeedMultiplier = 1.1;
-     public static final double RightLateralFF = 0.01; // feed forward on aiming right target
-     public static final double LeftLateralFF = 0.005;
+     public static final double RightLateralFF = 0.005; // feed forward on aiming right target
+     public static final double LeftLateralFF = 0.002;
 
      public static final double MaxAimSpeed = 3;// meters per second
 
@@ -203,7 +203,7 @@ public final class Constants {
       public static final double TargetZ = 0.43
       ; // meters
       public static final double MaxTargetZ = 1.85; // meters
-      public static final double TargetZSpeedMultiplier = 0.25;
+      public static final double TargetZSpeedMultiplier = 0.45;
 
     }
 

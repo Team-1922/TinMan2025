@@ -21,14 +21,15 @@ public class StoweEE extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() { 
+       m_EE.stowe();
+    }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
   //  m_Elevator.GoToL4();
-    m_EE.stowe();
-    
+
   }
 
   // Called once the command ends or is interrupted.

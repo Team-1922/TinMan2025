@@ -241,8 +241,9 @@ public class RobotContainer {
         m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
 
       // m_driveController.pov(0).onTrue(m_AimGroup);
-        m_operatorController.pov(180).onTrue(m_L3Group);
-        m_operatorController.pov(90).onTrue(m_L4Group);
+      //  m_operatorController.pov(180).onTrue(m_L3Group);
+      //  m_operatorController.pov(90).onTrue(m_L4Group);
+      m_driveController.pov(90).onTrue(m_StoweEE);
         m_driveController.button(1).onTrue(m_FloorGroup); // a
         m_driveController.pov(270).whileTrue(m_Collect);
    //     m_operatorController.pov(270).onTrue(m_FloorGroup);

@@ -72,7 +72,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
     return 
         Math.abs(m_LimelightSubsystem.targetXError()) < 0.001 //0.05
         && Math.abs(m_LimelightSubsystem.targetZError()) < 0.02 //0.108
-        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.05//0.05
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.04//0.05
     ;
   }
 }

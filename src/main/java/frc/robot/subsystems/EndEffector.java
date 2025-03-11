@@ -9,13 +9,12 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
-import com.ctre.phoenix6.controls.VelocityDutyCycle;
+
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import au.grapplerobotics.LaserCan;
-import au.grapplerobotics.interfaces.LaserCanInterface.Measurement;
-import au.grapplerobotics.interfaces.LaserCanInterface.RangingMode;
-import au.grapplerobotics.ConfigurationFailedException;
+import com.playingwithfusion.TimeOfFlight;
+
+
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,7 +28,8 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
   CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
-  LaserCan m_CollectorSensor = new LaserCan(LazerCanConstants.LcID);
+  //LaserCan m_CollectorSensor = new LaserCan(TOFConstants.TOFID);
+  TimeOfFlight m_TOF = new TimeOfFlight(0);
   
   
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
@@ -60,13 +60,6 @@ public class EndEffector extends SubsystemBase {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
-
-    try {
-      m_CollectorSensor.setRegionOfInterest(new LaserCan.RegionOfInterest(8, 8, 4, 4));
-      m_CollectorSensor.setRangingMode(LaserCan.RangingMode.SHORT);
-    } catch (ConfigurationFailedException e) {
-      System.out.println("Configuration failed! " + e);
-    }
 
   }
 
@@ -280,29 +273,21 @@ public class EndEffector extends SubsystemBase {
     m_Candle.clearAnimation(AnimationSlot);
   }
 
-  /** @return if something is within the Lc target range
+  /** @return if something is within the TOF target range
    */
   public boolean HasCoral(){
-Measurement measurement = m_CollectorSensor.getMeasurement();
-if(measurement != null)
-{
-  return
-  measurement.distance_mm >= LazerCanConstants.LcMinDistance 
-  && measurement.distance_mm <= LazerCanConstants.LcMaxDistance;
-  // do it the right way
-}
-else
-{
-  return false;
-  // do it the failsafe way
-}
-  
+double measurement = m_TOF.getRange();
 
+  return 
+  measurement >= TOFConstants.TOFMinDistance &&
+  measurement <= TOFConstants.TOFMaxDistance;
   }
-  public void putGrappleTargetOnDashboard(){
-    Measurement measurement = m_CollectorSensor.getMeasurement();
-    if(measurement != null){
-    SmartDashboard.putNumber("GrappleValue", measurement.distance_mm);}
+
+
+  public void putTOFTargetOnDashboard(){
+   double measurement = m_TOF.getRange();
+    if(m_TOF.isRangeValid()){
+    SmartDashboard.putNumber("TOFValue", measurement);}
   }
 
   /** turns LEDs green, mainly for testing if the wiring is correct */
@@ -312,7 +297,10 @@ else
   }
 
   private void LEDControl(){ // placeholder
-    if(HasCoral()){
+    if(
+    m_TOF.getRange() >= TOFConstants.TOFMinDistance
+    && m_TOF.getRange() <= TOFConstants.TOFMaxDistance
+    ){
       
       m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
     } else{
@@ -327,10 +315,10 @@ else
 
   @Override
   public void periodic() {
-    putGrappleTargetOnDashboard();
+    putTOFTargetOnDashboard();
    // LEDGreen();
     //EELogging();
-    //LEDControl();
+    LEDControl();
     // This method will be called once per scheduler run
   }
 }

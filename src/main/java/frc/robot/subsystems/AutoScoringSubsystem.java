@@ -36,13 +36,11 @@ public class AutoScoringSubsystem extends SubsystemBase {
   private final EndEffector m_EE = new EndEffector();
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
    CommandSwerveDrivetrain m_Drivetrain;
-     LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("left");
-     LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("right");
+     LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
+     LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
 
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem exists
-  /** Creates a new AutoScoringSubsystem. 
-   * @param side "left" to score left side, "right" to score right side 
-  */
+  /** Creates a new AutoScoringSubsystem. */
   public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain) {
     TargetLevel = 0;
     m_Drivetrain = drivetrain;
@@ -117,7 +115,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     }
     if (GetTargetLevel() == 0) {
       return
-          new SequentialCommandGroup(
+          new SequentialCommandGroup( // L2
               TargetCommandGroup, 
               new AprilTagAim(LL, m_Drivetrain),
               new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE))//,
@@ -126,12 +124,13 @@ public class AutoScoringSubsystem extends SubsystemBase {
               // new StoweEE(m_EE)
       );
     } else {
-      return new SequentialCommandGroup(
+      return new SequentialCommandGroup( // L3 and L4
           new ParallelCommandGroup(
-              new AprilTagAim(m_LimelightSubsystemLeft, m_Drivetrain),
+              new AprilTagAim(LL, m_Drivetrain),
               TargetCommandGroup
           ),
-           new ParallelRaceGroup(new WaitCommand(0.75),new Collect(m_EE)),
+           new ParallelRaceGroup(new WaitCommand(1.5),
+           new Collect(m_EE)),
           new EEVertical( m_EE),
           new GotoFloor(m_Elevator),
           new StoweEE(m_EE)

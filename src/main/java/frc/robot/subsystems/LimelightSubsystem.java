@@ -42,7 +42,9 @@ public class LimelightSubsystem extends SubsystemBase {
       m_TargetRightEdge = LimelightConstants.leftTargetRightEdge;
       m_TargetCenter = LimelightConstants.leftTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
+      
     };
+    
    }
 
 /** updates the target values */ 
@@ -51,7 +53,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
    m_Pos = 
       m_LLNetworkTable.getEntry("targetpose_robotspace").getDoubleArray(new double[6]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
-   }
+    
+    }
 
 /** @return limelight <b>tx</b> (meters) */
  public double getTx(){
