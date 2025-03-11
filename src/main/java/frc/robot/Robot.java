@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledExit() {
+    m_EE.stopEE();
+    m_Elevator.StopElevator();
   //  m_EE.stopAnimation(0);
 
   }
@@ -56,7 +58,10 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+    m_EE.stopEE();
+    m_Elevator.StopElevator();
+  }
 
   @Override
   public void teleopInit() {

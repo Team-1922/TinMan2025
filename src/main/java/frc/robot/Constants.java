@@ -12,6 +12,7 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.CoastOut;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -23,7 +24,7 @@ public final class Constants {
     public static class ClimberConstants{
       public static final int climberMotorID = 1; 
       public static final int climber2MotorID = 2; 
-      public static final double ClimberMaxVoltage = 2; // raise this later 
+      public static final double ClimberMaxVoltage = 8; // raise this later 
       public static final int ClimbControllerAxis = 1;
 
     }
@@ -38,7 +39,7 @@ public final class Constants {
       public static final double L1Position = 0.25;// placeholder
       public static final double L2Position = 39.19 ; // placeholder
       public static final double L3Position = 27.18; // placeholder
-      public static final double L4Position = 54.3;
+      public static final double L4Position = 54.5;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
@@ -99,7 +100,7 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.1; // placeholder
       public static final double StowedWristAngle =  .03; // the angle for defence, placeholder
       public static final double VerticalWristAngle = .23 ;
-      public static final double StationWristAngle = 2; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 23; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.077; // placeholder
@@ -110,7 +111,7 @@ public final class Constants {
       public static final double AlgaeArmAngle = .32; // placeholder
       public static final double StowedArmAngle = 0.23; // the angle for starting configuration, placeholder
       public static final double VerticalArmAngle = 0.22;
-      public static final double StationArmAngle = .20; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = .43; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -137,7 +138,8 @@ public final class Constants {
       .withKP(4) //
       .withKG(0.02); // 
 
-      
+      public static final MotorOutputConfigs M_ArmOUTPUT_CONFIGS = new MotorOutputConfigs()
+      .withNeutralMode(NeutralModeValue.Coast);
 
       public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
       .withKP(1.5)
@@ -203,7 +205,7 @@ public final class Constants {
       public static final double TargetZ = 0.43
       ; // meters
       public static final double MaxTargetZ = 1.85; // meters
-      public static final double TargetZSpeedMultiplier = 0.45;
+      public static final double TargetZSpeedMultiplier = 0.46;
 
     }
 

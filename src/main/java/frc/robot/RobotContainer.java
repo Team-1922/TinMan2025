@@ -35,6 +35,7 @@ import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
 import frc.robot.Commands.IncrementTargetLocation;
+import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.EeL1;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
@@ -86,6 +87,7 @@ public class RobotContainer {
     // private final AprilTagAim m_RightAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain, m_driveController,RcDrive);
     // private final AprilTagAim m_LeftAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain,m_driveController,RcDrive);
     private final Collect m_Collect = new Collect(m_EE);
+    private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
 
@@ -219,10 +221,10 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        m_driveController.back().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kForward));
-        m_driveController.back().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kReverse));
-        m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
-        m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
+       // m_driveController.back().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kForward));
+       // m_driveController.back().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kReverse));
+       // m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
+       // m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
@@ -233,19 +235,20 @@ public class RobotContainer {
      // m_driveController.button(6).whileTrue(m_RightAim); // right bumper
         
      //  m_driveController.pov(180).onTrue(m_AutoScoreCommand);
-       m_operatorController.button(1).onTrue(m_L1Group); // a
-        m_operatorController.button(2).onTrue(m_L2Group); // b
+    //   m_operatorController.button(1).onTrue(m_L1Group); // a
+     //   m_operatorController.button(2).onTrue(m_L2Group); // b
        // m_operatorController.button(2).onTrue(m_ElevatorL2);
-        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
-        m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
-        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+      //  m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
+       // m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
+      //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
 
       // m_driveController.pov(0).onTrue(m_AimGroup);
       //  m_operatorController.pov(180).onTrue(m_L3Group);
       //  m_operatorController.pov(90).onTrue(m_L4Group);
       m_driveController.pov(90).onTrue(m_StoweEE);
         m_driveController.button(1).onTrue(m_FloorGroup); // a
-        m_driveController.pov(270).whileTrue(m_Collect);
+        m_driveController.button(5).whileTrue(m_Collect);
+        m_driveController.button(6).onTrue(m_ReverseCollector);
    //     m_operatorController.pov(270).onTrue(m_FloorGroup);
     //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
      //   m_operatorController.button(3).onTrue(m_StoweEE); // x 
