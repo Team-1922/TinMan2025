@@ -72,7 +72,7 @@ public class RobotContainer {
     .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     
     
-    private final Telemetry logger = new Telemetry(MaxSpeed);
+    //private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
@@ -97,7 +97,7 @@ public class RobotContainer {
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
 
-    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem); // doesn't matter which side you give it
+    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     //elevator commands
     
     private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
@@ -229,46 +229,25 @@ public class RobotContainer {
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
-        m_drivetrain.registerTelemetry(logger::telemeterize);
+       // m_drivetrain.registerTelemetry(logger::telemeterize);
 
-       // m_driveController.button(5).whileTrue(m_LeftAim); // left bumper
-     // m_driveController.button(6).whileTrue(m_RightAim); // right bumper
-        
-     //  m_driveController.pov(180).onTrue(m_AutoScoreCommand);
-    //   m_operatorController.button(1).onTrue(m_L1Group); // a
-     //   m_operatorController.button(2).onTrue(m_L2Group); // b
-       // m_operatorController.button(2).onTrue(m_ElevatorL2);
-      //  m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
-       // m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
-      //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+ 
+        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
+        m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
+        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
 
       // m_driveController.pov(0).onTrue(m_AimGroup);
       //  m_operatorController.pov(180).onTrue(m_L3Group);
       //  m_operatorController.pov(90).onTrue(m_L4Group);
       m_driveController.pov(90).onTrue(m_StoweEE);
         m_driveController.button(1).onTrue(m_FloorGroup); // a
-        m_driveController.button(5).whileTrue(m_Collect);
-        m_driveController.button(6).onTrue(m_ReverseCollector);
+       m_driveController.button(2).whileTrue(m_Collect);
+       m_driveController.pov(270).onTrue(m_EeVertical);
+     //  m_driveController.button(6).onTrue(m_ReverseCollector);
    //     m_operatorController.pov(270).onTrue(m_FloorGroup);
     //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
      //   m_operatorController.button(3).onTrue(m_StoweEE); // x 
      //   m_operatorController.button(7).onTrue(m_EeVertical); // y 
-     //   m_operatorController.button(4).onTrue(m_L1); // y 
-     //   m_operatorController.button(5).onTrue(m_L3); // two squares
- //       m_operatorController.button(2).onTrue(m_L2); //b
-     //   m_operatorController.button(1).onTrue(m_L4); // a
-     //   m_operatorController.button(2).onTrue(m_Floor); // b
-   //     m_operatorController.button(5).onTrue(m_Floor); // left bumper
-   //     m_operatorController.button(3).onTrue(m_AngleL4); // x 
-        //m_operatorController.button(8).onTrue(m_StopArm); // 3 lines button
-      
-    //    m_operatorController.button(6).whileTrue(m_Collect); // RB
-//        m_operatorController.button(5).onTrue();
-      //  m_operatorController.button()
-
-
-      // m_operatorController.button(8).onTrue(m_StopElevator); // 3 lines button
-   //     m_operatorController.button(5).onTrue(m_LeDtest);
     }
 
     public Command getAutonomousCommand() {

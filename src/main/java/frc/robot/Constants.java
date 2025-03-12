@@ -133,12 +133,19 @@ public final class Constants {
       .withSupplyCurrentLimit(40)  
       ;
 
+      public static final CurrentLimitsConfigs CollectorCurrentLimitConfigs = new CurrentLimitsConfigs()
+      .withStatorCurrentLimitEnable(true)
+      .withStatorCurrentLimit(30)
+      .withSupplyCurrentLimitEnable(true)
+      .withSupplyCurrentLimit(30)  
+      ;
+
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
       .withKP(4) //
       .withKG(0.02); // 
 
-      public static final MotorOutputConfigs M_ArmOUTPUT_CONFIGS = new MotorOutputConfigs()
+      public static final MotorOutputConfigs M_ArmOutputConfigs = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Coast);
 
       public static final Slot0Configs WristSlot0Configs = new Slot0Configs()

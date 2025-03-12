@@ -20,7 +20,7 @@ import static edu.wpi.first.units.Units.*;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AprilTagAim extends Command {
   LimelightSubsystem m_LimelightSubsystem;
-  CommandSwerveDrivetrain m_Drivetrain = TunerConstants.createDrivetrain();
+  CommandSwerveDrivetrain m_Drivetrain;
  
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
@@ -71,8 +71,8 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
   public boolean isFinished() {
     return 
         Math.abs(m_LimelightSubsystem.targetXError()) < 0.001 //0.05
-        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.025 //0.108
-        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.04//0.05
+        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.016 //0.108
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.02//0.05
     ;
   }
 }

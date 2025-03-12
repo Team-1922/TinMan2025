@@ -13,7 +13,7 @@ import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
-
+import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -47,19 +47,22 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOUTPUT_CONFIGS);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOutputConfigs);
         
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
     
+
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
-    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
-    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);    
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+    
+    m_TOF.setRangingMode(RangingMode.Short, 25);
 
   }
 
