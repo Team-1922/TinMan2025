@@ -14,7 +14,7 @@ import frc.robot.subsystems.EndEffector;
 public class EeL1 extends Command {
 
   EndEffector m_EE;
-  /** Creates a new GotoL4. */
+  /** angles EE to score on L1 */
   public EeL1(EndEffector EE) {
   
     m_EE = EE;
@@ -49,6 +49,6 @@ public class EeL1 extends Command {
     return 
     Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.L1WristAngle) <0.05 &&
     Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.L1ArmAngle) <0.05 
-   ;// Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.L1Position) <0.1;
+   ;
   }
 }

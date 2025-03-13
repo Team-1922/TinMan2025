@@ -7,8 +7,6 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -16,7 +14,7 @@ public class Collect extends Command {
   EndEffector m_EE = new EndEffector();
   boolean m_StartedWithCoral;
   Timer m_Timer = new Timer();
-  /** Creates a new Collect. */
+  /** runs the intake so it would pick up a game piece if on the ground */
   public Collect( EndEffector collector) {
     m_EE = collector;
 

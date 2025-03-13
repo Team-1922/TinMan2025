@@ -19,7 +19,9 @@ public class AutoScoreCommand extends Command {
   ElevatorSubsystem m_Elevator;
   AprilTagAim m_Aim;
   String m_side;
-  /** Creates a new AutoScoreCommand. */
+  /** command used in Teleop to score using the april tags
+   * @param side "left" or "right"
+   */
   public AutoScoreCommand(AutoScoringSubsystem AutoScore, ElevatorSubsystem Elevator,EndEffector EE, String side) {
     m_AutoScoringSubsystem = AutoScore;
     m_side = side;
@@ -36,14 +38,11 @@ public class AutoScoreCommand extends Command {
     target = m_AutoScoringSubsystem.GetTargetLevel();
     m_AutoScoringSubsystem.TargetAndAim(
       m_AutoScoringSubsystem.GetTargetCommandGroup(target), m_side).schedule();
-  //  m_AutoScoringSubsystem.GetTargetCommandGroup(target).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    //m_AutoScoringSubsystem.TargetAndAim(m_AutoScoringSubsystem.GetTargetCommandGroup(target),m_side);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

@@ -14,16 +14,12 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.FileVersionException;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.EEVertical;
@@ -41,7 +37,6 @@ import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
 import frc.robot.Commands.GoToLimelightPos;
-import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
@@ -76,16 +71,10 @@ public class RobotContainer {
 
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
-
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    // private final LimelightSubsystem m_LeftLimelightSubsystem = new LimelightSubsystem("left"); // left limelight subsystem
-    // private final LimelightSubsystem m_RightLimelightSubsystem = new LimelightSubsystem("right"); // right limelight subsystem
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
-
-    // private final AprilTagAim m_RightAim = new AprilTagAim(m_LeftLimelightSubsystem, m_drivetrain, m_driveController,RcDrive);
-    // private final AprilTagAim m_LeftAim = new AprilTagAim(m_RightLimelightSubsystem, m_drivetrain,m_driveController,RcDrive);
     private final Collect m_Collect = new Collect(m_EE);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
@@ -132,7 +121,7 @@ public class RobotContainer {
     private final EEVertical m_EeVertical = new EEVertical( m_EE);
 
 
-    // sequential command groups
+    // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
         new EEVertical( m_EE),
         new GotoL1(m_ElevatorSubsystem),
@@ -174,7 +163,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         configureBindings();
-        DriverStation.silenceJoystickConnectionWarning(true);
+       // DriverStation.silenceJoystickConnectionWarning(true); // uncomment this when testing with only 1 controller, this turns off the joystick unplugged warning
     m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
 
@@ -196,7 +185,7 @@ public class RobotContainer {
  
  
 
-    autoChooser = AutoBuilder.buildAutoChooser("1 piece center");
+    autoChooser = AutoBuilder.buildAutoChooser("1 Piece Center Right");
     SmartDashboard.putData("autoChooser", autoChooser);
     }
 

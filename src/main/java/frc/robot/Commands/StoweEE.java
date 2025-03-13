@@ -5,7 +5,6 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 

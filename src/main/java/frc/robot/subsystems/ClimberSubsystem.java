@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.SignalLogger;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -15,21 +15,18 @@ public class ClimberSubsystem extends SubsystemBase {
 
   
   SparkMax m_climberMotor = new SparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
-  SparkMax m_climberMotor2 = new SparkMax(ClimberConstants.climber2MotorID, MotorType.kBrushless);
-  /** Creates a new Climber. */
+  /** subsystem that only controls the climber motor */
   public ClimberSubsystem() {
   }
 
   /**   @param directionMultiplier Put a joystick axis here*/
   public void climb(double directionMultiplier){
-    m_climberMotor.setVoltage(ClimberConstants.ClimberMaxVoltage*-directionMultiplier);
-    m_climberMotor2.setVoltage(ClimberConstants.ClimberMaxVoltage*directionMultiplier);
+    m_climberMotor.setVoltage(ClimberConstants.ClimberMaxVoltage*directionMultiplier);
   }
 
 
   public void stopClimber(){
     m_climberMotor.set(0);
-    m_climberMotor2.set(0);
   }
 
 

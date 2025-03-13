@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AutoScoringSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
-import frc.robot.subsystems.LimelightSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AutoScoreCommandFORAUTO extends Command {
@@ -36,14 +35,11 @@ public class AutoScoreCommandFORAUTO extends Command {
 
     m_AutoScoringSubsystem.TargetAndAim(
       m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side).schedule();
-  //  m_AutoScoringSubsystem.GetTargetCommandGroup(target).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    //m_AutoScoringSubsystem.TargetAndAim(m_AutoScoringSubsystem.GetTargetCommandGroup(target),m_side);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

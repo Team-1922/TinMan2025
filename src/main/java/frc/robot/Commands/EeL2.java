@@ -12,7 +12,9 @@ import frc.robot.subsystems.EndEffector;
 public class EeL2 extends Command {
  
   EndEffector m_EE;
-  /** Creates a new GotoL4. */
+  /** angles EE to score on L2 <p>
+   * <b> DO NOT RUN THIS UNLESS THE ELEVATOR IS UP OR THE ARM WILL TRY AND GO INTO THE FLOOR
+   */
   public EeL2(EndEffector EE) {
    
     m_EE = EE;
@@ -23,7 +25,6 @@ public class EeL2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   // m_Elevator.GoToL2();
     m_EE.L2();}
 
   // Called every time the scheduler runs while the command is scheduled.

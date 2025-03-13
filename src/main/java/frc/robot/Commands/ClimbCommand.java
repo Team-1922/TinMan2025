@@ -14,7 +14,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class ClimbCommand extends Command {
   ClimberSubsystem m_ClimberSubsystem;
   CommandXboxController m_Controller;
-  /** Creates a new ClimbCommand. */
+  /** command used for climbing*/
   public ClimbCommand(ClimberSubsystem climberSubsystem, CommandXboxController operatorController) {
     m_ClimberSubsystem = climberSubsystem;
     m_Controller = operatorController;

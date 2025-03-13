@@ -22,9 +22,9 @@ public final class Constants {
   /** Creates a new Constants. */
 
     public static class ClimberConstants{
-      public static final int climberMotorID = 1; 
-      public static final int climber2MotorID = 2; 
-      public static final double ClimberMaxVoltage = 8; // raise this later 
+      public static final int climberMotorID = 2; 
+     // public static final int climber2MotorID = 2; 
+      public static final double ClimberMaxVoltage = 5; // 8 is too high
       public static final int ClimbControllerAxis = 1;
 
     }
@@ -35,11 +35,11 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; // placeholder
       public static final int rightElevatorMotorID = 5; // placeholder
 
-      public static final double FloorPosition = 0.25; // placeholder
+      public static final double FloorPosition = -0.1; // placeholder
       public static final double L1Position = 0.25;// placeholder
-      public static final double L2Position = 39.19 ; // placeholder
-      public static final double L3Position = 27.18; // placeholder
-      public static final double L4Position = 54.5;
+      public static final double L2Position = 41.6 ; // placeholder
+      public static final double L3Position = 23.8; // placeholder
+      public static final double L4Position = 54.9;
       public static final double AlgaeLowPosition = 7; // placeholder 
       public static final double AlgaeHighPosition = 13; // placeholder 
       public static final double StationPosition = 10; // placeholder
@@ -92,24 +92,24 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = .145; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = -0.11; // placeholder, angle to score L1
-      public static final double L2WristAngle = 0.139; // 
-      public static final double L3WristAngle = 0.04;
-      public static final double L4WristAngle = 0.05; // placeholder
+      public static final double FloorWristAngle = 0.04; // placeholder angle to collect off the floor   
+      public static final double L1WristAngle = 0.21; // placeholder, angle to score L1
+      public static final double L2WristAngle = 0.09; // 
+      public static final double L3WristAngle = -0.08;
+      public static final double L4WristAngle = -0.02; // placeholder
       public static final double AlgaeWristAngle = 0.1; // placeholder
       public static final double StowedWristAngle =  .03; // the angle for defence, placeholder
-      public static final double VerticalWristAngle = .23 ;
+      public static final double VerticalWristAngle = .13 ;
       public static final double StationWristAngle = 23; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.077; // placeholder
-      public static final double L1ArmAngle = 0.1; // placeholder, might not be used
-      public static final double L2ArmAngle = -0.176; // underflows at -0.2
-      public static final double L3ArmAngle = 0.12;
-      public static final double L4ArmAngle = .1; // placeholder
+      public static final double FloorArmAngle = -0.075; // placeholder
+      public static final double L1ArmAngle = 0.12; // placeholder, might not be used
+      public static final double L2ArmAngle = -0.15; // underflows at -0.2
+      public static final double L3ArmAngle = 0.13;
+      public static final double L4ArmAngle = .08; // placeholder
       public static final double AlgaeArmAngle = .32; // placeholder
-      public static final double StowedArmAngle = 0.23; // the angle for starting configuration, placeholder
+      public static final double StowedArmAngle = 0.25; // the angle for starting configuration, placeholder
       public static final double VerticalArmAngle = 0.22;
       public static final double StationArmAngle = .43; // placeholder angle for collecting at the station
 
@@ -155,7 +155,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration WristCanCoderConfig =
        new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.15771484375));
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49560546875));
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()

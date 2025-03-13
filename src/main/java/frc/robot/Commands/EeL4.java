@@ -13,7 +13,7 @@ import frc.robot.subsystems.EndEffector;
 public class EeL4 extends Command {
 
   EndEffector m_EE;
-  /** Creates a new GotoL4. */
+  /** Angles EE to score on L4 */
   public EeL4(EndEffector EE) {
    // m_Elevator = elevatorSubsystem;
     m_EE = EE;
@@ -28,17 +28,13 @@ public class EeL4 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //  m_Elevator.GoToL4();
     m_EE.L4();
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //m_Elevator.StopElevator();
-   // m_EE.stopEE();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

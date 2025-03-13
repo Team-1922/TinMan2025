@@ -4,16 +4,12 @@
 
 package frc.robot.subsystems;
 
-import java.lang.annotation.Target;
 
 import com.ctre.phoenix6.SignalLogger;
-import com.ctre.phoenix6.controls.DynamicMotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

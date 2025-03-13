@@ -13,7 +13,7 @@ public class ReverseCollector extends Command {
   EndEffector m_EE;
   boolean m_StartedWithCoral;
   Timer m_Timer = new Timer();
-  /** Creates a new ReverseCollector. */
+  /** spins collector so it would spit out coral if on ground*/
   public ReverseCollector(EndEffector endEffector) {
     m_EE = endEffector;
     // Use addRequirements() here to declare subsystem dependencies.
