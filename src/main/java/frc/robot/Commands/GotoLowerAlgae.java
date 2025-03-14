@@ -4,54 +4,41 @@
 
 package frc.robot.Commands;
 
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.EndEffector;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Collect extends Command {
-  EndEffector m_EE = new EndEffector();
-  boolean m_StartedWithCoral;
-  Timer m_Timer = new Timer();
-  /** runs the intake so it would pick up a game piece if on the ground */
-  public Collect( EndEffector collector) {
-    m_EE = collector;
-
+public class GotoLowerAlgae extends Command {
+  ElevatorSubsystem m_Elevator;
+  /** Moves elevator to algae between L2 and L3 */
+  public GotoLowerAlgae( ElevatorSubsystem elevatorSubsystem) {
+    m_Elevator = elevatorSubsystem;
+    addRequirements(m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  m_StartedWithCoral = m_EE.HasCoral();
-  m_EE.collect();
-  
-  }
+  public void initialize() { 
+     m_Elevator.GoToLowAlgae();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   if( m_EE.HasCoral() != m_StartedWithCoral){
-    m_Timer.start();    
-   } 
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
- m_EE.stopCollector();
- m_Timer.stop();
- m_Timer.reset();
- if(!m_StartedWithCoral ){
-  m_EE.stowe();
- }
+   // m_Elevator.StopElevator();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Timer.hasElapsed(0.5);
-    // because this command will be used for collecting and scoring, this should end the command when the opposite happens
+    return 
+    Math.abs(m_Elevator.getElevatorPos() - ElevatorConstants.AlgaeLowPosition) <0.5;
   }
 }

@@ -15,13 +15,13 @@ import frc.robot.subsystems.LimelightSubsystem;
 import static edu.wpi.first.units.Units.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AprilTagAim extends Command {
+public class AprilTagAimReverse extends Command {
   LimelightSubsystem m_LimelightSubsystem;
   CommandSwerveDrivetrain m_Drivetrain;
  
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   /** Creates a new LeftAim. */
-  public AprilTagAim(
+  public AprilTagAimReverse(
 LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
   m_LimelightSubsystem = LimeLightSub;
   m_Drivetrain = drivetrain;
@@ -42,7 +42,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
 
 
     m_Drivetrain.applyRequest(() ->
-    new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
+    new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.L2RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
    
     .withVelocityY(m_LimelightSubsystem.RobotYDutyCycle()* LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(
@@ -67,9 +67,9 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
   @Override
   public boolean isFinished() {
     return 
-        Math.abs(m_LimelightSubsystem.targetXError()) < 0.0033 //0.05
-        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.014 //0.108
-        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.02//0.05
+        Math.abs(m_LimelightSubsystem.targetXError()) < 0.005 //0.05
+        && Math.abs(m_LimelightSubsystem.reverseTargetZError()) < 0.014 //0.108
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.04//0.05
     ;
   }
 }

@@ -17,6 +17,7 @@ import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
@@ -150,6 +151,8 @@ public class EndEffector extends SubsystemBase {
   public void ToVerticalWristAngle(){
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalWristAngle));
   }
+
+
 
 
            // ARM CODE
@@ -299,7 +302,8 @@ double measurement = m_TOF.getRange();
     m_Candle.setLEDs(0, 255, 0, 0, 0,LedCount);
   }
 
-  private void LEDControl(){ // placeholder
+  public void LEDControl(){ // placeholder
+ 
     if(
     m_TOF.getRange() >= TOFConstants.TOFMinDistance
     && m_TOF.getRange() <= TOFConstants.TOFMaxDistance
@@ -312,7 +316,7 @@ double measurement = m_TOF.getRange();
   }
 
   public void disabledAnimation(){
-    m_Candle.animate( new RainbowAnimation());
+    m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
   }
 
 
@@ -321,7 +325,7 @@ double measurement = m_TOF.getRange();
     putTOFTargetOnDashboard();
    // LEDGreen();
     //EELogging();
-    LEDControl();
+   // LEDControl();
     // This method will be called once per scheduler run
   }
 }

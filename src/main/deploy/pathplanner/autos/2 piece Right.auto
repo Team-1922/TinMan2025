@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C Left to J"
+            "pathName": "C Right to E"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "RightL4"
+            "name": "LeftL4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C J to Left algae.0"
+            "pathName": "C E to right algae.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "EeFloor"
           }
         },
         {
@@ -27,15 +33,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "Collect"
+                  "pathName": "C E to right algae.1"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "C J to Left algae.1"
+                  "name": "Collect"
                 }
               }
             ]
@@ -44,13 +50,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C Left Algae to K"
+            "pathName": "C Right algae to D"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "LeftL4"
+            "name": "RightL4"
           }
         }
       ]

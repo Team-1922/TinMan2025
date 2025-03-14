@@ -32,16 +32,16 @@ public final class Constants {
     public static class ElevatorConstants{
 
 
-      public static final int leftElevatatorMotorID = 6; // placeholder
-      public static final int rightElevatorMotorID = 5; // placeholder
+      public static final int leftElevatatorMotorID = 6; 
+      public static final int rightElevatorMotorID = 5; 
 
-      public static final double FloorPosition = -0.1; // placeholder
-      public static final double L1Position = 0.25;// placeholder
-      public static final double L2Position = 41.6 ; // placeholder
-      public static final double L3Position = 23.8; // placeholder
-      public static final double L4Position = 54.9;
-      public static final double AlgaeLowPosition = 7; // placeholder 
-      public static final double AlgaeHighPosition = 13; // placeholder 
+      public static final double FloorPosition = -0.15;
+      public static final double L1Position = 0.25;
+      public static final double L2Position = 41.6 ; // placeholder?
+      public static final double L3Position = 28.8;
+      public static final double L4Position = 52.4;
+      public static final double AlgaeLowPosition = 31.08; // placeholder 
+      public static final double AlgaeHighPosition = 38.22; // placeholder 
       public static final double StationPosition = 10; // placeholder
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 
@@ -67,7 +67,7 @@ public final class Constants {
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
       .withKP(0.5)
-      .withKG(0.022)   ;
+      .withKG(0.022);
 
       public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Coast)
@@ -80,10 +80,10 @@ public final class Constants {
 
 
       // motor ids 
-      public static final int rightCollectorMotorID = 7; // placeholder
-      public static final int leftCollectorMotorID = 8; // placeholder
-      public static final int endEffectorWristMotorID = 26; // placeholder
-      public static final int endEffectorArmMotorID = 19; // placeholder
+      public static final int rightCollectorMotorID = 7;
+      public static final int leftCollectorMotorID = 8; 
+      public static final int endEffectorWristMotorID = 26; 
+      public static final int endEffectorArmMotorID = 19;
 
       public static final int endEffectorArmEncoderID = 5; // remember that the swerve encoders are the same device type so can't have the same ID
       public static final int endEffectorWristEncoderID = 6;
@@ -92,24 +92,24 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = 0.04; // placeholder angle to collect off the floor   
-      public static final double L1WristAngle = 0.21; // placeholder, angle to score L1
+      public static final double FloorWristAngle = 0.04; //  angle to collect off the floor   
+      public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = 0.09; // 
       public static final double L3WristAngle = -0.08;
-      public static final double L4WristAngle = -0.02; // placeholder
-      public static final double AlgaeWristAngle = 0.1; // placeholder
-      public static final double StowedWristAngle =  .03; // the angle for defence, placeholder
+      public static final double L4WristAngle = -0.06; 
+      public static final double AlgaeWristAngle = 0.12; // placeholder
+      public static final double StowedWristAngle =  .03; // the angle for defence
       public static final double VerticalWristAngle = .13 ;
       public static final double StationWristAngle = 23; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.075; // placeholder
-      public static final double L1ArmAngle = 0.12; // placeholder, might not be used
+      public static final double FloorArmAngle = -0.075; 
+      public static final double L1ArmAngle = 0.138; 
       public static final double L2ArmAngle = -0.15; // underflows at -0.2
       public static final double L3ArmAngle = 0.13;
-      public static final double L4ArmAngle = .08; // placeholder
-      public static final double AlgaeArmAngle = .32; // placeholder
-      public static final double StowedArmAngle = 0.25; // the angle for starting configuration, placeholder
+      public static final double L4ArmAngle = .13; 
+      public static final double AlgaeArmAngle = -0.06; // placeholder
+      public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.22;
       public static final double StationArmAngle = .43; // placeholder angle for collecting at the station
 
@@ -175,7 +175,7 @@ public final class Constants {
 
     public static class LEDConstants{
       public static final int CandleID = 0;
-      public static final int TotalLEDs = 99; // placeholder
+      public static final int TotalLEDs = 56; // placeholder
     }
 
     public static class TOFConstants{
@@ -189,10 +189,10 @@ public final class Constants {
 
 
 
-
-     public static final double rightTargetLeftEdge = 0.41; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
-     public static final double rightTargetRightEdge = -0.66; //meters 
-     public static final double rightTargetCenter = -0.205; // meters 
+// -0.25, 0.07
+     public static final double rightTargetLeftEdge = 0.07; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
+     public static final double rightTargetRightEdge = -0.25; //meters 
+     public static final double rightTargetCenter = -0.18; // meters 
     
 
      public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
@@ -200,7 +200,7 @@ public final class Constants {
      public static final double leftTargetCenter = 0.15; // meters
     
      public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming        0.84 for the right target/left limelight/LL3
-     public static final double AimingTurnSpeedMultiplier = 1.1;
+     public static final double AimingTurnSpeedMultiplier = 1.05;
      public static final double RightLateralFF = 0.005; // feed forward on aiming right target
      public static final double LeftLateralFF = 0.002;
 
@@ -209,10 +209,10 @@ public final class Constants {
      public static final double TargetYDeadband = 0.05; // meters
      public static final double TargetYawDeadband = 4; // deg
      public static final double TargetYaw = 0;// RAD
-      public static final double TargetZ = 0.43
-      ; // meters
+      public static final double TargetZ = 0.4; // meters
+      public static final double L2TargetZ = 0.78; // target for backing up from the reef to put the arm into a stowed position
       public static final double MaxTargetZ = 1.85; // meters
-      public static final double TargetZSpeedMultiplier = 0.46;
+      public static final double TargetZSpeedMultiplier = 0.475;
 
     }
 

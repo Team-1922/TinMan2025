@@ -89,6 +89,10 @@ public class LimelightSubsystem extends SubsystemBase {
   return -LimelightConstants.TargetZ+GetTz();
  }
 
+ public double reverseTargetZError(){
+   return -LimelightConstants.L2TargetZ+GetTz();
+ }
+
  public double targetYawError() {
   return LimelightConstants.TargetYaw-getYaw();
  }
@@ -130,6 +134,29 @@ public class LimelightSubsystem extends SubsystemBase {
   return target;
  
  }
+
+
+ public double L2AimTargetZDutyCycle(){
+  if (! HasTarget()) return 0;
+double target =
+ MathUtil.clamp(reverseTargetZError()* LimelightConstants.TargetZSpeedMultiplier,-0.8,0.8);
+
+ SmartDashboard.putNumber("ZSpeed", reverseTargetZError());
+  return 
+   
+  target;
+ }
+
+ public double L2RobotXDutyCycle(){
+  if (!HasTarget()) return 0;
+ double target = MathUtil.clamp((-Math.sin(getYaw())*AimTargetXDutyCycle())+(Math.cos(getYaw())
+ 
+ *L2AimTargetZDutyCycle()),-.8,.8);
+SmartDashboard.putNumber("LlRobotX", target);
+ return target;
+
+}
+
 
  public double AimTargetZDutyCycle(){
   if (! HasTarget()) return 0;

@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "C Center to H"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C Center to H"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AimPrep"
+                }
+              }
+            ]
           }
         },
         {

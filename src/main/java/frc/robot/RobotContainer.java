@@ -30,6 +30,7 @@ import frc.robot.Commands.GotoL1;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
+import frc.robot.Commands.GotoLowerAlgae;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.EeL1;
@@ -37,6 +38,7 @@ import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
 import frc.robot.Commands.GoToLimelightPos;
+import frc.robot.Commands.AlgaeRemove;
 import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
@@ -85,7 +87,7 @@ public class RobotContainer {
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
-
+    
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     //elevator commands
     
@@ -97,6 +99,8 @@ public class RobotContainer {
     private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final GoToLimelightPos m_ElevatorLL = new GoToLimelightPos(m_ElevatorSubsystem);
+
+    private final AlgaeRemove m_AlgaeRemove = new AlgaeRemove(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE);
 
 
     // EE commands
@@ -157,20 +161,24 @@ public class RobotContainer {
         new GoToLimelightPos(m_ElevatorSubsystem)
     );
 
-
+    private final SequentialCommandGroup m_AutoL4Group = new SequentialCommandGroup(
+        new EEVertical(m_EE),
+        new GotoL4(m_ElevatorSubsystem)
+    );
 
 
 
     public RobotContainer() {
         configureBindings();
-       // DriverStation.silenceJoystickConnectionWarning(true); // uncomment this when testing with only 1 controller, this turns off the joystick unplugged warning
+        DriverStation.silenceJoystickConnectionWarning(true); // uncomment this when testing with only 1 controller, this turns off the joystick unplugged warning
     m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
 
     NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
     NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
     NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
-
+    NamedCommands.registerCommand("EeFloor", m_Floor); // the end effector to floor, does not controll elevator
+    NamedCommands.registerCommand("AimPrep", m_AutoL4Group); // Re-get these numbers and test this before adding into autos
     
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
     try {
@@ -224,14 +232,16 @@ public class RobotContainer {
         m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
         m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
         m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+        
 
-      // m_driveController.pov(0).onTrue(m_AimGroup);
-      //  m_operatorController.pov(180).onTrue(m_L3Group);
-      //  m_operatorController.pov(90).onTrue(m_L4Group);
       m_driveController.pov(90).onTrue(m_StoweEE);
         m_driveController.button(1).onTrue(m_FloorGroup); // a
        m_driveController.button(2).whileTrue(m_Collect);
-       m_driveController.pov(270).onTrue(m_EeVertical);
+     //  m_driveController.pov(270).onTrue(m_EeVertical);
+     
+  
+       //m_driveController.button(1).onTrue(m_L1Group);
+       m_driveController.pov(180).whileTrue(m_ReverseCollector);
      //  m_driveController.button(6).onTrue(m_ReverseCollector);
    //     m_operatorController.pov(270).onTrue(m_FloorGroup);
     //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
