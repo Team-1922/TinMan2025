@@ -15,6 +15,12 @@
           "data": {
             "name": "LeftL4"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C E to right algae.0"
+          }
         }
       ]
     }

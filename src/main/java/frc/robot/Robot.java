@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    m_EE.ConfigEeCoast();
   }
 
   @Override
@@ -70,7 +71,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
+    m_EE.ConfigEeCoast();
   }
 
   @Override
@@ -80,6 +81,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopExit() {
+    m_EE.ConfigEeBrake();
     m_EE.stopEE(); 
     m_Elevator.StopElevator(); 
   }

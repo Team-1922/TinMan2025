@@ -40,7 +40,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     m_LeftElevatorMotor.setControl(new Follower(ElevatorConstants.rightElevatorMotorID, true));
 
-    
+    m_LeftElevatorMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_RightElevatorMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_LeftElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    m_RightElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
   }
 
   /** position relitive to reference

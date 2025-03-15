@@ -43,6 +43,7 @@ import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
+import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.Commands.StoweEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
@@ -55,8 +56,8 @@ import frc.robot.Constants.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
+    private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+// was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -102,7 +103,7 @@ public class RobotContainer {
 
     private final AlgaeRemove m_AlgaeRemove = new AlgaeRemove(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE);
 
-
+    private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
     // EE commands
 
  
@@ -223,30 +224,72 @@ public class RobotContainer {
        // m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
        // m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
+       // m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
+
+
+       // DRIVER CONTROLS
+       
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
-       // m_drivetrain.registerTelemetry(logger::telemeterize);
-
  
-        m_driveController.button(3).onTrue(m_IncrementTargetLocation); // x
-        m_driveController.button(6).whileTrue(m_RightAutoScore); // Right Bumper 
-        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+   
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
+
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right")); // Right Bumper
+                
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right")); // Right Bumper 
+
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left")); // left Bumper 
+    
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left")); // left Bumper
+                    
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
+          
+      
+      
+            // m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
+   //     m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+   
+        m_driveController.leftTrigger().whileTrue(m_Collect); // Left Trigger
+        m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
         
 
-      m_driveController.pov(90).onTrue(m_StoweEE);
-        m_driveController.button(1).onTrue(m_FloorGroup); // a
-       m_driveController.button(2).whileTrue(m_Collect);
-     //  m_driveController.pov(270).onTrue(m_EeVertical);
-     
-  
-       //m_driveController.button(1).onTrue(m_L1Group);
-       m_driveController.pov(180).whileTrue(m_ReverseCollector);
-     //  m_driveController.button(6).onTrue(m_ReverseCollector);
-   //     m_operatorController.pov(270).onTrue(m_FloorGroup);
-    //    m_operatorController.pov(90).onTrue(m_IncrementTargetLocation);
-     //   m_operatorController.button(3).onTrue(m_StoweEE); // x 
-     //   m_operatorController.button(7).onTrue(m_EeVertical); // y 
+        // OPERATOR CONTROLS
+
+        m_operatorController.button(5).onTrue(m_IncrementTargetLocation); // Left Bumper
+        m_operatorController.button(4).onTrue(m_L1Group); // Y
+        m_operatorController.button(1).onTrue(m_FloorGroup); // A
+        m_operatorController.button(3).onTrue(m_StoweEE); // X
+        m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
+        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
+     /*
+     DRIVER
+        drive  -  both joysticks
+        zero field orientation - Y
+        Auto Aim Left  - LB
+        Auto Aim Right - RB
+        Collect - LT
+        reverse collector - RT
+
+
+
+      OPERATOR
+         climbing - Left Joystick
+         chose scoring target   - LB
+         end effector to L1 - Y
+         move arm to Collect position/the floor - A
+         move arm to stowed position (for defence/moving around) - X
+         stop elevator/arm/collector   - B
+*/
+
+
     }
 
     public Command getAutonomousCommand() {

@@ -48,10 +48,10 @@ public class EndEffector extends SubsystemBase {
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOutputConfigs);
+  //  m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOutputConfigs);
         
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
-    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
+  
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
     
@@ -65,7 +65,30 @@ public class EndEffector extends SubsystemBase {
     
     m_TOF.setRangingMode(RangingMode.Short, 25);
 
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
   }
+
+  public void ConfigEeCoast(){
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotorConfig);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
+  }
+
+
+
+  public void ConfigEeBrake(){
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);    
+
+  }
+
 
             // COLLECTOR CODE
 
@@ -97,7 +120,7 @@ public class EndEffector extends SubsystemBase {
 
 
   public void ReverseCollector(){
-  //  m_leftCollect.setControl(new VelocityDutyCycle(-EndEffectorConstants.collectorRPM));// maybe make them a seperate constant, if needed
+  
     m_rightCollect.set(0.4);
   }
 
