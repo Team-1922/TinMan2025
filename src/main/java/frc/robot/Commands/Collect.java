@@ -24,7 +24,7 @@ public class Collect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  m_StartedWithCoral = m_EE.HasCoral();
+ // m_StartedWithCoral = m_EE.HasCoral();
   m_EE.collect();
   
   }

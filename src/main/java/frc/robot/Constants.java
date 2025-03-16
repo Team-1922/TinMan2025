@@ -96,7 +96,7 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = -0.051; //  angle to collect off the floor   
+      public static final double FloorWristAngle = -0.049; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = 0.09; // 
       public static final double L3WristAngle = -0.18;
@@ -234,7 +234,7 @@ public final class Constants {
       public static final double TargetZ = 0.4; // meters
       public static final double L2TargetZ = 0.78; // target for backing up from the reef to put the arm into a stowed position
       public static final double MaxTargetZ = 1.85; // meters
-      public static final double TargetZSpeedMultiplier = 0.61;
+      public static final double TargetZSpeedMultiplier = 0.68;
 
     }
 

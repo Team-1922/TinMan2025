@@ -22,7 +22,7 @@ public class ReverseCollector extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_StartedWithCoral = m_EE.HasCoral();
+    //m_StartedWithCoral = m_EE.HasCoral();
     m_EE.ReverseCollector();
     m_Timer.reset();
   }
@@ -30,9 +30,9 @@ public class ReverseCollector extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_EE.HasCoral() != m_StartedWithCoral){
-      m_Timer.start();
-    }
+    //if (m_EE.HasCoral() != m_StartedWithCoral){
+    //  m_Timer.start();
+   // }
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +45,7 @@ public class ReverseCollector extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Timer.hasElapsed(0.25);
+    return false;
+    //m_Timer.hasElapsed(0.25);
   }
 }
