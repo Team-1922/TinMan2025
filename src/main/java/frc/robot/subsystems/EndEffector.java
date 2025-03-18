@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
@@ -339,8 +341,11 @@ double measurement = m_TOF.getRange();
   }
 
   public void disabledAnimation(){
-    m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
+   // m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
+    m_Candle.animate(new LarsonAnimation(255, 255, 0, 0, 0,24, BounceMode.Back, 4, 8), 0);
+    m_Candle.animate(new LarsonAnimation(255, 255, 0, 0, 0, 24, BounceMode.Back, 4, 32),1);
   }
+
 
 
   @Override

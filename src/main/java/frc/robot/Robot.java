@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     m_EE.stopEE();
     m_Elevator.StopElevator();
     m_EE.stopAnimation(0);
+    m_EE.stopAnimation(1);
 
   }
 

@@ -106,7 +106,7 @@ public final class Constants {
       public static final double VerticalWristAngle = .005
       
       ;
-      public static final double StationWristAngle = 23; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.04; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
@@ -118,7 +118,7 @@ public final class Constants {
       public static final double AlgaeArmAngle = -0.06; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
-      public static final double StationArmAngle = .43; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = .35; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -231,7 +231,7 @@ public final class Constants {
      public static final double TargetYDeadband = 0.05; // meters
      public static final double TargetYawDeadband = 4; // deg
      public static final double TargetYaw = 0;// RAD
-      public static final double TargetZ = 0.4; // meters
+      public static final double TargetZ = 0.39; // meters
       public static final double L2TargetZ = 0.78; // target for backing up from the reef to put the arm into a stowed position
       public static final double MaxTargetZ = 1.85; // meters
       public static final double TargetZSpeedMultiplier = 0.68;
