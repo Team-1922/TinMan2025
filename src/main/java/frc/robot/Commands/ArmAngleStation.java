@@ -9,43 +9,31 @@ import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class EEVertical extends Command {
-
+public class ArmAngleStation extends Command {
   EndEffector m_EE;
-  /** Creates a new EEVertical. <p>
-   * puts the End Effector into the vertical position for moving the elevator up/down
-   */
-  public EEVertical(EndEffector EE){ 
+  /** angles arm to collect from the station   */
+  public ArmAngleStation( EndEffector EE ) {
     m_EE = EE;
-    addRequirements( m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_EE.Vertical();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    
+    m_EE.ToStationArmAngle();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //m_Elevator.StopElevator();
-    // m_EE.stopEE();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() { 
-        return     
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.VerticalWristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.VerticalArmAngle) <0.05 ;
+  public boolean isFinished() {
+    return Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.StationArmAngle) <=0.05;
   }
 }

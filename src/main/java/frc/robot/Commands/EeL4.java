@@ -4,6 +4,8 @@
 
 package frc.robot.Commands;
 
+import java.lang.annotation.Target;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.EndEffectorConstants;
 
@@ -23,12 +25,14 @@ public class EeL4 extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_EE.L4();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_EE.L4();
+    
     
   }
 

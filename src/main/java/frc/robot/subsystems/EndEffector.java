@@ -135,13 +135,15 @@ public class EndEffector extends SubsystemBase {
 
   /** gets current angle of the end effector */
   public double getCurrentWristAngle(){
-    return m_WristMotor.getPosition().getValueAsDouble();
+    double angle =  m_WristMotor.getPosition().getValueAsDouble();
+    SmartDashboard.putNumber("CurrentWristAngle", angle);
+    return angle;
     //m_ArmMotor.getpo
   }
 
   /**angles the end effector at the floor */
   public void ToFloorWristAngle(){
-    
+    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.FloorWristAngle);
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorWristAngle));
   }
 
@@ -150,6 +152,7 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void ToL2WristAngle(){
+   SmartDashboard.putNumber("WristTarget", EndEffectorConstants.L2WristAngle);
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2WristAngle));
   }
 
@@ -162,6 +165,7 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void ToStationWristAngle(){
+    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.StationWristAngle);
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationWristAngle));
   }
 
@@ -174,6 +178,7 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void ToVerticalWristAngle(){
+    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.VerticalWristAngle);
     m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalWristAngle));
   }
 
@@ -187,13 +192,16 @@ public class EndEffector extends SubsystemBase {
 
   /** gets current angle of the arm on the end effector */
   public double getCurrentArmAngle(){
-    return m_ArmMotor.getPosition().getValueAsDouble();
+   double angle= m_ArmMotor.getPosition().getValueAsDouble();
+    SmartDashboard.putNumber("currentArmAngle",angle );
+    return angle;
 
   }
 
   
   /**angles the end effector arm to the floor */
   public void ToFloorArmAngle(){
+    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.FloorArmAngle);
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorArmAngle));
   }
 
@@ -216,6 +224,7 @@ public class EndEffector extends SubsystemBase {
   /**  angles arm to collect at station 
   */
   public void ToStationArmAngle(){
+    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.StationArmAngle);
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle));
   }
 
@@ -229,6 +238,7 @@ public class EndEffector extends SubsystemBase {
   }
 
   public void ToVerticalArmAngle(){
+    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.VerticalArmAngle);
     m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalArmAngle));
   }
 
@@ -351,6 +361,8 @@ double measurement = m_TOF.getRange();
   @Override
   public void periodic() {
     putTOFTargetOnDashboard();
+    getCurrentArmAngle();
+    getCurrentWristAngle();
    // LEDGreen();
     //EELogging();
    // LEDControl();

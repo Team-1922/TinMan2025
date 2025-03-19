@@ -5,25 +5,28 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AngleStation extends Command {
+public class WristAngleStation extends Command {
   EndEffector m_EE;
-  /** angles EE to collect from the station   */
-  public AngleStation( EndEffector EE ) {
+  /** angles wrist to collect from the station   */
+  public WristAngleStation( EndEffector EE ) {
     m_EE = EE;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_EE.ToStationWristAngle();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_EE.ToStationWristAngle();
+   
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +36,6 @@ public class AngleStation extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.StationWristAngle) <=0.05;
   }
 }

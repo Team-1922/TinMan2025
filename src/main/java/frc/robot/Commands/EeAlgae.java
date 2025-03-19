@@ -23,12 +23,12 @@ public class EeAlgae extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {m_EE.Algae();}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_EE.Algae();
+    
     
   }
 

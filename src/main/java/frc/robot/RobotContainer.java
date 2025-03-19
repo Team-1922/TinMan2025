@@ -33,18 +33,21 @@ import frc.robot.Commands.GotoL4;
 import frc.robot.Commands.GotoLowerAlgae;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.ReverseCollector;
+import frc.robot.Commands.StationCollect;
 import frc.robot.Commands.EeL1;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
 import frc.robot.Commands.GoToLimelightPos;
 import frc.robot.Commands.AlgaeRemove;
+import frc.robot.Commands.ArmAngleStation;
 import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.Commands.StoweEE;
+import frc.robot.Commands.WristAngleStation;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -90,6 +93,7 @@ public class RobotContainer {
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
+    private final StationCollect m_StationCollect = new StationCollect(m_AutoScoringSubsystem);
     //elevator commands
     
     private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
@@ -104,6 +108,7 @@ public class RobotContainer {
     private final AlgaeRemove m_AlgaeRemove = new AlgaeRemove(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE);
 
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
+
     // EE commands
 
  
@@ -168,6 +173,10 @@ public class RobotContainer {
     );
 
 
+    private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
+        new EEVertical(m_EE),
+        new GoToStation(m_ElevatorSubsystem)
+    );
 
     public RobotContainer() {
         configureBindings();
@@ -269,6 +278,14 @@ public class RobotContainer {
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
         m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(90).whileTrue(new SequentialCommandGroup(
+            new EEVertical(m_EE),
+          //  new GotoFloor(m_ElevatorSubsystem),
+         //   new WristAngleStation(m_EE),
+            new GoToStation(m_ElevatorSubsystem)
+           // new ArmAngleStation(m_EE)
+           ));
+        m_operatorController.pov(270).whileTrue(m_stationCollect);
      /*
      DRIVER
         drive  -  both joysticks

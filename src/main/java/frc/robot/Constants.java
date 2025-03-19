@@ -37,14 +37,14 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; 
       public static final int rightElevatorMotorID = 5; 
 
-      public static final double FloorPosition = 0.4;
-      public static final double L1Position = 0.4;
-      public static final double L2Position = 41.6 ; // placeholder?
-      public static final double L3Position = 28.9;
-      public static final double L4Position = 54.5;
+      public static final double FloorPosition = 0.2;
+      public static final double L1Position = FloorPosition;
+      public static final double L2Position = FloorPosition + 41.2;//41.6 ; // placeholder?
+      public static final double L3Position = FloorPosition+ 28.5; //28.9;
+      public static final double L4Position = FloorPosition+ 54.1;//54.5;
       public static final double AlgaeLowPosition = 31.08; // placeholder 
       public static final double AlgaeHighPosition = 38.22; // placeholder 
-      public static final double StationPosition = 10; // placeholder
+      public static final double StationPosition = FloorPosition +7.9;// 8.1; // placeholder
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 
 
@@ -103,9 +103,7 @@ public final class Constants {
       public static final double L4WristAngle = -0.094; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
-      public static final double VerticalWristAngle = .005
-      
-      ;
+      public static final double VerticalWristAngle = .005;
       public static final double StationWristAngle = 0.04; // placeholder angle for collecting at station
 
       //arm angles
@@ -118,7 +116,7 @@ public final class Constants {
       public static final double AlgaeArmAngle = -0.06; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
-      public static final double StationArmAngle = .35; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = 0.33; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)

@@ -44,7 +44,7 @@ public class Collect extends Command {
 // m_Timer.stop();
 // m_Timer.reset();
  if(!m_StartedWithCoral ){
-  m_EE.stowe();
+  //m_EE.stowe();
  }
   }
 

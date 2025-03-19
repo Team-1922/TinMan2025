@@ -17,12 +17,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.AprilTagAimReverse;
+import frc.robot.Commands.ArmAngleStation;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.EEVertical;
 import frc.robot.Commands.EeAlgae;
 import frc.robot.Commands.EeL2;
 import frc.robot.Commands.EeL3;
 import frc.robot.Commands.EeL4;
+import frc.robot.Commands.GoToStation;
 import frc.robot.Commands.GotoFloor;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
@@ -31,6 +33,7 @@ import frc.robot.Commands.GotoLowerAlgae;
 import frc.robot.Commands.GotoUpperAlgae;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StoweEE;
+import frc.robot.Commands.WristAngleStation;
 import frc.robot.generated.TunerConstants;
 
 public class AutoScoringSubsystem extends SubsystemBase {
@@ -159,6 +162,27 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
   
 
+  public SequentialCommandGroup StationPickupGroup(){
+    return new SequentialCommandGroup(
+      new EEVertical(m_EE),
+      new GotoFloor(m_Elevator),
+      new WristAngleStation(m_EE),
+      new GoToStation(m_Elevator),
+      new ArmAngleStation(m_EE)
+      //new Collect(m_EE)
+      
+      
+
+
+      // send arm and wrist back , not all the way to the position?
+      // send elevator up
+      // move arm and wrist to position
+      // collect
+      // move arm and wrist up a little so they don't hit climber/elevator
+      // move elevator down
+      // move arm and wrist back into vertical position
+    );
+  }
 
 
   @Override

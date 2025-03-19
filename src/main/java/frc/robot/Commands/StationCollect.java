@@ -5,47 +5,34 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.EndEffectorConstants;
-import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.AutoScoringSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class EEVertical extends Command {
-
-  EndEffector m_EE;
-  /** Creates a new EEVertical. <p>
-   * puts the End Effector into the vertical position for moving the elevator up/down
-   */
-  public EEVertical(EndEffector EE){ 
-    m_EE = EE;
-    addRequirements( m_EE);
+public class StationCollect extends Command {
+  AutoScoringSubsystem m_AutoScoringSubsystem;
+  /** Creates a new StationCollect. */
+  public StationCollect( AutoScoringSubsystem autoScoringSubsystem) {
+    m_AutoScoringSubsystem = autoScoringSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.Vertical();
+    m_AutoScoringSubsystem.StationPickupGroup();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //m_Elevator.StopElevator();
-    // m_EE.stopEE();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() { 
-        return     
-    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.VerticalWristAngle) <0.05 &&
-    Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.VerticalArmAngle) <0.05 ;
+  public boolean isFinished() {
+    return true;
   }
 }

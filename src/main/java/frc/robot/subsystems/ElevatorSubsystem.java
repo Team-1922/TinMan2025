@@ -50,7 +50,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * @return the position the elevator should target (in rotations)
     */
   public double TargetPosition(double pos){
-    return pos - SmartDashboard.getNumber("ElevatorReference", 0);
+    return pos;
   };
 
   public void GoToFloor(){
@@ -102,6 +102,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.LlAimPosition));
   }
 
+
+
   /** Stops elevator */
   public void StopElevator(){
   //  m_rightElevatorMotor.set(0);
@@ -109,8 +111,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double getElevatorPos(){
-    
-    return m_RightElevatorMotor.getPosition().getValueAsDouble();
+    double Position = m_RightElevatorMotor.getPosition().getValueAsDouble();
+    SmartDashboard.putNumber("ElevatorPosition", Position);
+    return Position;
   };
 
   public void setPosAsReference(){
@@ -128,6 +131,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
   //  ElevatorLogging();
+  getElevatorPos();
     // This method will be called once per scheduler run
   }
 }
