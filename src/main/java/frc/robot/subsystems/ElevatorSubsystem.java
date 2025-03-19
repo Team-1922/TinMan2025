@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 
+
+
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
@@ -52,6 +54,12 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double TargetPosition(double pos){
     return pos;
   };
+
+
+  public void GoToPosition(double TargetPos){
+    m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPos));
+    SmartDashboard.putNumber("ETarget", TargetPos);
+  }
 
   public void GoToFloor(){
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.FloorPosition)));

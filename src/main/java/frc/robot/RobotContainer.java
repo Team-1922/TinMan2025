@@ -25,33 +25,18 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
-import frc.robot.Commands.EEVertical;
-import frc.robot.Commands.EeFloor;
-import frc.robot.Commands.GoToStation;
-import frc.robot.Commands.GotoFloor;
-import frc.robot.Commands.GotoL1;
-import frc.robot.Commands.GotoL2;
-import frc.robot.Commands.GotoL3;
-import frc.robot.Commands.GotoL4;
 import frc.robot.Commands.IncrementTargetLocation;
+import frc.robot.Commands.MoveArm;
+import frc.robot.Commands.MoveArmAndWrist;
+import frc.robot.Commands.MoveElevator;
+import frc.robot.Commands.MoveWrist;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StationCollect;
-import frc.robot.Commands.EeL1;
-import frc.robot.Commands.EeL2;
-import frc.robot.Commands.EeL3;
-import frc.robot.Commands.EeL4;
-import frc.robot.Commands.GoToLimelightPos;
-import frc.robot.Commands.AlgaeRemove;
-import frc.robot.Commands.ArmAngleStation;
-import frc.robot.Commands.ArmStowAngle;
 import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
-import frc.robot.Commands.StoweEE;
-import frc.robot.Commands.WristAngleStation;
-import frc.robot.Commands.WristL4;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -81,8 +66,8 @@ public class RobotContainer {
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-    private final EndEffector m_EE = new EndEffector();
+     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+     final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
     private final Collect m_Collect = new Collect(m_EE);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
@@ -94,22 +79,10 @@ public class RobotContainer {
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
-    
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     private final StationCollect m_StationCollect = new StationCollect(m_AutoScoringSubsystem);
     //elevator commands
-    
-    private final GotoFloor m_GotoFloor = new GotoFloor(m_ElevatorSubsystem);
-    private final GotoL1 m_ElevatorL1 = new GotoL1(m_ElevatorSubsystem);
-    private final GotoL2 m_ElevatorL2 = new GotoL2(m_ElevatorSubsystem);
-    private final GotoL3 m_ElevatorL3 = new GotoL3(m_ElevatorSubsystem);
-    private final GotoL4 m_ElevatorL4 = new GotoL4(m_ElevatorSubsystem);
-    private final GoToStation m_GoToStation = new GoToStation(m_ElevatorSubsystem);
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
-    private final GoToLimelightPos m_ElevatorLL = new GoToLimelightPos(m_ElevatorSubsystem);
-
-    private final AlgaeRemove m_AlgaeRemove = new AlgaeRemove(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE);
-
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
 
     // EE commands
@@ -125,72 +98,73 @@ public class RobotContainer {
     // EE+elevator commands
 
 
-    private final EeL1 m_L1 = new EeL1(m_EE);
-    private final EeL2 m_L2 = new EeL2( m_EE);
-    private final EeL3 m_L3 = new EeL3(m_EE);
-    private final EeL4 m_L4 = new EeL4( m_EE);
-    private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final StoweEE m_StoweEE = new StoweEE(m_EE);
-    private final EEVertical m_EeVertical = new EEVertical( m_EE);
+//    private final EeL1 m_L1 = new EeL1(m_EE);
+ //   private final EeL2 m_L2 = new EeL2( m_EE);
+ //   private final EeL3 m_L3 = new EeL3(m_EE);
+ //   private final EeL4 m_L4 = new EeL4( m_EE);
+ //   private final EeFloor m_Floor = new EeFloor( m_EE);
+    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
+    private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
 
 
     // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
-        new EEVertical( m_EE),
-        new GotoL1(m_ElevatorSubsystem),
-        new EeL1(m_EE)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L1Position),
+           new MoveArmAndWrist(m_EE, EndEffectorConstants.L1ArmAngle, EndEffectorConstants.L1WristAngle)
     );
 
     private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(
-        new EEVertical( m_EE),    
-        new GotoL2(m_ElevatorSubsystem),
-        new EeL2(m_EE)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L2Position),
+           new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle)
     );
     private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(
-        new EEVertical( m_EE),
-        new GotoL3(m_ElevatorSubsystem),
-        new EeL3(m_EE)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position),
+           new MoveArmAndWrist(m_EE, EndEffectorConstants.L3ArmAngle, EndEffectorConstants.L3WristAngle)
     );
 
     private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(
-        new EEVertical( m_EE),
-        new GotoL4(m_ElevatorSubsystem),
-        new EeL4(m_EE)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position),
+           new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
     );
 
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
-        new EEVertical( m_EE),
-        new GotoFloor(m_ElevatorSubsystem),
-        new EeFloor(m_EE)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
+           new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
     );
 
-    private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
+   // private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
 
-        new EEVertical( m_EE),
-        new GoToLimelightPos(m_ElevatorSubsystem)
-    );
+   //     new EEVertical( m_EE),
+   //     new GoToLimelightPos(m_ElevatorSubsystem)
+   // );
 
     private final SequentialCommandGroup m_AutoL4Group = new SequentialCommandGroup(
-        new EEVertical(m_EE),
-        new GotoL4(m_ElevatorSubsystem)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position)
     );
 
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
-        new EEVertical(m_EE),
-        new GotoFloor(m_ElevatorSubsystem),
-        new WristL4(m_EE),
-        new ParallelCommandGroup(new ArmAngleStation(m_EE),
-        new GoToStation(m_ElevatorSubsystem)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
+        new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
+        new ParallelCommandGroup(
+            new MoveArm(m_EE,EndEffectorConstants.StationArmAngle),
+        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationPosition)
         ),
-        new WristAngleStation(m_EE),
+        new MoveWrist(m_EE,EndEffectorConstants.StationWristAngle),
         new WaitCommand(10),
-        new WristL4(m_EE),
+        new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
          new ParallelCommandGroup(
-            new GotoFloor(m_ElevatorSubsystem),
-            new ArmStowAngle(m_EE)
+            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
+            new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
          ),
-         new StoweEE(m_EE)
+         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
         
     );
 
@@ -203,7 +177,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
     NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
     NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
-    NamedCommands.registerCommand("EeFloor", m_Floor); // the end effector to floor, does not controll elevator
+    //NamedCommands.registerCommand("EeFloor", ); // the end effector to floor, does not controll elevator
     NamedCommands.registerCommand("AimPrep", m_AutoL4Group); // Re-get these numbers and test this before adding into autos
     
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
@@ -294,13 +268,6 @@ public class RobotContainer {
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
         m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
-        m_operatorController.pov(90).whileTrue(new SequentialCommandGroup(
-            new EEVertical(m_EE),
-          //  new GotoFloor(m_ElevatorSubsystem),
-         //   new WristAngleStation(m_EE),
-            new GoToStation(m_ElevatorSubsystem)
-           // new ArmAngleStation(m_EE)
-           ));
         m_operatorController.pov(270).whileTrue(m_stationCollect);
      /*
      DRIVER

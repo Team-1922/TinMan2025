@@ -5,15 +5,18 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArmStowAngle extends Command {
+public class MoveArm extends Command {
   EndEffector m_EE;
-  /** angles arm to collect from the station   */
-  public ArmStowAngle( EndEffector EE ) {
+  Double m_TargetPos;
+  /** Creates a new MoveArm.
+   * @param TargetPos the target position for the arm
+   */
+  public MoveArm(EndEffector EE, Double TargetPos) {
     m_EE = EE;
+    m_TargetPos = TargetPos;
     addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -21,14 +24,12 @@ public class ArmStowAngle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.ToStowedArmAngle();
+    m_EE.ToArmAngle(m_TargetPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-   
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -37,6 +38,6 @@ public class ArmStowAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.StowedArmAngle) <=0.05;
+    return Math.abs(m_EE.getCurrentArmAngle() - m_TargetPos)<= 0.05;
   }
 }

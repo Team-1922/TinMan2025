@@ -124,10 +124,8 @@ public class EndEffector extends SubsystemBase {
 
             // WRIST CODE
 
-  /** sets the current angle of the end effector wrist as the reference angle */
-  public void setWristAngleAsReference(){
-   // SmartDashboard.putNumber("EEReference", m_WristEncoder.getPosition().getValueAsDouble());
-  }
+  
+
 
   /** gets current angle of the end effector */
   public double getCurrentWristAngle(){
@@ -137,47 +135,15 @@ public class EndEffector extends SubsystemBase {
     //m_ArmMotor.getpo
   }
 
-  /**angles the end effector at the floor */
-  public void ToFloorWristAngle(){
-    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.FloorWristAngle);
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorWristAngle));
+  /**
+   * moves wrist to given location
+   * @param targetAngle the target position
+   */
+  public void ToWristAngle(double targetAngle){
+    SmartDashboard.putNumber("WristTarget", targetAngle);
+    m_WristMotor.setControl(new MotionMagicExpoDutyCycle(targetAngle));
   }
 
-  public void ToL1WristAngle(){
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L1WristAngle));
-  }
-
-  public void ToL2WristAngle(){
-   SmartDashboard.putNumber("WristTarget", EndEffectorConstants.L2WristAngle);
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2WristAngle));
-  }
-
-  public void ToL3WristAngle(){
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L3WristAngle));
-  }
-
-  public void ToL4WristAngle(){
-    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.L4WristAngle);
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4WristAngle));
-  }
-
-  public void ToStationWristAngle(){
-    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.StationWristAngle);
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationWristAngle));
-  }
-
-  public void ToStowedWristAngle(){
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StowedWristAngle));
-  }
-
-  public void ToAlgaeWristAngle(){
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeWristAngle));
-  }
-
-  public void ToVerticalWristAngle(){
-    SmartDashboard.putNumber("WristTarget", EndEffectorConstants.VerticalWristAngle);
-    m_WristMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalWristAngle));
-  }
 
 
 
@@ -195,101 +161,11 @@ public class EndEffector extends SubsystemBase {
 
   }
 
-  
-  /**angles the end effector arm to the floor */
-  public void ToFloorArmAngle(){
-    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.FloorArmAngle);
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.FloorArmAngle));
+  public void ToArmAngle(double TargetPos){
+    SmartDashboard.putNumber("ArmTarget", TargetPos);
+    m_ArmMotor.setControl(new MotionMagicExpoDutyCycle(TargetPos));
   }
 
-  public void ToL1ArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L1ArmAngle));
-  }
-
-  public void ToL2ArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L2ArmAngle));
-  }
-  
-  public void ToL3ArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L3ArmAngle));
-  }
-
-  public void ToL4ArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.L4ArmAngle));
-  }
-
-  /**  angles arm to collect at station 
-  */
-  public void ToStationArmAngle(){
-    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.StationArmAngle);
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StationArmAngle));
-  }
-
-  /** angles arm to starting configuration */
-  public void ToStowedArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.StowedArmAngle));
-  }
-  
-  public void ToAlgaeArmAngle(){
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.AlgaeArmAngle));
-  }
-
-  public void ToVerticalArmAngle(){
-    SmartDashboard.putNumber("ArmTarget", EndEffectorConstants.VerticalArmAngle);
-    m_ArmMotor.setControl( new MotionMagicExpoDutyCycle(EndEffectorConstants.VerticalArmAngle));
-  }
-
-  /** angles EE at <b>L1 */
-  public void L1(){
-    ToL1ArmAngle();
-    ToL1WristAngle();
-  }
-
-  /** angles EE at <b>L2</b>*/
-  public void L2(){
-    ToL2ArmAngle();
-    ToL2WristAngle();
-  }
-
-   /** angles EE at <b>L3</b>*/
-  public void L3(){
-    ToL3ArmAngle();
-    ToL3WristAngle();
-  }
-
-  /** angles EE at <b>L4 */
-  public void L4(){
-    ToL4ArmAngle();
-    ToL4WristAngle();
-  }
-
-    /** angles EE at <b>Algae */
-    public void Algae(){
-      ToAlgaeArmAngle();
-      ToAlgaeWristAngle();
-    }
-
-  /**  angles EE at the station, to pickup */
-  public void EEStation(){
-    ToStationArmAngle();
-    ToStationWristAngle();
-  }
-
-  /** angles EE at the floor */
-  public void Floor(){
-    ToFloorArmAngle();
-    ToFloorWristAngle();
-  }
-
-  public void stowe(){
-    ToStowedArmAngle();
-    ToStowedWristAngle();
-  }
-  
-  public void Vertical(){
-    ToVerticalArmAngle();
-    ToVerticalWristAngle();
-  }
 
 /** logging method for this subsystem it logs 
  * <ul>
@@ -330,8 +206,7 @@ double measurement = m_TOF.getRange();
 
   /** turns LEDs green, mainly for testing if the wiring is correct */
   public void LEDGreen(){
-    int LedCount = (int) SmartDashboard.getNumber("LedCount", 8);
-    m_Candle.setLEDs(0, 255, 0, 0, 0,LedCount);
+    m_Candle.setLEDs(0, 255, 0, 0, 0,99);
   }
 
   public void LEDControl(){ // placeholder
@@ -360,9 +235,7 @@ double measurement = m_TOF.getRange();
     putTOFTargetOnDashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();
-   // LEDGreen();
-    //EELogging();
-   // LEDControl();
+
     // This method will be called once per scheduler run
   }
 }
