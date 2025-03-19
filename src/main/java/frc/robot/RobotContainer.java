@@ -69,7 +69,8 @@ public class RobotContainer {
      final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
      final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
-    private final Collect m_Collect = new Collect(m_EE);
+    private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
+    private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
@@ -80,7 +81,7 @@ public class RobotContainer {
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
-    private final StationCollect m_StationCollect = new StationCollect(m_AutoScoringSubsystem);
+    private final StationCollect m_EeToStationCollect = new StationCollect(m_AutoScoringSubsystem);
     //elevator commands
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
@@ -103,7 +104,7 @@ public class RobotContainer {
  //   private final EeL3 m_L3 = new EeL3(m_EE);
  //   private final EeL4 m_L4 = new EeL4( m_EE);
  //   private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
+    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle);
     private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
 
 
@@ -174,7 +175,7 @@ public class RobotContainer {
     m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
 
-    NamedCommands.registerCommand("Collect", m_Collect); // put pathplanner commands here
+    NamedCommands.registerCommand("Collect", m_FloorCollect); // put pathplanner commands here
     NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
     NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
     //NamedCommands.registerCommand("EeFloor", ); // the end effector to floor, does not controll elevator
@@ -256,7 +257,7 @@ public class RobotContainer {
             // m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
    //     m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
-        m_driveController.leftTrigger().whileTrue(m_Collect); // Left Trigger
+        m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
         
 

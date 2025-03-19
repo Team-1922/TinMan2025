@@ -23,12 +23,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "EeFloor"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [

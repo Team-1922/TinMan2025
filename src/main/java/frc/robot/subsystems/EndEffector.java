@@ -90,10 +90,10 @@ public class EndEffector extends SubsystemBase {
 
             // COLLECTOR CODE
 
-  public void collect(){
+  public void collect(double speed){
  
    // m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
-    m_rightCollect.set(-0.4);
+    m_rightCollect.set(speed);
   }
 
   public void stopCollector(){
@@ -117,9 +117,9 @@ public class EndEffector extends SubsystemBase {
   }
 
 
-  public void ReverseCollector(){
+  public void ReverseCollector(double speed){
   
-    m_rightCollect.set(0.4);
+    m_rightCollect.set(speed);
   }
 
             // WRIST CODE

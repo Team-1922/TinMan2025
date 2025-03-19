@@ -12,13 +12,14 @@ public class MoveArmAndWrist extends Command {
   EndEffector m_EE;
   Double m_TargetArmPos;
   Double m_TargetWristPos;
-  /** Creates a new MoveArm.
-   * @param TargetPos the target position for the arm
+  /** moves both arm and wrist to given positions
+   * @param TargetArmPos the target position for the arm
+   * @param TargetWristPos the target position for the wrist
    */
   public MoveArmAndWrist(EndEffector EE, Double TargetArmPos, double TargetWristPos ) {
     m_EE = EE;
     m_TargetWristPos = TargetWristPos;
-    m_TargetWristPos = TargetArmPos;
+    m_TargetArmPos = TargetArmPos;
     addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
