@@ -79,7 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.L4Position)));
   }
   public void GoToStation(){
-  m_RightElevatorMotor.setControl(new MotionMagicDutyCycle(TargetPosition(ElevatorConstants.StationPosition)));
+  m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.StationPosition)));
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.StationPosition));
   }
 

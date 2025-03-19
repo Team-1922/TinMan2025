@@ -9,10 +9,10 @@ import frc.robot.Constants.EndEffectorConstants;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArmAngleStation extends Command {
+public class ArmStowAngle extends Command {
   EndEffector m_EE;
   /** angles arm to collect from the station   */
-  public ArmAngleStation( EndEffector EE ) {
+  public ArmStowAngle( EndEffector EE ) {
     m_EE = EE;
     addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,12 +20,14 @@ public class ArmAngleStation extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_EE.ToStowedArmAngle();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_EE.ToStationArmAngle();
+   
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +37,6 @@ public class ArmAngleStation extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.StationArmAngle) <=0.05;
+    return Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.StowedArmAngle) <=0.05;
   }
 }

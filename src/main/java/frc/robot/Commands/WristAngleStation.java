@@ -14,12 +14,14 @@ public class WristAngleStation extends Command {
   /** angles wrist to collect from the station   */
   public WristAngleStation( EndEffector EE ) {
     m_EE = EE;
+    addRequirements(m_EE);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+ //   m_EE.ToStationArmAngle();
     m_EE.ToStationWristAngle();
   }
 
@@ -36,6 +38,8 @@ public class WristAngleStation extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.StationWristAngle) <=0.05;
+    return 
+    Math.abs(m_EE.getCurrentWristAngle() - EndEffectorConstants.StationWristAngle) <=0.05;
+   // Math.abs(m_EE.getCurrentArmAngle() - EndEffectorConstants.StationArmAngle) <=0.05;
   }
 }

@@ -18,7 +18,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
@@ -30,7 +33,6 @@ import frc.robot.Commands.GotoL1;
 import frc.robot.Commands.GotoL2;
 import frc.robot.Commands.GotoL3;
 import frc.robot.Commands.GotoL4;
-import frc.robot.Commands.GotoLowerAlgae;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StationCollect;
@@ -41,6 +43,7 @@ import frc.robot.Commands.EeL4;
 import frc.robot.Commands.GoToLimelightPos;
 import frc.robot.Commands.AlgaeRemove;
 import frc.robot.Commands.ArmAngleStation;
+import frc.robot.Commands.ArmStowAngle;
 import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
@@ -48,13 +51,13 @@ import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.Commands.StoweEE;
 import frc.robot.Commands.WristAngleStation;
+import frc.robot.Commands.WristL4;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
-import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
@@ -175,7 +178,20 @@ public class RobotContainer {
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
         new EEVertical(m_EE),
+        new GotoFloor(m_ElevatorSubsystem),
+        new WristL4(m_EE),
+        new ParallelCommandGroup(new ArmAngleStation(m_EE),
         new GoToStation(m_ElevatorSubsystem)
+        ),
+        new WristAngleStation(m_EE),
+        new WaitCommand(10),
+        new WristL4(m_EE),
+         new ParallelCommandGroup(
+            new GotoFloor(m_ElevatorSubsystem),
+            new ArmStowAngle(m_EE)
+         ),
+         new StoweEE(m_EE)
+        
     );
 
     public RobotContainer() {

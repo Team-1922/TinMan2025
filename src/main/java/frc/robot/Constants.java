@@ -44,7 +44,7 @@ public final class Constants {
       public static final double L4Position = FloorPosition+ 54.1;//54.5;
       public static final double AlgaeLowPosition = 31.08; // placeholder 
       public static final double AlgaeHighPosition = 38.22; // placeholder 
-      public static final double StationPosition = FloorPosition +7.9;// 8.1; // placeholder
+      public static final double StationPosition = FloorPosition +11.3;// 11.5; // placeholder
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 
 
@@ -104,7 +104,7 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = 0.04; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.09; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
@@ -116,7 +116,7 @@ public final class Constants {
       public static final double AlgaeArmAngle = -0.06; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
-      public static final double StationArmAngle = 0.33; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = 0.39; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
