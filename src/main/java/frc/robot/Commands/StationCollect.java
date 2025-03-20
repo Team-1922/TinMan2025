@@ -19,7 +19,7 @@ public class StationCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_AutoScoringSubsystem.StationPickupGroup();
+    //m_AutoScoringSubsystem.StationPickupGroup();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

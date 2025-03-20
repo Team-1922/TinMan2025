@@ -37,16 +37,18 @@ public final class Constants {
       public static final int leftElevatatorMotorID = 6; 
       public static final int rightElevatorMotorID = 5; 
 
-      public static final double FloorPosition = 0.2;
+      public static final double ConversionFactor = 2*(Math.PI*1.432)/9; 
+      public static final double FloorPosition = 0.2/ConversionFactor;
       public static final double L1Position = FloorPosition;
-      public static final double L2Position = FloorPosition + 41.2;//41.6 ; // placeholder?
-      public static final double L3Position = FloorPosition+ 28.5; //28.9;
-      public static final double L4Position = FloorPosition+ 54.1;//54.5;
-      public static final double AlgaeLowPosition = 31.08; // placeholder 
-      public static final double AlgaeHighPosition = 38.22; // placeholder 
-      public static final double StationPosition = FloorPosition +11.3;// 11.5; // placeholder
-      public static final double LlAimPosition = 23; // position used while aiming using the limelights 
+      public static final double L2Position = FloorPosition + 41.2/ConversionFactor;//41.6 ; // placeholder?
+      public static final double L3Position = FloorPosition+ 28.5/ConversionFactor; //28.9;
+      public static final double L4Position = FloorPosition+ 54.1/ConversionFactor;//54.5;
+      public static final double AlgaeLowPosition = 31.08/ConversionFactor; // placeholder 
+      public static final double AlgaeHighPosition = 38.22/ConversionFactor; // placeholder 
+      public static final double StationPosition = FloorPosition +10.5/ConversionFactor;// 11.5; // placeholder
 
+      public static final double LlAimPosition = 23; // position used while aiming using the limelights 
+//
 
       // motion magic configs
       
@@ -65,13 +67,15 @@ public final class Constants {
 
       public static final MotionMagicConfigs ElevatorMotionMagicConfigs = new MotionMagicConfigs()
       .withMotionMagicCruiseVelocity(0)
-      .withMotionMagicExpo_kA(0.1)
-      .withMotionMagicExpo_kV(0.1); // rotations per second, velocity control doens't use this, expo and position do.    ;
+      .withMotionMagicExpo_kA(0.01)
+      .withMotionMagicExpo_kV(0.2); // rotations per second, velocity control doens't use this, expo and position do.    ;
 
 
       public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
-      .withKP(0.5)
-      .withKG(0.022);
+      .withKP(0.75)
+      .withKG(0.0225)
+      .withKD(0.03)
+      .withKS(0.0137);
 
       public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Coast)
@@ -104,19 +108,21 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = 0.09; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.085; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
       public static final double L1ArmAngle = 0.138; 
       public static final double L2ArmAngle = -0.15; // underflows at -0.2
-      public static final double L3ArmAngle = 0.14
-      ;
+      public static final double L3ArmAngle = 0.14;
+
+      
       public static final double L4ArmAngle = .139;
       public static final double AlgaeArmAngle = -0.06; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
-      public static final double StationArmAngle = 0.39; // placeholder angle for collecting at the station
+      public static final double StationHalfwayArmAngle = 0.33;
+      public static final double StationArmAngle = 0.3875; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -200,7 +206,7 @@ public final class Constants {
 
     public static class TOFConstants{
       public static final int TOFID = 0; // placeholder
-      public static final double TOFMaxDistance = 30; // mm
+      public static final double TOFMaxDistance = 55; // mm
       public static final double TOFMinDistance = 0; //mm
 
     }

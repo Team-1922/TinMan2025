@@ -19,8 +19,6 @@ public class LimelightSubsystem extends SubsystemBase {
   NetworkTable m_LLNetworkTable;
   double[] m_Pos;
   NetworkTableEntry m_tv;
-  double m_TargetLeftEdge;
-  double m_TargetRightEdge;
   double m_TargetCenter;
   double m_AimingSpeedMultiplier;
 
@@ -32,14 +30,10 @@ public class LimelightSubsystem extends SubsystemBase {
     m_LLNetworkTable =NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
     if(LimelightSide == "left")
     {
-      m_TargetLeftEdge = LimelightConstants.rightTargetLeftEdge; 
-      m_TargetRightEdge = LimelightConstants.rightTargetRightEdge;
       m_TargetCenter = LimelightConstants.rightTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     }
     else{
-      m_TargetLeftEdge = LimelightConstants.leftTargetLeftEdge; 
-      m_TargetRightEdge = LimelightConstants.leftTargetRightEdge;
       m_TargetCenter = LimelightConstants.leftTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
       

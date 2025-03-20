@@ -154,12 +154,14 @@ public class RobotContainer {
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
+
         new ParallelCommandGroup(
-            new MoveArm(m_EE,EndEffectorConstants.StationArmAngle),
+            new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationPosition)
         ),
-        new MoveWrist(m_EE,EndEffectorConstants.StationWristAngle),
-        new WaitCommand(10),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
+        new Collect(m_EE, -0.3),
+        new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
          new ParallelCommandGroup(
             new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
@@ -246,6 +248,7 @@ public class RobotContainer {
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left")); // left Bumper 
     
+
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left")); // left Bumper
                     

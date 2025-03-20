@@ -54,7 +54,7 @@ public class Collect extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Timer.hasElapsed(0.5);
+    return m_Timer.hasElapsed(0.3);
     // m_Timer.hasElapsed(0.5);
     // because this command will be used for collecting and scoring, this should end the command when the opposite happens
   }

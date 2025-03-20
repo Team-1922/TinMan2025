@@ -154,7 +154,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
   
 
-  public SequentialCommandGroup StationPickupGroup(){
+ /* public SequentialCommandGroup StationPickupGroup(){
     return new SequentialCommandGroup(
 
       new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
@@ -165,8 +165,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
         new MoveElevator(m_Elevator, ElevatorConstants.StationPosition),
         new MoveArm(m_EE, EndEffectorConstants.StationArmAngle)),
       new MoveWrist(m_EE, EndEffectorConstants.StationWristAngle),
-      //collect
-      new WaitCommand(5), // to act as collect for now
+      new Collect(m_EE, -0.2),
+      //new WaitCommand(5), // to act as collect for now
       new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
       new ParallelCommandGroup(
         new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
@@ -181,7 +181,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
       // move arm and wrist back into vertical position
     );
   }
-
+*/
 
   @Override
   public void periodic() {
