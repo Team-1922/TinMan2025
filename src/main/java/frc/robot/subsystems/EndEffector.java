@@ -26,14 +26,12 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
-  CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
-  //LaserCan m_CollectorSensor = new LaserCan(TOFConstants.TOFID);
-  TimeOfFlight m_TOF = new TimeOfFlight(0);
-  
-  
+
+
+  TimeOfFlight m_TOF = new TimeOfFlight(TOFConstants.TOFID);
+  TimeOfFlight m_TOF2 = new TimeOfFlight(TOFConstants.TOFID2);
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
-  CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");
-  
+  CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");  
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
   DoublePublisher m_armPos = m_networkTable.getDoubleTopic("ArmPos").publish();
   DoublePublisher m_wristPos = m_networkTable.getDoubleTopic("WristPos").publish();
@@ -62,16 +60,22 @@ public class EndEffector extends SubsystemBase {
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
     
     m_TOF.setRangingMode(RangingMode.Short, 25);
+    m_TOF2.setRangingMode(RangingMode.Short, 25);
 
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    /*
+    //m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
 
-    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    //m_ArmMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    */
+
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotionMagicConfigs);
+    m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristMotionMagicConfigs);
   }
 
   public void ConfigEeCoast(){
@@ -89,10 +93,8 @@ public class EndEffector extends SubsystemBase {
 
 
             // COLLECTOR CODE
-
+ /** spins motor at speed given, percent output */
   public void collect(double speed){
- 
-   // m_rightCollect.setControl(new VelocityDutyCycle(EndEffectorConstants.collectorRPM));
     m_rightCollect.set(speed);
   }
 
@@ -182,10 +184,6 @@ public class EndEffector extends SubsystemBase {
 
             // LED+LazerCan CODE
   
-  /** clears animation running in given animation slot */
-  public void stopAnimation(int AnimationSlot){
-    m_Candle.clearAnimation(AnimationSlot);
-  }
 
   /** @return if something is within the TOF target range
    */
@@ -197,36 +195,29 @@ double measurement = m_TOF.getRange();
   measurement <= TOFConstants.TOFMaxDistance;
   }
 
+  /** checks the 2nd TOF if it sees something, only used for station pickup */
+  public boolean HasStationCoral(){
+    double measurement = m_TOF2.getRange();
+    return 
+    measurement >= TOFConstants.TOF2MinDistance &&
+    measurement <= TOFConstants.TOF2MaxDistance;
+
+  }
 
   public void putTOFTargetOnDashboard(){
    double measurement = m_TOF.getRange();
+   double measurement2 = m_TOF2.getRange();
     if(m_TOF.isRangeValid()){
     SmartDashboard.putNumber("TOFValue", measurement);}
-  }
-
-  /** turns LEDs green, mainly for testing if the wiring is correct */
-  public void LEDGreen(){
-    m_Candle.setLEDs(0, 255, 0, 0, 0,99);
-  }
-
-  public void LEDControl(){ // placeholder
- 
-    if(
-    m_TOF.getRange() >= TOFConstants.TOFMinDistance
-    && m_TOF.getRange() <= TOFConstants.TOFMaxDistance
-    ){
+    if(m_TOF2.isRangeValid()){
+      SmartDashboard.putNumber("TOF2Value", measurement2);}
       
-      m_Candle.setLEDs(0,255,0,0,0,LEDConstants.TotalLEDs); // does have coral, turn LEDs green 
-    } else{
-      m_Candle.setLEDs(255,0,0,0,0,LEDConstants.TotalLEDs); // doesn't have coral, turn LEDs red
-    }
   }
 
-  public void disabledAnimation(){
-   // m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
-    m_Candle.animate(new LarsonAnimation(255, 255, 0, 0, 0,24, BounceMode.Back, 4, 8), 0);
-    m_Candle.animate(new LarsonAnimation(255, 255, 0, 0, 0, 24, BounceMode.Back, 4, 32),1);
-  }
+
+
+
+
 
 
 

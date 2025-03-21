@@ -43,6 +43,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.LedSubsystem;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
@@ -70,7 +71,7 @@ public class RobotContainer {
      final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
-    private final Collect m_StationCollect = new Collect(m_EE,-0.2);
+    //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
@@ -81,11 +82,12 @@ public class RobotContainer {
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
-    private final StationCollect m_EeToStationCollect = new StationCollect(m_AutoScoringSubsystem);
+    private final StationCollect m_StationCollect = new StationCollect(m_EE, -0.2);
     //elevator commands
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
 
+     final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
     // EE commands
 
  
@@ -157,13 +159,15 @@ public class RobotContainer {
 
         new ParallelCommandGroup(
             new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationPosition)
+        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationHalfWayPosition)
         ),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
-        new Collect(m_EE, -0.3),
+        new StationCollect(m_EE, -0.3),
         new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-         new ParallelCommandGroup(
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
+        new ParallelCommandGroup(
             new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
             new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
          ),
@@ -182,7 +186,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
     //NamedCommands.registerCommand("EeFloor", ); // the end effector to floor, does not controll elevator
     NamedCommands.registerCommand("AimPrep", m_AutoL4Group); // Re-get these numbers and test this before adding into autos
-    
+    NamedCommands.registerCommand("StationCollect", m_stationCollect);
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
     try {
         PathPlannerPath TestPath = PathPlannerPath.fromChoreoTrajectory("choreoTest");

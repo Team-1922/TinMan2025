@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.LedSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -16,11 +17,16 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
   private final EndEffector m_EE;
   private final ElevatorSubsystem m_Elevator;
+  private final LedSubsystem m_LED;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
-    m_EE = new EndEffector();
-    m_Elevator = new ElevatorSubsystem();
+    m_EE = m_robotContainer.m_EE;
+    m_Elevator = m_robotContainer.m_ElevatorSubsystem;
+    m_LED = m_robotContainer.m_LED;
+  //  m_EE = new EndEffector();
+   // m_Elevator = new ElevatorSubsystem();
+    //m_LED = new LedSubsystem(m_EE);
   
   }
 
@@ -31,7 +37,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    m_EE.disabledAnimation();
+    m_LED.disabledAnimation();
   }
 
   @Override
@@ -41,8 +47,8 @@ public class Robot extends TimedRobot {
   public void disabledExit() {
     m_EE.stopEE();
     m_Elevator.StopElevator();
-    m_EE.stopAnimation(0);
-    m_EE.stopAnimation(1);
+    m_LED.stopAnimation(0);
+    m_LED.stopAnimation(1);
 
   }
 
@@ -58,7 +64,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    m_EE.LEDControl();
+    m_LED.LEDControl();
   }
 
   @Override
@@ -77,14 +83,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_EE.LEDControl();
+    m_LED.LEDControl();
   }
 
   @Override
   public void teleopExit() {
     m_EE.ConfigEeBrake();
     m_EE.stopEE(); 
-    m_Elevator.StopElevator(); 
+    m_Elevator.StopElevator();
+     
   }
 
   @Override

@@ -45,7 +45,8 @@ public final class Constants {
       public static final double L4Position = FloorPosition+ 54.1/ConversionFactor;//54.5;
       public static final double AlgaeLowPosition = 31.08/ConversionFactor; // placeholder 
       public static final double AlgaeHighPosition = 38.22/ConversionFactor; // placeholder 
-      public static final double StationPosition = FloorPosition +10.5/ConversionFactor;// 11.5; // placeholder
+      public static final double StationPosition = FloorPosition +13.4/ConversionFactor;// 11.5; // placeholder
+      public static final double StationHalfWayPosition = FloorPosition +5/ConversionFactor;// 11.5; // placeholder
 
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 //
@@ -76,6 +77,9 @@ public final class Constants {
       .withKG(0.0225)
       .withKD(0.03)
       .withKS(0.0137);
+
+      public static final ClosedLoopRampsConfigs ElevatorClosedLoopRampConfigs = new ClosedLoopRampsConfigs()
+      .withDutyCycleClosedLoopRampPeriod(0);
 
       public static final MotorOutputConfigs ElevatorMotorOutputConfigs = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Coast)
@@ -108,7 +112,7 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = 0.085; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.05; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
@@ -122,13 +126,23 @@ public final class Constants {
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
       public static final double StationHalfwayArmAngle = 0.33;
-      public static final double StationArmAngle = 0.3875; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = 0.38; // placeholder angle for collecting at the station
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
       .withFeedbackRemoteSensorID(endEffectorArmEncoderID)
       .withRotorToSensorRatio(50)
       .withSensorToMechanismRatio(1.5)
+      ;
+
+      public static final MotionMagicConfigs ArmMotionMagicConfigs = new MotionMagicConfigs()
+      .withMotionMagicExpo_kV(10)
+      .withMotionMagicExpo_kA(8)
+      ;
+
+      public static final MotionMagicConfigs WristMotionMagicConfigs = new MotionMagicConfigs()
+      .withMotionMagicExpo_kA(0.1)
+      .withMotionMagicExpo_kV(3.5)
       ;
 
       public static final FeedbackConfigs WristFeedbackConfigs = new FeedbackConfigs()
@@ -157,22 +171,30 @@ public final class Constants {
 
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
-      .withKP(4) //
-      .withKG(0.02); // 
+      .withKP(2) //
+      .withKG(0.02)
+      .withKD(0.1)
+      .withKS(0.008)
+      .withKV(1.1)
+      .withKA(.05)
+      ; // 
+
+      public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
+      .withKP(1)
+      .withKS(0.015)
+      .withKV(0.5);
 
     //  public static final MotorOutputConfigs M_ArmOutputConfigs = new MotorOutputConfigs()
     //  .withNeutralMode(NeutralModeValue.Coast);
 
       public static final ClosedLoopRampsConfigs closedLoopRampConfigs = new ClosedLoopRampsConfigs()
-    .withDutyCycleClosedLoopRampPeriod(0.2);
+    .withDutyCycleClosedLoopRampPeriod(0.0);
 
     public static final ClosedLoopRampsConfigs openLoopRampConfigs = new ClosedLoopRampsConfigs()
-    .withDutyCycleClosedLoopRampPeriod(0.2);
+    .withDutyCycleClosedLoopRampPeriod(0);
 
 
-      public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
-      .withKP(1.5)
-      ;
+      
 
 
       public static final CANcoderConfiguration WristCanCoderConfig =
@@ -182,7 +204,8 @@ public final class Constants {
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
       .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.28564453125)
-      .withAbsoluteSensorDiscontinuityPoint(0.8));
+      .withAbsoluteSensorDiscontinuityPoint(0.8)
+      );
     
       public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
       .withNeutralMode(NeutralModeValue.Coast)
@@ -205,9 +228,13 @@ public final class Constants {
     }
 
     public static class TOFConstants{
-      public static final int TOFID = 0; // placeholder
+      public static final int TOFID = 0; 
+      public static final int TOFID2 = 1; // the TOF that is further back into the collector
       public static final double TOFMaxDistance = 55; // mm
       public static final double TOFMinDistance = 0; //mm
+      
+      public static final double TOF2MaxDistance = 50; // mm
+      public static final double TOF2MinDistance = 0; //mm
 
     }
 

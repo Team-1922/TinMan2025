@@ -17,12 +17,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "C J to Left algae.0"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -35,7 +29,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C J to Left algae.1"
+                  "pathName": "C J to Station"
                 }
               }
             ]
@@ -44,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C Left Algae to K"
+            "pathName": "C Station to L"
           }
         },
         {
