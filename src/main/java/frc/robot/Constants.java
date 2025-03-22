@@ -108,7 +108,7 @@ public final class Constants {
       public static final double FloorWristAngle = -0.066; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = 0.09; // 
-      public static final double L3WristAngle = -0.135;
+      public static final double L3WristAngle = -0.145;
       public static final double L4WristAngle = -0.107; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
