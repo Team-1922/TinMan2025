@@ -113,7 +113,7 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = 0.06; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.02; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
