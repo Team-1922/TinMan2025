@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "VerticalStow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "C Right to E"

@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "VerticalStow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "C Left to J"
@@ -14,12 +20,6 @@
           "type": "named",
           "data": {
             "name": "RightL4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C J to Left algae.0"
           }
         }
       ]

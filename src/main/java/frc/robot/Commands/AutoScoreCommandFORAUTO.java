@@ -33,6 +33,8 @@ public class AutoScoreCommandFORAUTO extends Command {
   @Override
   public void initialize() {
 
+   // m_AutoScoringSubsystem ->
+
     m_AutoScoringSubsystem.TargetAndAim(
       m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side).schedule();
   }

@@ -17,19 +17,19 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "C E to Station.0"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C E to Station"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StationCollect"
+                  "pathName": "C E to Station.1"
                 }
               }
             ]

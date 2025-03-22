@@ -142,7 +142,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
              new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5)),
               TargetCommandGroup
           ),
-          new WaitCommand(0.15),
+          new WaitCommand(0.25),
            new ParallelRaceGroup(new WaitCommand(0.65),
            new Collect(m_EE,-0.4)),
            new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),

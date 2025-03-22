@@ -41,12 +41,13 @@ public final class Constants {
       public static final double FloorPosition = 0.2/ConversionFactor;
       public static final double L1Position = FloorPosition;
       public static final double L2Position = FloorPosition + 41.2/ConversionFactor;//41.6 ; // placeholder?
-      public static final double L3Position = FloorPosition+ 28.5/ConversionFactor; //28.9;
-      public static final double L4Position = FloorPosition+ 54.1/ConversionFactor;//54.5;
+      public static final double L3Position = FloorPosition+ 27.8/ConversionFactor; //28.9;
+      public static final double L4Position = FloorPosition+ 55.1/ConversionFactor;//54.5;
       public static final double AlgaeLowPosition = 31.08/ConversionFactor; // placeholder 
       public static final double AlgaeHighPosition = 38.22/ConversionFactor; // placeholder 
       public static final double StationPosition = FloorPosition +13.4/ConversionFactor;// 11.5; // placeholder
       public static final double StationHalfWayPosition = FloorPosition +5/ConversionFactor;// 11.5; // placeholder
+      public static final double CoralStuckPosition = FloorPosition +15/ConversionFactor; // for if coral is stuck
 
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 //
@@ -104,21 +105,21 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = -0.049; //  angle to collect off the floor   
+      public static final double FloorWristAngle = -0.066; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = 0.09; // 
-      public static final double L3WristAngle = -0.18;
-      public static final double L4WristAngle = -0.094; 
+      public static final double L3WristAngle = -0.135;
+      public static final double L4WristAngle = -0.107; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = 0.05; // placeholder angle for collecting at station
+      public static final double StationWristAngle = 0.06; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.075; 
       public static final double L1ArmAngle = 0.138; 
       public static final double L2ArmAngle = -0.15; // underflows at -0.2
-      public static final double L3ArmAngle = 0.14;
+      public static final double L3ArmAngle = 0.164;
 
       
       public static final double L4ArmAngle = .139;
@@ -127,6 +128,7 @@ public final class Constants {
       public static final double VerticalArmAngle = 0.2;
       public static final double StationHalfwayArmAngle = 0.33;
       public static final double StationArmAngle = 0.38; // placeholder angle for collecting at the station
+      
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -149,6 +151,7 @@ public final class Constants {
       .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
       .withFeedbackRemoteSensorID(endEffectorWristEncoderID)
       .withRotorToSensorRatio(20)
+      .withSensorToMechanismRatio(1);
       ;
 
       public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
@@ -199,7 +202,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration WristCanCoderConfig =
        new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49560546875));
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.830810546875));
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
@@ -250,7 +253,7 @@ public final class Constants {
 
      public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag (for aiming right side)
      public static final double leftTargetRightEdge = -0.46; //meters 
-     public static final double leftTargetCenter = 0.15; // meters
+     public static final double leftTargetCenter = 0.17; // meters
     
      public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming        0.84 for the right target/left limelight/LL3
      public static final double AimingTurnSpeedMultiplier = 1.05;

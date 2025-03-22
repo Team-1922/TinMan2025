@@ -140,6 +140,18 @@ public class RobotContainer {
            new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
     );
 
+
+    private final SequentialCommandGroup m_CORALSTUCKgroup = new SequentialCommandGroup(// sends elevator up, for if a coral is stuck
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.CoralStuckPosition)
+
+    );
+
+    private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(  
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
+        );
+
    // private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
 
    //     new EEVertical( m_EE),
@@ -175,12 +187,30 @@ public class RobotContainer {
         
     );
 
+    /** if the arm is stuck at the station position from letting go of the button, this should send it back */
+    public final SequentialCommandGroup m_backFromStation = new SequentialCommandGroup(
+
+    new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
+    new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
+    new ParallelCommandGroup(
+        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
+        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
+     ),
+     new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
+ 
+
+
+    );
+
+    
+
     public RobotContainer() {
         configureBindings();
         DriverStation.silenceJoystickConnectionWarning(true); // uncomment this when testing with only 1 controller, this turns off the joystick unplugged warning
     m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric());
 
-
+    NamedCommands.registerCommand("VerticalStow", new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
     NamedCommands.registerCommand("Collect", m_FloorCollect); // put pathplanner commands here
     NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
     NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
@@ -261,8 +291,8 @@ public class RobotContainer {
           
       
       
-            // m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
-   //     m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+      //  m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
+      //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
@@ -276,8 +306,13 @@ public class RobotContainer {
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
         m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
-        m_operatorController.pov(270).whileTrue(m_stationCollect);
-     /*
+      //  m_operatorController.pov(270).whileTrue(m_stationCollect);
+        m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
+        m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
+        m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
+        m_operatorController.pov(270).onTrue(m_verticalStowGroup);
+     
+        /*
      DRIVER
         drive  -  both joysticks
         zero field orientation - Y
@@ -295,6 +330,8 @@ public class RobotContainer {
          move arm to Collect position/the floor - A
          move arm to stowed position (for defence/moving around) - X
          stop elevator/arm/collector   - B
+         collect from station - RT
+         move arm back from station (incase it gets stuck there) - LT
 */
 
 
