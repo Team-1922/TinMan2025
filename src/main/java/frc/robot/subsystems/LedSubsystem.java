@@ -53,10 +53,10 @@ public class LedSubsystem extends SubsystemBase {
     if(m_LeftLL.HasTarget() || m_RightLL.HasTarget()){
       //m_Candle.animate(, 0)
       m_Candle.setLEDs(255, 255, 0, 0, 16, 8);
-      m_Candle.setLEDs(255, 255, 0, 0, 42, 8);
+      m_Candle.setLEDs(255, 255, 0, 0, 40, 8);
     }else{
       m_Candle.setLEDs(0, 0, 255, 0, 16, 8);
-      m_Candle.setLEDs(0, 0, 255, 0, 42, 8);
+      m_Candle.setLEDs(0, 0, 255, 0, 40, 8);
     };
 
 

@@ -175,7 +175,7 @@ public class RobotContainer {
         ),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
-        new StationCollect(m_EE, -0.3),
+        new StationCollect(m_EE, -0.2),
         new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
@@ -202,6 +202,27 @@ public class RobotContainer {
 
 
     );
+
+
+    public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position)
+    
+
+
+    );
+
+    public final SequentialCommandGroup m_L2algaeRemove = new SequentialCommandGroup(
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.AlgaeL2)
+    
+
+
+    );
+
+    
 
     
 
@@ -247,6 +268,9 @@ public class RobotContainer {
                     .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
+
+
+
 
        // m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
     //   m_driveController.b().whileTrue(m_drivetrain.applyRequest(() ->
@@ -303,15 +327,18 @@ public class RobotContainer {
         m_operatorController.button(5).onTrue(m_IncrementTargetLocation); // Left Bumper
         m_operatorController.button(4).onTrue(m_L1Group); // Y
         m_operatorController.button(1).onTrue(m_FloorGroup); // A
+
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
-        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
       //  m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
-     
+        m_operatorController.pov(90).onTrue(m_algaeRemove);
+        m_operatorController.button(10).onTrue(m_L2algaeRemove);
+            //m_L3Group);
         /*
      DRIVER
         drive  -  both joysticks

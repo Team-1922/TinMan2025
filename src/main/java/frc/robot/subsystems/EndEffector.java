@@ -35,7 +35,8 @@ public class EndEffector extends SubsystemBase {
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
   DoublePublisher m_armPos = m_networkTable.getDoubleTopic("ArmPos").publish();
   DoublePublisher m_wristPos = m_networkTable.getDoubleTopic("WristPos").publish();
-  
+  double m_TOFmeasurement;
+  double m_TOF2Measurement;
 
   /** Creates a new EndEffector. */
   public EndEffector() {
@@ -62,6 +63,7 @@ public class EndEffector extends SubsystemBase {
     m_TOF.setRangingMode(RangingMode.Short, 25);
     m_TOF2.setRangingMode(RangingMode.Short, 25);
 
+    
     /*
     //m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
@@ -179,8 +181,28 @@ public class EndEffector extends SubsystemBase {
     SignalLogger.writeDouble("ArmPosition", getCurrentArmAngle());
   }
 
+ 
+public double GetTofMeasurement(){
+return m_TOFmeasurement;
+}
+  
+public double GetTof2Measurement(){
+ return m_TOF2Measurement;
+} 
+ 
+public void SetTofMeasurement(){
+  if(m_TOF.isRangeValid()){
+  m_TOFmeasurement = m_TOF.getRange();}
+
+ // if(m_TOF2.isRangeValid()){
+ //   m_TOF2Measurement = m_TOF2.getRange();
+ // }
+}
 
 
+public void PutTOFonSmartdashboard(){
+  SmartDashboard.putNumber("TOFtestValues", m_TOFmeasurement);
+}
 
             // LED+LazerCan CODE
   
@@ -188,29 +210,30 @@ public class EndEffector extends SubsystemBase {
   /** @return if something is within the TOF target range
    */
   public boolean HasCoral(){
-double measurement = m_TOF.getRange();
+
+// m_TOF.getRange();
 
   return 
-  measurement >= TOFConstants.TOFMinDistance &&
-  measurement <= TOFConstants.TOFMaxDistance;
+  m_TOFmeasurement >= TOFConstants.TOFMinDistance &&
+  m_TOFmeasurement <= TOFConstants.TOFMaxDistance;
   }
 
   /** checks the 2nd TOF if it sees something, only used for station pickup */
   public boolean HasStationCoral(){
-    double measurement = m_TOF2.getRange();
+  //  double measurement = m_TOF2.getRange();
     return 
-    measurement >= TOFConstants.TOF2MinDistance &&
-    measurement <= TOFConstants.TOF2MaxDistance;
+    m_TOF2Measurement >= TOFConstants.TOF2MinDistance &&
+    m_TOF2Measurement <= TOFConstants.TOF2MaxDistance;
 
   }
 
   public void putTOFTargetOnDashboard(){
-   double measurement = m_TOF.getRange();
-   double measurement2 = m_TOF2.getRange();
+   //double measurement = m_TOF.getRange();
+   //double measurement2 = m_TOF2.getRange();
     if(m_TOF.isRangeValid()){
-    SmartDashboard.putNumber("TOFValue", measurement);}
-    if(m_TOF2.isRangeValid()){
-      SmartDashboard.putNumber("TOF2Value", measurement2);}
+    SmartDashboard.putNumber("TOFValue", m_TOFmeasurement);}
+   // if(m_TOF2.isRangeValid()){
+   //   SmartDashboard.putNumber("TOF2Value", m_TOF2Measurement);}
       
   }
 
@@ -223,10 +246,12 @@ double measurement = m_TOF.getRange();
 
   @Override
   public void periodic() {
-    putTOFTargetOnDashboard();
+   putTOFTargetOnDashboard();
+    SetTofMeasurement();
+   // PutTOFonSmartdashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();
-
+    
     // This method will be called once per scheduler run
   }
 }

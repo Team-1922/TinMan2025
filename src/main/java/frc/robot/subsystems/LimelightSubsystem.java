@@ -44,6 +44,7 @@ public class LimelightSubsystem extends SubsystemBase {
 /** updates the target values */ 
    private void UpdateData(){
      m_tv = m_LLNetworkTable.getEntry("tv"); // 0 if no target, 1 if it has a target
+    //SmartDashboard.putBoolean("HasTarget");
 
    m_Pos = 
       m_LLNetworkTable.getEntry("targetpose_robotspace").getDoubleArray(new double[6]); // tx,ty,tz,pitch,yaw,roll (meters, deg)

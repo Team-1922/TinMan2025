@@ -47,7 +47,8 @@ public final class Constants {
       public static final double AlgaeHighPosition = 38.22/ConversionFactor; // placeholder 
       public static final double StationPosition = FloorPosition +13.4/ConversionFactor;// 11.5; // placeholder
       public static final double StationHalfWayPosition = FloorPosition +5/ConversionFactor;// 11.5; // placeholder
-      public static final double CoralStuckPosition = FloorPosition +15/ConversionFactor; // for if coral is stuck
+      public static final double CoralStuckPosition = FloorPosition +17/ConversionFactor; // for if coral is stuck
+      public static final double AlgaeL2 = FloorPosition + 13.17/ConversionFactor;
 
       public static final double LlAimPosition = 23; // position used while aiming using the limelights 
 //
@@ -108,7 +109,7 @@ public final class Constants {
       public static final double FloorWristAngle = -0.066; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = 0.09; // 
-      public static final double L3WristAngle = -0.145;
+      public static final double L3WristAngle = -0.175;
       public static final double L4WristAngle = -0.107; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
@@ -123,7 +124,7 @@ public final class Constants {
 
       
       public static final double L4ArmAngle = .139;
-      public static final double AlgaeArmAngle = -0.06; // placeholder
+      public static final double AlgaeArmAngle = .132; // placeholder
       public static final double StowedArmAngle = 0.25; // the angle for starting configuration
       public static final double VerticalArmAngle = 0.2;
       public static final double StationHalfwayArmAngle = 0.33;

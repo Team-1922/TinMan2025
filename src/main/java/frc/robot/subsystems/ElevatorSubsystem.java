@@ -27,7 +27,7 @@ public class ElevatorSubsystem extends SubsystemBase {
  // DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
   DoublePublisher m_elevatorPos = m_networkTable.getDoubleTopic("ElevatorPos").publish();
 
-
+  private double m_ElevatorOffset;
   /** Creates a new Elevator. */
   public ElevatorSubsystem() {
    
@@ -46,6 +46,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorClosedLoopRampConfigs);
    // m_LeftElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
   //  m_RightElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+  
+
+    m_RightElevatorMotor.setPosition(ElevatorConstants.FloorPosition);
   }
 
   /** position relitive to reference

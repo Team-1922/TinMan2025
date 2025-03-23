@@ -44,7 +44,7 @@ public class StationCollect extends Command {
   @Override
   public boolean isFinished() {
     return 
-    m_EE.HasCoral() == true &&
-    m_EE.HasStationCoral() == true;
+    m_EE.HasCoral() == true ;
+  //  m_EE.HasStationCoral() == true;
   }
 }
