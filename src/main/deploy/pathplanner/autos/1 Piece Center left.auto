@@ -5,28 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AimPrep"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "C Center to G"
-                }
-              }
-            ]
+            "name": "VerticalStow"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.25
+            "pathName": "C Center to G"
           }
         },
         {
