@@ -13,22 +13,18 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-  
   SparkMax m_climberMotor = new SparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
   /** subsystem that only controls the climber motor */
-  public ClimberSubsystem() {
-  }
+  public ClimberSubsystem() {}
 
   /**   @param directionMultiplier Put a joystick axis here*/
   public void climb(double directionMultiplier){
     m_climberMotor.setVoltage(ClimberConstants.ClimberMaxVoltage*directionMultiplier);
   }
 
-
   public void stopClimber(){
     m_climberMotor.set(0);
   }
-
 
   @Override
   public void periodic() {

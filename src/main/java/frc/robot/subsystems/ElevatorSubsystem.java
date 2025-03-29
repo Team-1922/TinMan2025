@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-
-
-
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
@@ -24,7 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   // logging values
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
- // DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
+  // DoublePublisher m_elevatorTarget = m_networkTable.getDoubleTopic("ElevatorTarget").publish();
   DoublePublisher m_elevatorPos = m_networkTable.getDoubleTopic("ElevatorPos").publish();
 
   private double m_ElevatorOffset;
@@ -44,8 +41,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     m_LeftElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorClosedLoopRampConfigs);
     m_RightElevatorMotor.getConfigurator().apply(ElevatorConstants.ElevatorClosedLoopRampConfigs);
-   // m_LeftElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
-  //  m_RightElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    // m_LeftElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
+    // m_RightElevatorMotor.getConfigurator().apply(EndEffectorConstants.openLoopRampConfigs);
   
 
     m_RightElevatorMotor.setPosition(ElevatorConstants.FloorPosition);
@@ -53,7 +50,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   /** position relitive to reference
    * @return the position the elevator should target (in rotations)
-    */
+  */
   public double TargetPosition(double pos){
     return pos;
   };
@@ -66,13 +63,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void GoToFloor(){
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.FloorPosition)));
-  SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.FloorPosition)); 
+    SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.FloorPosition)); 
   }
 
   public void GoToL1(){
-  //  m_RightElevatorMotor.setControl(new MotionMagicDutyCycle(TargetPosition(ElevatorConstants.L1Position)));
+    // m_RightElevatorMotor.setControl(new MotionMagicDutyCycle(TargetPosition(ElevatorConstants.L1Position)));
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.L1Position)));
-   SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.L1Position));
+    SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.L1Position));
   }
 
   public void GoToL2(){
@@ -81,16 +78,16 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void GoToL3(){
-     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.L3Position)));
-      SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.L3Position));
-    }
+    m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.L3Position)));
+    SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.L3Position));
+  }
 
   public void GoToL4(){
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.L4Position));
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.L4Position)));
   }
   public void GoToStation(){
-  m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.StationPosition)));
+   m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.StationPosition)));
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.StationPosition));
   }
 
@@ -100,20 +97,15 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void GoToHighAlgae(){
-
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.AlgaeHighPosition)));
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.AlgaeHighPosition));
-    
   }
 
   /** moves elevator up to a position so the limelights can see the apriltags */
   public void GoToAimingPosition(){
-
     m_RightElevatorMotor.setControl(new MotionMagicExpoDutyCycle(TargetPosition(ElevatorConstants.LlAimPosition)));
     SmartDashboard.putNumber("ETarget", TargetPosition(ElevatorConstants.LlAimPosition));
   }
-
-
 
   /** Stops elevator */
   public void StopElevator(){
@@ -129,20 +121,18 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void setPosAsReference(){
     SmartDashboard.putNumber("ElevatorReference", m_RightElevatorMotor.getPosition().getValueAsDouble());
-
   }
 
-
   public void ElevatorLogging(){
-   // m_elevatorPos = getElevatorPos();
+    // m_elevatorPos = getElevatorPos();
     SignalLogger.writeDouble("ElevatorPosition", getElevatorPos());
-    //m_elevatorTarget.set(getElevatorPos());
+    // m_elevatorTarget.set(getElevatorPos());
   };
 
   @Override
   public void periodic() {
-  //  ElevatorLogging();
-  getElevatorPos();
+    // ElevatorLogging();
+    getElevatorPos();
     // This method will be called once per scheduler run
   }
 }

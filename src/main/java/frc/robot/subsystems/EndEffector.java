@@ -40,20 +40,17 @@ public class EndEffector extends SubsystemBase {
 
   /** Creates a new EndEffector. */
   public EndEffector() {
- 
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmMotorConfig);
-  //  m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOutputConfigs);
+    // m_ArmMotor.getConfigurator().apply(EndEffectorConstants.M_ArmOutputConfigs);
         
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristSlot0Configs);
-  
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.WristFeedbackConfigs);
-    
-
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
+
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
@@ -62,10 +59,9 @@ public class EndEffector extends SubsystemBase {
     
     m_TOF.setRangingMode(RangingMode.Short, 25);
     m_TOF2.setRangingMode(RangingMode.Short, 25);
-
     
     /*
-    //m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
+    m_ArmMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.closedLoopRampConfigs);
@@ -93,16 +89,14 @@ public class EndEffector extends SubsystemBase {
 
   }
 
-
-            // COLLECTOR CODE
- /** spins motor at speed given, percent output */
+  // COLLECTOR CODE
+  /** spins motor at speed given, percent output */
   public void collect(double speed){
     m_rightCollect.set(speed);
   }
 
   public void stopCollector(){
     m_rightCollect.set(0);
-
   }
 
   public void stopWrist(){
@@ -120,16 +114,12 @@ public class EndEffector extends SubsystemBase {
     stopArm();
   }
 
-
   public void ReverseCollector(double speed){
-  
     m_rightCollect.set(speed);
   }
 
-            // WRIST CODE
 
-  
-
+  // WRIST CODE
 
   /** gets current angle of the end effector */
   public double getCurrentWristAngle(){
@@ -149,27 +139,19 @@ public class EndEffector extends SubsystemBase {
   }
 
 
-
-
-
-           // ARM CODE
-
-
-
+  // ARM CODE
 
   /** gets current angle of the arm on the end effector */
   public double getCurrentArmAngle(){
-   double angle= m_ArmMotor.getPosition().getValueAsDouble();
+    double angle= m_ArmMotor.getPosition().getValueAsDouble();
     SmartDashboard.putNumber("currentArmAngle",angle );
     return angle;
-
   }
 
   public void ToArmAngle(double TargetPos){
     SmartDashboard.putNumber("ArmTarget", TargetPos);
     m_ArmMotor.setControl(new MotionMagicExpoDutyCycle(TargetPos));
   }
-
 
 /** logging method for this subsystem it logs 
  * <ul>
@@ -181,46 +163,47 @@ public class EndEffector extends SubsystemBase {
     SignalLogger.writeDouble("ArmPosition", getCurrentArmAngle());
   }
 
- 
-public double GetTofMeasurement(){
-return m_TOFmeasurement;
-}
+  public double GetTofMeasurement(){
+    return m_TOFmeasurement;
+  }
   
-public double GetTof2Measurement(){
- return m_TOF2Measurement;
-} 
+  public double GetTof2Measurement(){
+    return m_TOF2Measurement;
+  } 
  
-public void SetTofMeasurement(){
-  if(m_TOF.isRangeValid()){
-  m_TOFmeasurement = m_TOF.getRange();}
+  public void SetTofMeasurement(){
+    if(m_TOF.isRangeValid()){
+      m_TOFmeasurement = m_TOF.getRange();
+    }
 
- // if(m_TOF2.isRangeValid()){
- //   m_TOF2Measurement = m_TOF2.getRange();
- // }
-}
+    /*
+    if(m_TOF2.isRangeValid()){
+      m_TOF2Measurement = m_TOF2.getRange();
+    }
+    */
+  }
 
 
-public void PutTOFonSmartdashboard(){
-  SmartDashboard.putNumber("TOFtestValues", m_TOFmeasurement);
-}
+  public void PutTOFonSmartdashboard(){
+    SmartDashboard.putNumber("TOFtestValues", m_TOFmeasurement);
+  }
 
-            // LED+LazerCan CODE
+
+  // LED+LazerCan CODE
   
 
   /** @return if something is within the TOF target range
    */
   public boolean HasCoral(){
-
-// m_TOF.getRange();
-
-  return 
-  m_TOFmeasurement >= TOFConstants.TOFMinDistance &&
-  m_TOFmeasurement <= TOFConstants.TOFMaxDistance;
+    // m_TOF.getRange();
+    return 
+    m_TOFmeasurement >= TOFConstants.TOFMinDistance &&
+    m_TOFmeasurement <= TOFConstants.TOFMaxDistance;
   }
 
   /** checks the 2nd TOF if it sees something, only used for station pickup */
   public boolean HasStationCoral(){
-  //  double measurement = m_TOF2.getRange();
+    // double measurement = m_TOF2.getRange();
     return 
     m_TOF2Measurement >= TOFConstants.TOF2MinDistance &&
     m_TOF2Measurement <= TOFConstants.TOF2MaxDistance;
@@ -228,30 +211,22 @@ public void PutTOFonSmartdashboard(){
   }
 
   public void putTOFTargetOnDashboard(){
-   //double measurement = m_TOF.getRange();
-   //double measurement2 = m_TOF2.getRange();
+    //double measurement = m_TOF.getRange();
+    //double measurement2 = m_TOF2.getRange();
     if(m_TOF.isRangeValid()){
     SmartDashboard.putNumber("TOFValue", m_TOFmeasurement);}
-   // if(m_TOF2.isRangeValid()){
-   //   SmartDashboard.putNumber("TOF2Value", m_TOF2Measurement);}
+    // if(m_TOF2.isRangeValid()){
+    // SmartDashboard.putNumber("TOF2Value", m_TOF2Measurement);}
       
   }
 
-
-
-
-
-
-
-
   @Override
   public void periodic() {
-   putTOFTargetOnDashboard();
+    putTOFTargetOnDashboard();
     SetTofMeasurement();
-   // PutTOFonSmartdashboard();
+    // PutTOFonSmartdashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();
-    
     // This method will be called once per scheduler run
   }
 }

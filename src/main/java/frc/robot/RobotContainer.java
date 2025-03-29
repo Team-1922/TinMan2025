@@ -42,6 +42,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.Localization;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
@@ -50,14 +52,14 @@ public class RobotContainer {
 // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     private final SwerveRequest.RobotCentric RcDrive = new SwerveRequest.RobotCentric() 
-    .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-    .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     
     
     //private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -65,14 +67,15 @@ public class RobotContainer {
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-     final EndEffector m_EE = new EndEffector();
+    final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+    final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
-   
+    private final Localization m_LocalizationLeft = new Localization("left");
+    private final Localization m_LocalizationRight = new Localization("right");
 
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
@@ -290,7 +293,7 @@ public class RobotContainer {
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
- 
+ /* 
    
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
