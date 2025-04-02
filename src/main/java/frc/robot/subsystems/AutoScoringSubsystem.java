@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.AprilTagAim;
 import frc.robot.Commands.AprilTagAimReverse;
+import frc.robot.Commands.CloseToReef;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.MoveArm;
 import frc.robot.Commands.MoveArmAndWrist;
@@ -35,7 +36,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
    CommandSwerveDrivetrain m_Drivetrain;
    public  LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
    public  LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
-
+  
   
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem exists
   /** Creates a new AutoScoringSubsystem. */
@@ -142,9 +143,13 @@ public class AutoScoringSubsystem extends SubsystemBase {
              new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5)),
               TargetCommandGroup
           ),
-          new WaitCommand(0.25),
-           new ParallelRaceGroup(new WaitCommand(0.65),
-           new Collect(m_EE,-0.4)),
+          new ParallelRaceGroup(
+            new CloseToReef(LL), // checks if the robot is close enough to the reef to score 
+            new SequentialCommandGroup( 
+              new WaitCommand(0.25),
+              new ParallelRaceGroup(new WaitCommand(0.65),
+              new Collect(m_EE,-0.4)))),
+
            new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
            new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
            new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)

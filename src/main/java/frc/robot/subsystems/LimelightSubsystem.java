@@ -141,9 +141,10 @@ double target =
    
   target;
  }
-
+ 
+ /** moves robot backwards  */
  public double L2RobotXDutyCycle(){
-  if (!HasTarget()) return 0;
+  if (!HasTarget()) return 0;// remove this line, might not see tag because it's too close
  double target = MathUtil.clamp((-Math.sin(getYaw())*AimTargetXDutyCycle())+(Math.cos(getYaw())
  
  *L2AimTargetZDutyCycle()),-.8,.8);
