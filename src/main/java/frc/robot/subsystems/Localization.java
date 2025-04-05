@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 public class Localization extends SubsystemBase {
 
@@ -26,17 +27,21 @@ public class Localization extends SubsystemBase {
   double m_AimingSpeedMultiplier;
   Pose2d m_Pos2D;
   Rotation2d m_Rotation2d;
+  Field2d m_Field2d = new Field2d();
   
   private final Field2d m_field = new Field2d();
 
     /** Creates a new Localization.
      * @param LimelightSide the limelight called, either <b>"left"</b> or <b>"right"
      */
-  public Localization(String LimelightSide ) { 
-    m_LimelightSide = LimelightSide;
-    m_LLNetworkTable =NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
+  public Localization(
+    //String LimelightSide
+    ) { 
+    m_LimelightSide = "left";
+    // =NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
+    m_LLNetworkTable = NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
     SmartDashboard.putData("Field", m_field);
-    if(LimelightSide == "left")
+    if(true)
     {
       m_TargetCenter = LimelightConstants.rightTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
@@ -45,7 +50,6 @@ public class Localization extends SubsystemBase {
       m_TargetCenter = LimelightConstants.leftTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     };
-    
    }
 
 /** updates the target values */ 
@@ -55,6 +59,8 @@ public class Localization extends SubsystemBase {
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
     m_Rotation2d = new Rotation2d(getYaw());
     m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation2d);
+    m_Field2d.setRobotPose(m_Pos2D);
+    SmartDashboard.putData(m_Field2d);
   }
 
 /** @return limelight <b>tx</b> (meters) */
@@ -69,7 +75,7 @@ public class Localization extends SubsystemBase {
 
 /** @return limelight <b>Yaw</b> (Rad) */
  public double getYaw(){
-  return m_Pos[4] * Math.PI/180;
+  return m_Pos[5] * Math.PI/180;
    }
 
   /** checks if limelight sees an apriltag */
@@ -176,7 +182,6 @@ public double RobotXDutyCycle(){
  *AimTargetZDutyCycle()),-.8,.8);
 SmartDashboard.putNumber("LlRobotX", target);
  return target;
-
 }
 
 

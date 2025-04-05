@@ -73,26 +73,22 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * <p> 2 = L4
    */
   public SequentialCommandGroup GetTargetCommandGroup(int Target){
-    
     if(Target ==0){
-
-   return new SequentialCommandGroup(// L2
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveElevator(m_Elevator, ElevatorConstants.L2Position),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle))
-    ;}else if(Target == 1){
-
-     return new SequentialCommandGroup( // L3
+      return new SequentialCommandGroup(// L2
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_Elevator, ElevatorConstants.L2Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle));
+    }else if(Target == 1){
+      return new SequentialCommandGroup( // L3
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_Elevator, ElevatorConstants.L3Position),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.L3ArmAngle, EndEffectorConstants.L3WristAngle) 
-    );} else {
-
-    return new SequentialCommandGroup(// L4
-      new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-      new MoveElevator(m_Elevator, ElevatorConstants.L4Position),
-      new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
-    );}
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L3ArmAngle, EndEffectorConstants.L3WristAngle) );
+    } else {
+      return new SequentialCommandGroup(// L4
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_Elevator, ElevatorConstants.L4Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle));
+    }
   }
 
 /*   public SequentialCommandGroup GetAlgaeTargetCommandGroup(int Target){
@@ -127,32 +123,30 @@ public class AutoScoringSubsystem extends SubsystemBase {
     }
     if (GetTargetLevel() == 0) {
       return //new SequentialCommandGroup(new WaitCommand(0));
-             new SequentialCommandGroup( // L2
-               TargetCommandGroup, 
-              new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
-               new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE)),
-               new AprilTagAimReverse(LL, m_Drivetrain),
-               new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-                new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-                new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
-      );
+        new SequentialCommandGroup( // L2
+          TargetCommandGroup, 
+          new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
+          new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE)),
+          new AprilTagAimReverse(LL, m_Drivetrain),
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
+        );
     } else {
       return new SequentialCommandGroup( // L3 and L4
-          new ParallelCommandGroup(
-             new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5)),
-              TargetCommandGroup
-          ),
-          new WaitCommand(0.25),
-           new ParallelRaceGroup(new WaitCommand(0.65),
-           new Collect(m_EE,-0.4)),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
-    );
+        new ParallelCommandGroup(
+          new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5)),
+          TargetCommandGroup
+        ),
+        new WaitCommand(0.25),
+        new ParallelRaceGroup(new WaitCommand(0.65),
+        new Collect(m_EE,-0.4)),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
+      );
     }
   }
-
-  
 
  /* public SequentialCommandGroup StationPickupGroup(){
     return new SequentialCommandGroup(
