@@ -6,8 +6,16 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
+import java.util.Optional;
 
+import javax.swing.plaf.TreeUI;
+
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.config.RobotConfig;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -35,13 +43,16 @@ public class AutoScoringSubsystem extends SubsystemBase {
    CommandSwerveDrivetrain m_Drivetrain;
    public  LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
    public  LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
-
-  
+  public String[] ReefSides = {"Front","FrontRight","BackRight","Back","BackLeft","FrontLeft"};
+  public int[] BlueIDs = {18,17,22,21,29,19};
+  public int[] RedIDs = {7,8,9,10,11,6};
+  int TargetLocation;
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem exists
   /** Creates a new AutoScoringSubsystem. */
   public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain) {
     TargetLevel = 2;
     m_Drivetrain = drivetrain;
+    TargetLocation = 0;
   }
 
   /** increments target level by 1 
@@ -63,7 +74,44 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
   public void PutTargetOnDashboard(){
     SmartDashboard.putNumber("TargetLevel", TargetLevel+2);
+    SmartDashboard.putString("Target Location", ReefSides[TargetLocation]);
   }
+
+  /** increments targetSide by 1,
+   * makes it move around the reef CCW, or to the right
+   */
+  public void incrementTargetSide(){
+    TargetLocation = (TargetLocation+1)%6;
+  }
+
+
+  /**Returns side of reef to target, front left is last so it loops around the reef 
+   * <p> 0 = Front center
+   * <p> 1 = Front right
+   * <p> 2 = Back right
+   * <p> 3 = Back center
+   * <p> 4 = Back left
+   * <p> 5 = Front left
+   */
+  public int getTargetLocation(){
+    return TargetLocation;
+  }
+
+  /** 
+   * @return the ID of the Limelight to target
+   */
+  public int GetTargetLimelight(){
+    Optional<Alliance> ally = DriverStation.getAlliance();
+
+    if (ally.get() == Alliance.Red) {
+      return RedIDs[TargetLocation];
+    }else{
+        return BlueIDs[TargetLocation];
+    }
+  }
+
+ // DriverStation.Alliance
+
 
   /** @param Target put {@code GetTargetLevel()} here
    *  @return sequential command group for scoring on L2-4, as scoring on L1 is manual
@@ -179,7 +227,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  //  PutTargetOnDashboard();
+    PutTargetOnDashboard();
     // This method will be called once per scheduler run
   }
 }
