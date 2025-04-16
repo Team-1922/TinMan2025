@@ -40,9 +40,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
   private final EndEffector m_EE = new EndEffector();
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
-   CommandSwerveDrivetrain m_Drivetrain;
-   public  LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
-   public  LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
+  CommandSwerveDrivetrain m_Drivetrain;
+  public LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
+  public LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
   public String[] ReefSides = {"Front","FrontRight","BackRight","Back","BackLeft","FrontLeft"};
   public int[] BlueIDs = {18,17,22,21,29,19};
   public int[] RedIDs = {7,8,9,10,11,6};
@@ -106,7 +106,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     if (ally.get() == Alliance.Red) {
       return RedIDs[TargetLocation];
     }else{
-        return BlueIDs[TargetLocation];
+      return BlueIDs[TargetLocation];
     }
   }
 

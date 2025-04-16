@@ -4,6 +4,7 @@ import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -31,8 +32,8 @@ public class Telemetry {
      */
     public Telemetry(double maxSpeed) {
         MaxSpeed = maxSpeed;
-      //  SignalLogger.start();
-       // SignalLogger.setPath("/documents/ctre-logs/");
+        // SignalLogger.start();
+        // SignalLogger.setPath("/documents/ctre-logs/");
     }
 
     /* What to publish over networktables for telemetry */
@@ -83,6 +84,20 @@ public class Telemetry {
     private final double[] m_moduleStatesArray = new double[8];
     private final double[] m_moduleTargetsArray = new double[8];
 
+    public Pose2d getPose2d(){
+        return new Pose2d(m_poseArray[0], m_poseArray[1], new Rotation2d(m_poseArray[2]/180 * Math.PI));
+    }
+
+    public void setPose2d(Pose2d pose2d){
+        m_poseArray[0] = pose2d.getX();
+        m_poseArray[1] = pose2d.getY();
+        m_poseArray[2] = pose2d.getRotation().getDegrees();
+    }
+
+    //public double getTimeStamp(){
+    //    return .Timestamp;
+   // }
+
     /** Accept the swerve drive state and telemeterize it to SmartDashboard and SignalLogger. */
     public void telemeterize(SwerveDriveState state) {
         /* Telemeterize the swerve drive state */
@@ -93,6 +108,7 @@ public class Telemetry {
         driveModulePositions.set(state.ModulePositions);
         driveTimestamp.set(state.Timestamp);
         driveOdometryFrequency.set(1.0 / state.OdometryPeriod);
+        
 
         /* Also write to log file */
         m_poseArray[0] = state.Pose.getX();

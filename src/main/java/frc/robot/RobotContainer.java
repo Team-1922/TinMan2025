@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.*;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -59,10 +61,9 @@ public class RobotContainer {
     private final SwerveRequest.RobotCentric RcDrive = new SwerveRequest.RobotCentric() 
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    //private final Telemetry logger = new Telemetry(MaxSpeed);
+    private final Telemetry logger = new Telemetry(MaxSpeed);
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
-    public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     final EndEffector m_EE = new EndEffector();
     private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
@@ -70,9 +71,10 @@ public class RobotContainer {
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
-    private final Localization m_LocalizationLeft = new Localization();
+    public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
+    private final Localization m_LocalizationLeft = new Localization(logger, m_drivetrain);
  //   private final Localization m_LocalizationRight = new Localization("right");
-
+// .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
@@ -258,11 +260,11 @@ public class RobotContainer {
        // m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
        // m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-       // m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
+        m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
 
 
        // DRIVER CONTROLS
-       
+       /*
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
@@ -311,7 +313,7 @@ public class RobotContainer {
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
         m_operatorController.button(10).onTrue(m_L2algaeRemove);
-            //m_L3Group);
+            //m_L3Group); */
         /*
      DRIVER
         drive  -  both joysticks
