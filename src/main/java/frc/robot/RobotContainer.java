@@ -293,7 +293,7 @@ public class RobotContainer {
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
  
-   
+   /* 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
 
@@ -331,13 +331,15 @@ public class RobotContainer {
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
         m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
-      //  m_operatorController.pov(270).whileTrue(m_stationCollect);
+        //m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
-        m_operatorController.button(10).onTrue(m_L2algaeRemove);
+        m_operatorController.button(10).onTrue(m_L2algaeRemove); 
+       
+      /// */
             //m_L3Group);
         /*
      DRIVER

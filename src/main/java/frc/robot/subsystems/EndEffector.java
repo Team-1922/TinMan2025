@@ -246,8 +246,8 @@ public void PutTOFonSmartdashboard(){
 
   @Override
   public void periodic() {
-   putTOFTargetOnDashboard();
-    SetTofMeasurement();
+ //  putTOFTargetOnDashboard();
+ //   SetTofMeasurement();
    // PutTOFonSmartdashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();
