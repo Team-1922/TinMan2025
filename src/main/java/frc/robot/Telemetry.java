@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-
 public class Telemetry {
     private final double MaxSpeed;
 
@@ -34,7 +33,7 @@ public class Telemetry {
      */
     public Telemetry(double maxSpeed) {
         MaxSpeed = maxSpeed;
-        // SignalLogger.start();
+        SignalLogger.start();
         // SignalLogger.setPath("/documents/ctre-logs/");
     }
 

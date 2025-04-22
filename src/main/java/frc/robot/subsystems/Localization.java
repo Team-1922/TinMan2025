@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
+import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -66,57 +68,56 @@ public class Localization extends SubsystemBase {
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
     m_Rotation2d = new Rotation2d(getYaw());
     m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation2d);
+
     m_driveTrain.addVisionMeasurement(m_Pos2D, m_Telemetry.getTimeStamp());
     m_Field2d.setRobotPose(m_Telemetry.getPose2d());
-    SmartDashboard.putData(m_Field2d);
-    
+    SmartDashboard.putData("Field", m_Field2d);
   }
 
 /** @return limelight <b>tx</b> (meters) */
- public double getTx(){
-  return m_Pos[0];
- }
+  public double getTx(){
+    return m_Pos[0];
+  }
 
-   /** @return limelight <b>ty</b> (meters) */
- public double getTy(){
-  return m_Pos[1];
+/** @return limelight <b>ty</b> (meters) */
+  public double getTy(){
+    return m_Pos[1];
   }
 
 /** @return limelight <b>Yaw</b> (Rad) */
- public double getYaw(){
-  return m_Pos[5] * Math.PI/180;
-   }
+  public double getYaw(){
+    return m_Pos[5] * Math.PI/180;
+  }
 
-  /** checks if limelight sees an apriltag */
- public boolean HasTarget(){
-  return m_tv.getDouble(0) ==1;
- }
+/** checks if limelight sees an apriltag */
+  public boolean HasTarget(){
+    return m_tv.getDouble(0) ==1;
+  }
 
- public double GetTz(){
-  return m_Pos[2];
+  public double GetTz(){
+    return m_Pos[2];
+  }
 
- }
+  public double targetXError() {
+    return m_TargetCenter-getTx();
+  }
 
- public double targetXError() {
-  return m_TargetCenter-getTx();
- }
+  public double targetZError() {
+    return -LimelightConstants.TargetZ+GetTz();
+  }
 
- public double targetZError() {
-  return -LimelightConstants.TargetZ+GetTz();
- }
+  public double reverseTargetZError(){
+    return -LimelightConstants.L2TargetZ+GetTz();
+  }
 
- public double reverseTargetZError(){
-   return -LimelightConstants.L2TargetZ+GetTz();
- }
-
- public double targetYawError() {
-  return LimelightConstants.TargetYaw-getYaw();
- }
+  public double targetYawError() {
+    return LimelightConstants.TargetYaw-getYaw();
+  }
 
  /** the value to use for apriltag aiming lattarlly  */
- public double AimTargetXDutyCycle(){
-  if (! HasTarget()) {
-    return 0;
+  public double AimTargetXDutyCycle(){
+    if (! HasTarget()) {
+      return 0;
   }
   double target;
   double Error =  targetXError();
@@ -128,7 +129,7 @@ public class Localization extends SubsystemBase {
   }
 
     target= MathUtil.clamp(
- (
+  (
     Error
  //     /(m_TargetLeftEdge-m_TargetRightEdge)
       *m_AimingSpeedMultiplier
