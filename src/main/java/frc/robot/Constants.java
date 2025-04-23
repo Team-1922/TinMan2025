@@ -207,7 +207,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.28564453125)
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.738525390625)
       .withAbsoluteSensorDiscontinuityPoint(0.8)
       );
     
