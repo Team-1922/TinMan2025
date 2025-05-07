@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.MoveArm;
@@ -39,7 +38,6 @@ import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
@@ -69,11 +67,10 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
      final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
      final EndEffector m_EE = new EndEffector();
-    private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+   
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
-    private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
    
 
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
@@ -256,7 +253,7 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        m_ClimberSubsystem.setDefaultCommand(m_ClimbCommand);
+     
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.

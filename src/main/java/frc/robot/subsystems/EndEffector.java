@@ -22,7 +22,7 @@ import frc.robot.Constants.*;
 
 
 public class EndEffector extends SubsystemBase {
-  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
+//  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
@@ -56,12 +56,13 @@ public class EndEffector extends SubsystemBase {
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
-    m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
+ //   m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);    
-    m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+ //   m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
     
     m_TOF.setRangingMode(RangingMode.Short, 25);
     m_TOF2.setRangingMode(RangingMode.Short, 25);
+   // m_TOF.setRangeOfInterest(0, 0, 0, 0);
 
     
     /*
