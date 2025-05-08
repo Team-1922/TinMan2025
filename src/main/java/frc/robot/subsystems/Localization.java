@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
+import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveRequest.FieldCentric;
 import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
 
 import edu.wpi.first.math.MathUtil;
@@ -36,7 +37,7 @@ public class Localization extends SubsystemBase {
   Field2d m_Field2d = new Field2d();
   Telemetry m_Telemetry = new Telemetry(TunerConstants.kSpeedAt12Volts.in(MetersPerSecond));
   CommandSwerveDrivetrain m_driveTrain;
-  private final Field2d m_field = new Field2d();
+  //private final Field2d m_field = new Field2d();
 
     /** Creates a new Localization.
      * @param LimelightSide the limelight called, either <b>"left"</b> or <b>"right"
@@ -47,9 +48,9 @@ public class Localization extends SubsystemBase {
       m_driveTrain = commandSwerveDrivetrain;
       m_Telemetry = telemetry;
       m_LimelightSide = "left";
-      // =NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
+      // = NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
       m_LLNetworkTable = NetworkTableInstance.getDefault().getTable("limelight-"+m_LimelightSide);
-      SmartDashboard.putData("Field", m_field);
+      // SmartDashboard.putData("Field", m_field);
       if(true)
         {
           m_TargetCenter = LimelightConstants.rightTargetCenter;
@@ -62,16 +63,32 @@ public class Localization extends SubsystemBase {
     }
 
 /** updates the target values */ 
+  boolean isFirst = true;
+  Pose2d telPose2d = new Pose2d();
   private void UpdateData(){
     m_tv = m_LLNetworkTable.getEntry("tv"); // 0 if no target, 1 if it has a target
-    //SmartDashboard.putBoolean("HasTarget");
+    // SmartDashboard.putBoolean("HasTarget");
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
     m_Rotation2d = new Rotation2d(getYaw());
     m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation2d);
-
-    m_driveTrain.addVisionMeasurement(m_Pos2D, m_Telemetry.getTimeStamp());
-    m_Field2d.setRobotPose(m_Telemetry.getPose2d());
+    
+    if(HasTarget()){
+      m_Field2d.setRobotPose(m_Pos2D);
+      m_Telemetry.setPose2d(m_Pos2D);
+    }
+    /* 
+    else if(isFirst){
+      telPose2d = m_Telemetry.getPose2d();
+    }
+    else{
+      m_Field2d.setRobotPose(m_Telemetry.getPose2d());
+      
+    }
+      */
     SmartDashboard.putData("Field", m_Field2d);
+    //m_driveTrain.addVisionMeasurement(m_Pos2D, m_Telemetry.getTimeStamp());
+    //m_Field2d.setRobotPose(m_Telemetry.getPose2d());
+    //SmartDashboard.putData("Fieldebnalwguwhgliawhgwliuh", m_Field2d);
   }
 
 /** @return limelight <b>tx</b> (meters) */
