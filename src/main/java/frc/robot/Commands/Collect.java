@@ -29,7 +29,8 @@ public class Collect extends Command {
   @Override
   public void initialize() {
   m_StartedWithCoral = m_EE.HasCoral();
-  m_EE.collect(m_speed);
+ m_EE.collect(-20, 10, -5);
+ // m_EE.collect(m_speed);
   
   }
 

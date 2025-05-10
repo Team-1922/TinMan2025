@@ -24,7 +24,8 @@ public class StationCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.collect(m_speed);
+    m_EE.collect(-20, 10, -5);
+    //m_EE.collect(m_speed);
     //m_AutoScoringSubsystem.StationPickupGroup();
   }
 

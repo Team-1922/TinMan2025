@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
@@ -19,17 +21,19 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
+import au.grapplerobotics.LaserCan;
 
 
 public class EndEffector extends SubsystemBase {
-//  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
+  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
+  TalonFX m_TopCollect = new TalonFX(EndEffectorConstants.topCollectorMotorID,"Elevator");
+  LaserCan m_LC = new LaserCan(1);
 
-
-  TimeOfFlight m_TOF = new TimeOfFlight(TOFConstants.TOFID);
-  TimeOfFlight m_TOF2 = new TimeOfFlight(TOFConstants.TOFID2);
+ // TimeOfFlight m_TOF = new TimeOfFlight(TOFConstants.TOFID);
+ // TimeOfFlight m_TOF2 = new TimeOfFlight(TOFConstants.TOFID2);
   CANcoder m_armEncoder = new CANcoder(EndEffectorConstants.endEffectorArmEncoderID,"Elevator");
   CANcoder m_WristEncoder = new CANcoder(EndEffectorConstants.endEffectorWristEncoderID,"Elevator");  
   NetworkTableInstance m_networkTable = NetworkTableInstance.getDefault();
@@ -37,10 +41,12 @@ public class EndEffector extends SubsystemBase {
   DoublePublisher m_wristPos = m_networkTable.getDoubleTopic("WristPos").publish();
   double m_TOFmeasurement;
   double m_TOF2Measurement;
-
+  
   /** Creates a new EndEffector. */
   public EndEffector() {
  
+
+  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EECurrentLimitConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmFeedbackConfigs);  
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.ArmSlot0Configs);
@@ -60,8 +66,8 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);    
  //   m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
     
-    m_TOF.setRangingMode(RangingMode.Short, 25);
-    m_TOF2.setRangingMode(RangingMode.Short, 25);
+ //   m_TOF.setRangingMode(RangingMode.Short, 25);
+  //  m_TOF2.setRangingMode(RangingMode.Short, 25);
    // m_TOF.setRangeOfInterest(0, 0, 0, 0);
 
     
@@ -97,12 +103,17 @@ public class EndEffector extends SubsystemBase {
 
             // COLLECTOR CODE
  /** spins motor at speed given, percent output */
-  public void collect(double speed){
-    m_rightCollect.set(speed);
+  public void collect(double rightSpeed, double leftSpeed, double topSpeed){
+    m_rightCollect.set(rightSpeed);
+    m_leftCollect.set(leftSpeed);
+    m_TopCollect.set(topSpeed);
+
   }
 
   public void stopCollector(){
     m_rightCollect.set(0);
+    m_leftCollect.set(0);
+    m_TopCollect.set(0);
 
   }
 
@@ -191,7 +202,7 @@ public double GetTof2Measurement(){
  return m_TOF2Measurement;
 } 
  
-public void SetTofMeasurement(){
+/*public void SetTofMeasurement(){
   if(m_TOF.isRangeValid()){
   m_TOFmeasurement = m_TOF.getRange();}
 
@@ -199,24 +210,48 @@ public void SetTofMeasurement(){
  //   m_TOF2Measurement = m_TOF2.getRange();
  // }
 }
-
+*/
 
 public void PutTOFonSmartdashboard(){
-  SmartDashboard.putNumber("TOFtestValues", m_TOFmeasurement);
+  if(m_LC.getMeasurement() != null){
+    
+  SmartDashboard.putNumber("LaserCan value", m_LC.getMeasurement().distance_mm);
+  SmartDashboard.putBoolean("LaserCanValid", true);
+}else{
+  SmartDashboard.putBoolean("LaserCanValid", false);
+ // SmartDashboard.putNumber("LaserCan value", 9999);
+}
 }
 
             // LED+LazerCan CODE
   
 
+
+
+
+
+
+
   /** @return if something is within the TOF target range
    */
   public boolean HasCoral(){
-
+    if(m_LC.getMeasurement() != null){
+    LaserCan.Measurement measurement = m_LC.getMeasurement();
+    
+    if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+      System.out.println("The target is " + measurement.distance_mm + "mm away!");
+    } else {
+      System.out.println("Oh no! The target is out of range, or we can't get a reliable measurement!");
+      // You can still use distance_mm in here, if you're ok tolerating a clamped value or an unreliable measurement.
+    }
 // m_TOF.getRange();
 
   return 
-  m_TOFmeasurement >= TOFConstants.TOFMinDistance &&
-  m_TOFmeasurement <= TOFConstants.TOFMaxDistance;
+  measurement.distance_mm >= TOFConstants.TOFMinDistance &&
+  measurement.distance_mm <= TOFConstants.TOFMaxDistance;
+    }else{
+      return false;
+    }
   }
 
   /** checks the 2nd TOF if it sees something, only used for station pickup */
@@ -227,7 +262,7 @@ public void PutTOFonSmartdashboard(){
     m_TOF2Measurement <= TOFConstants.TOF2MaxDistance;
 
   }
-
+/* 
   public void putTOFTargetOnDashboard(){
    //double measurement = m_TOF.getRange();
    //double measurement2 = m_TOF2.getRange();
@@ -238,7 +273,7 @@ public void PutTOFonSmartdashboard(){
       
   }
 
-
+*/
 
 
 
@@ -247,8 +282,8 @@ public void PutTOFonSmartdashboard(){
 
   @Override
   public void periodic() {
-   putTOFTargetOnDashboard();
-    SetTofMeasurement();
+   //putTOFTargetOnDashboard();
+    //SetTofMeasurement();
    // PutTOFonSmartdashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();

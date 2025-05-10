@@ -162,40 +162,12 @@ public class RobotContainer {
 
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-        new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
-
-        new ParallelCommandGroup(
-            new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationHalfWayPosition)
-        ),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
-        new StationCollect(m_EE, -0.2),
-        new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
-        new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
-        new ParallelCommandGroup(
-            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-            new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
-         ),
-         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
-        
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle)
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
     public final SequentialCommandGroup m_backFromStation = new SequentialCommandGroup(
-
-    new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
-    new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
-    new ParallelCommandGroup(
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
-     ),
-     new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
- 
 
 
     );
@@ -288,9 +260,9 @@ public class RobotContainer {
        
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
-
+        m_driveController.a().whileTrue(m_FloorCollect);
  
-   
+   /* 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
 
@@ -309,15 +281,17 @@ public class RobotContainer {
                     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
-          
+         */ 
       
       
       //  m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
       //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
+   
+      
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
-        
+        /* 
 
         // OPERATOR CONTROLS
 
@@ -336,6 +310,7 @@ public class RobotContainer {
         m_operatorController.pov(90).onTrue(m_algaeRemove);
         m_operatorController.button(10).onTrue(m_L2algaeRemove);
             //m_L3Group);
+            */
         /*
      DRIVER
         drive  -  both joysticks

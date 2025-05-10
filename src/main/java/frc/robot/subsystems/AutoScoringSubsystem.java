@@ -158,8 +158,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
   }
 
   
-
- /* public SequentialCommandGroup StationPickupGroup(){
+/* 
+  public SequentialCommandGroup StationPickupGroup(){
     return new SequentialCommandGroup(
 
       new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
