@@ -30,7 +30,7 @@ public class EndEffector extends SubsystemBase {
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
   TalonFX m_TopCollect = new TalonFX(EndEffectorConstants.topCollectorMotorID,"Elevator");
-  LaserCan m_LC = new LaserCan(1);
+  LaserCan m_LC = new LaserCan(0);
 
  // TimeOfFlight m_TOF = new TimeOfFlight(TOFConstants.TOFID);
  // TimeOfFlight m_TOF2 = new TimeOfFlight(TOFConstants.TOFID2);
@@ -213,7 +213,7 @@ public double GetTof2Measurement(){
 */
 
 public void PutTOFonSmartdashboard(){
-  if(m_LC.getMeasurement() != null){
+  if(m_LC.getMeasurement() != null && m_LC.getMeasurement().status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT){
     
   SmartDashboard.putNumber("LaserCan value", m_LC.getMeasurement().distance_mm);
   SmartDashboard.putBoolean("LaserCanValid", true);
@@ -235,7 +235,7 @@ public void PutTOFonSmartdashboard(){
   /** @return if something is within the TOF target range
    */
   public boolean HasCoral(){
-    if(m_LC.getMeasurement() != null){
+    if(m_LC.getMeasurement() != null && m_LC.getMeasurement().status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT){
     LaserCan.Measurement measurement = m_LC.getMeasurement();
     
     if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
@@ -284,6 +284,7 @@ public void PutTOFonSmartdashboard(){
   public void periodic() {
    //putTOFTargetOnDashboard();
     //SetTofMeasurement();
+   
    // PutTOFonSmartdashboard();
     getCurrentArmAngle();
     getCurrentWristAngle();

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
-//import au.grapplerobotics.CanBridge;
+import au.grapplerobotics.CanBridge;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   
@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
     m_EE = m_robotContainer.m_EE;
     m_Elevator = m_robotContainer.m_ElevatorSubsystem;
     m_LED = m_robotContainer.m_LED;
-    //CanBridge.runTCP();
+    CanBridge.runTCP();
   //  m_EE = new EndEffector();
    // m_Elevator = new ElevatorSubsystem();
     //m_LED = new LedSubsystem(m_EE);

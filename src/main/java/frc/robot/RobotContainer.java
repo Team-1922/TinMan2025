@@ -163,7 +163,9 @@ public class RobotContainer {
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
     new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle)
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
+    new StationCollect(m_EE,0.1)
+
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
@@ -291,8 +293,9 @@ public class RobotContainer {
       
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
-        /* 
-
+        m_driveController.a().whileTrue(m_FloorGroup);
+        m_driveController.b().whileTrue(m_L4Group);
+/* 
         // OPERATOR CONTROLS
 
         m_operatorController.button(5).onTrue(m_IncrementTargetLocation); // Left Bumper

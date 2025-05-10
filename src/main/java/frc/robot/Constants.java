@@ -114,8 +114,8 @@ public final class Constants {
       public static final double L4WristAngle = -0.107; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
-      public static final double VerticalWristAngle = .005;
-      public static final double StationWristAngle = -0.27; // placeholder angle for collecting at station
+      public static final double VerticalWristAngle = -0.02;
+      public static final double StationWristAngle = -0.245; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.06; 
@@ -127,9 +127,9 @@ public final class Constants {
       public static final double L4ArmAngle = .139;
       public static final double AlgaeArmAngle = .132; // placeholder
       public static final double StowedArmAngle = 0.18; // the angle for starting configuration
-      public static final double VerticalArmAngle = 0.17;
+      public static final double VerticalArmAngle = 0.22;
  
-      public static final double StationArmAngle = 0.21; // placeholder angle for collecting at the station
+      public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
       
 
       public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
@@ -228,7 +228,7 @@ public final class Constants {
       public static final int TOFID = 0; 
       public static final int TOFID2 = 1; // the TOF that is further back into the collector
       public static final double TOFMaxDistance = 55; // mm
-      public static final double TOFMinDistance = 0; //mm
+      public static final double TOFMinDistance = 1; //mm
       
       public static final double TOF2MaxDistance = 50; // mm
       public static final double TOF2MinDistance = 0; //mm
