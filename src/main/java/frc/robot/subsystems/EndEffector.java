@@ -12,6 +12,7 @@ import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
 import au.grapplerobotics.LaserCan;
+import au.grapplerobotics.ConfigurationFailedException;
 
 
 public class EndEffector extends SubsystemBase {
@@ -66,6 +68,13 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);    
  //   m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
     
+ try {
+  m_LC.setRangingMode(LaserCan.RangingMode.SHORT);
+  m_LC.setRegionOfInterest(new LaserCan.RegionOfInterest(8, 8, 4, 4));
+  m_LC.setTimingBudget(LaserCan.TimingBudget.TIMING_BUDGET_20MS);
+} catch (ConfigurationFailedException e) {
+  System.out.println("Configuration failed! " + e);
+}
  //   m_TOF.setRangingMode(RangingMode.Short, 25);
   //  m_TOF2.setRangingMode(RangingMode.Short, 25);
    // m_TOF.setRangeOfInterest(0, 0, 0, 0);
@@ -107,6 +116,7 @@ public class EndEffector extends SubsystemBase {
     m_rightCollect.set(rightSpeed);
     m_leftCollect.set(leftSpeed);
     m_TopCollect.set(topSpeed);
+  
 
   }
 
@@ -136,6 +146,7 @@ public class EndEffector extends SubsystemBase {
   public void ReverseCollector(double speed){
   
     m_rightCollect.set(speed);
+  
   }
 
             // WRIST CODE

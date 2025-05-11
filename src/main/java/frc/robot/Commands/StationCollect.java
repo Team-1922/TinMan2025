@@ -24,7 +24,7 @@ public class StationCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.collect(-.4, .2, -.2);
+    m_EE.collect(-.1, .1, -.1);
     //m_EE.collect(m_speed);
     //m_AutoScoringSubsystem.StationPickupGroup();
   }
@@ -44,8 +44,7 @@ public class StationCollect extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    //m_EE.HasCoral() == true ;
+    return m_EE.HasCoral() == true ;
   //  m_EE.HasStationCoral() == true;
   }
 }

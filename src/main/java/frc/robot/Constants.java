@@ -40,9 +40,9 @@ public final class Constants {
       public static final double ConversionFactor = 2*(Math.PI*1.432)/9; 
       public static final double FloorPosition = 0.2/ConversionFactor;
       public static final double L1Position = FloorPosition;
-      public static final double L2Position = FloorPosition + 41.2/ConversionFactor;//41.6 ; // placeholder?
+      public static final double L2Position = FloorPosition + 11.1/ConversionFactor;//41.6 ; // placeholder?
       public static final double L3Position = FloorPosition+ 27.8/ConversionFactor; //28.9;
-      public static final double L4Position = FloorPosition+ 55.1/ConversionFactor;//54.5;
+      public static final double L4Position = FloorPosition+ 54.3/ConversionFactor;//54.5;
       public static final double AlgaeLowPosition = 31.08/ConversionFactor; // placeholder 
       public static final double AlgaeHighPosition = 38.22/ConversionFactor; // placeholder 
       public static final double StationPosition = FloorPosition +13.4/ConversionFactor;// 11.5; // placeholder
@@ -109,25 +109,25 @@ public final class Constants {
       // wrist angles
       public static final double FloorWristAngle = -0.05; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
-      public static final double L2WristAngle = 0.09; // 
+      public static final double L2WristAngle = -0.15; // 
       public static final double L3WristAngle = -0.175;
-      public static final double L4WristAngle = -0.107; 
+      public static final double L4WristAngle = -0.105 ; 
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = -0.02;
-      public static final double StationWristAngle = -0.245; // placeholder angle for collecting at station
+      public static final double StationWristAngle = -0.25; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.06; 
-      public static final double L1ArmAngle = 0.138; 
-      public static final double L2ArmAngle = -0.15; // underflows at -0.2
-      public static final double L3ArmAngle = 0.164;
+      public static final double FloorArmAngle = -0.07; 
+      public static final double L1ArmAngle = 0.128; 
+      public static final double L2ArmAngle = 0.138; // underflows at -0.2
+      public static final double L3ArmAngle = 0.154;
 
       
-      public static final double L4ArmAngle = .139;
-      public static final double AlgaeArmAngle = .132; // placeholder
-      public static final double StowedArmAngle = 0.18; // the angle for starting configuration
-      public static final double VerticalArmAngle = 0.22;
+      public static final double L4ArmAngle = .14;
+      public static final double AlgaeArmAngle = .122; // placeholder
+      public static final double StowedArmAngle = 0.2; // the angle for starting configuration
+      public static final double VerticalArmAngle = 0.21;
  
       public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
       
@@ -200,7 +200,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.718017578125)
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.444091796875)
       .withAbsoluteSensorDiscontinuityPoint(0.8)
       );
     
@@ -227,7 +227,7 @@ public final class Constants {
     public static class TOFConstants{
       public static final int TOFID = 0; 
       public static final int TOFID2 = 1; // the TOF that is further back into the collector
-      public static final double TOFMaxDistance = 55; // mm
+      public static final double TOFMaxDistance = 75; // mm
       public static final double TOFMinDistance = 1; //mm
       
       public static final double TOF2MaxDistance = 50; // mm

@@ -262,9 +262,9 @@ public class RobotContainer {
        
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
-        m_driveController.a().whileTrue(m_FloorCollect);
+       // m_driveController.a().whileTrue(m_FloorCollect);
  
-   /* 
+   
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
 
@@ -283,7 +283,7 @@ public class RobotContainer {
                     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
-         */ 
+         
       
       
       //  m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
@@ -293,9 +293,12 @@ public class RobotContainer {
       
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
-        m_driveController.a().whileTrue(m_FloorGroup);
-        m_driveController.b().whileTrue(m_L4Group);
-/* 
+    //    m_driveController.a().whileTrue(m_FloorGroup);
+    //    m_driveController.b().whileTrue(m_L4Group);
+    //    m_driveController.pov(0).whileTrue(m_L3Group);
+     //   m_driveController.x().whileTrue(m_stationCollect);
+
+
         // OPERATOR CONTROLS
 
         m_operatorController.button(5).onTrue(m_IncrementTargetLocation); // Left Bumper
@@ -307,13 +310,13 @@ public class RobotContainer {
         m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
       //  m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
-        m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
+   //     m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
         m_operatorController.button(10).onTrue(m_L2algaeRemove);
             //m_L3Group);
-            */
+            
         /*
      DRIVER
         drive  -  both joysticks

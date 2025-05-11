@@ -129,13 +129,15 @@ public class AutoScoringSubsystem extends SubsystemBase {
     if (GetTargetLevel() == 0) {
       return //new SequentialCommandGroup(new WaitCommand(0));
              new SequentialCommandGroup( // L2
-               TargetCommandGroup, 
+             new ParallelCommandGroup(
+              new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+              new MoveElevator(m_Elevator, ElevatorConstants.L3Position)),
               new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
-               new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE)),
-               new AprilTagAimReverse(LL, m_Drivetrain),
+               TargetCommandGroup, 
+               new ParallelRaceGroup(new WaitCommand(0.75),new Collect(m_EE,0.02)),
                new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-                new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-                new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
+                new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition)
+             
       );
     } else {
       return new SequentialCommandGroup( // L3 and L4
