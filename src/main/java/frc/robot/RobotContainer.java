@@ -31,7 +31,6 @@ import frc.robot.Commands.MoveElevator;
 import frc.robot.Commands.MoveWrist;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StationCollect;
-import frc.robot.Commands.AutoScoreCommand;
 import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
@@ -76,8 +75,6 @@ public class RobotContainer {
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
-    private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     private final StationCollect m_StationCollect = new StationCollect(m_EE, -0.2);
     //elevator commands
@@ -177,18 +174,18 @@ public class RobotContainer {
 
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position)
-    
+
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
 
 
     );
 
     public final SequentialCommandGroup m_L2algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.AlgaeL2)
-    
+
+    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.AlgaeL2),
+    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
 
 
     );
@@ -266,23 +263,22 @@ public class RobotContainer {
  
    
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right",2)); // Right Bumper 
 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right")); // Right Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right",1)); // Right Bumper
                 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right",0)); // Right Bumper 
 
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left")); // left Bumper 
-    
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left",2)); // left Bumper    
 
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left")); // left Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left",1)); // left Bumper
                     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left",0)); // left Bumper 
          
       
       
@@ -307,7 +303,7 @@ public class RobotContainer {
 
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
-        m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
       //  m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
    //     m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 

@@ -96,22 +96,6 @@ public class AutoScoringSubsystem extends SubsystemBase {
     );}
   }
 
-/*   public SequentialCommandGroup GetAlgaeTargetCommandGroup(int Target){
-    if (Target == 1){ // between L2/3
-     return new SequentialCommandGroup( // don't forget to get the target numbers before testing this :)
-        new EEVertical(m_EE),
-        new GotoLowerAlgae(m_Elevator),
-        new EeAlgae(m_EE)
-    );} else {// between L3/4
-       return new SequentialCommandGroup(
-       new EEVertical(m_EE),
-      new GotoUpperAlgae(m_Elevator),
-      new EeAlgae(m_EE)
-    );}
-
-  }*/
-
-
 
   /**
    * 
@@ -119,19 +103,19 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * @param side "left" or "right"
    * @return parralel command group that will both aim and move the EE to the position for scoring
    */
-  public SequentialCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side){
+  public SequentialCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side,int TargetLevel){
     LimelightSubsystem LL;
     if (side == "left") {
       LL = m_LimelightSubsystemLeft;
     } else {
       LL = m_LimelightSubsystemRight;
     }
-    if (GetTargetLevel() == 0) {
-      return //new SequentialCommandGroup(new WaitCommand(0));
-             new SequentialCommandGroup( // L2
-             new ParallelCommandGroup(
+ 
+    if (TargetLevel == 0) {
+      return new SequentialCommandGroup( // L2
+             
               new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-              new MoveElevator(m_Elevator, ElevatorConstants.L3Position)),
+              new MoveElevator(m_Elevator, ElevatorConstants.L3Position),
               new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
                TargetCommandGroup, 
                new ParallelRaceGroup(new WaitCommand(0.75),new Collect(m_EE,0.02)),

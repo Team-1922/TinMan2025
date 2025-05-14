@@ -44,7 +44,7 @@ LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
   @Override
   public void execute() {
 
-    if(!m_LimelightSubsystem.HasTarget()){
+    if(m_LimelightSubsystem.HasTarget()){
       TimeSinceLastSeenTag.reset();
     }
 

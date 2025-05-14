@@ -36,7 +36,7 @@ public class AutoScoreCommandFORAUTO extends Command {
    // m_AutoScoringSubsystem ->
 
     m_AutoScoringSubsystem.TargetAndAim(
-      m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side).schedule();
+      m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side,2).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
