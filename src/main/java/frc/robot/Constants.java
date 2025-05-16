@@ -118,7 +118,7 @@ public final class Constants {
       public static final double StationWristAngle = -0.25; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.07; 
+      public static final double FloorArmAngle = -0.072; 
       public static final double L1ArmAngle = 0.128; 
       public static final double L2ArmAngle = 0.138; // underflows at -0.2
       public static final double L3ArmAngle = 0.154;
@@ -176,11 +176,12 @@ public final class Constants {
 
       public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
       .withGravityType(GravityTypeValue.Arm_Cosine)
-     .withKG(0.016)
-     .withKP(2.5);
+     .withKG(0.024)
+     .withKP(2)
+     .withKS(.04);
 
       public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
-      .withKP(1);
+      .withKP(2);
     //  public static final MotorOutputConfigs M_ArmOutputConfigs = new MotorOutputConfigs()
     //  .withNeutralMode(NeutralModeValue.Coast);
 
