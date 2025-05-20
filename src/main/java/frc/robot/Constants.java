@@ -107,7 +107,7 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = -0.05; //  angle to collect off the floor   
+      public static final double FloorWristAngle = -0.02; //  angle to collect off the floor   
       public static final double L1WristAngle = 0.23; // angle to score L1
       public static final double L2WristAngle = -0.15; // 
       public static final double L3WristAngle = -0.175;
@@ -115,7 +115,7 @@ public final class Constants {
       public static final double AlgaeWristAngle = 0.12; // placeholder
       public static final double StowedWristAngle =  .01; // the angle for defence
       public static final double VerticalWristAngle = -0.02;
-      public static final double StationWristAngle = -0.25; // placeholder angle for collecting at station
+      public static final double StationWristAngle = -0.205; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = -0.072; 
@@ -127,7 +127,7 @@ public final class Constants {
       public static final double L4ArmAngle = .14;
       public static final double AlgaeArmAngle = .122; // placeholder
       public static final double StowedArmAngle = 0.2; // the angle for starting configuration
-      public static final double VerticalArmAngle = 0.21;
+      public static final double VerticalArmAngle = 0.205;
  
       public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
       
@@ -201,7 +201,7 @@ public final class Constants {
 
       public static final CANcoderConfiguration ArmCanCoderConfig = 
       new CANcoderConfiguration()
-      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.444091796875)
+      .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49560546875)
       .withAbsoluteSensorDiscontinuityPoint(0.8)
       );
     
@@ -229,7 +229,7 @@ public final class Constants {
       public static final int TOFID = 0; 
       public static final int TOFID2 = 1; // the TOF that is further back into the collector
       public static final double TOFMaxDistance = 75; // mm
-      public static final double TOFMinDistance = 1; //mm
+      public static final double TOFMinDistance = 0; //mm
       
       public static final double TOF2MaxDistance = 50; // mm
       public static final double TOF2MinDistance = 0; //mm
