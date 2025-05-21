@@ -44,9 +44,11 @@ public class LedSubsystem extends SubsystemBase {
     if(
     m_EE.HasCoral()
     ){
-      m_Candle.setLEDs(0,255,0,0,24,16); // does have coral, turn LEDs green 
+      m_Candle.setLEDs(0,255,0,0,8,8); // does have coral, turn LEDs green 
+      m_Candle.setLEDs(0, 255, 0, 0, 32, 8);
     } else{
-      m_Candle.setLEDs(255,0,0,0,24,16); // doesn't have coral, turn LEDs red
+      m_Candle.setLEDs(255, 0, 0, 0, 32, 8);
+      m_Candle.setLEDs(255,0,0,0,8,8); // doesn't have coral, turn LEDs red
     }
 
     // middle 1/3
@@ -62,13 +64,13 @@ public class LedSubsystem extends SubsystemBase {
 
     // bottom 1/3
     if(m_AutoScoringSubsystem.GetTargetLevel() == 0){
-  m_Candle.setLEDs(0, 255, 0, 0, 8, 8);
+  m_Candle.setLEDs(0, 255, 0, 0, 24, 8);// L2
   m_Candle.setLEDs(0, 255, 0, 0, 48, 8);
   }else if(m_AutoScoringSubsystem.GetTargetLevel() == 1){
-      m_Candle.setLEDs(255, 255, 0, 0, 8, 8);
+      m_Candle.setLEDs(255, 255, 0, 0, 24, 8); // L3
       m_Candle.setLEDs(255, 255, 0, 0, 48, 8);
     }else{
-      m_Candle.setLEDs(255, 0, 0, 0, 8, 8);
+      m_Candle.setLEDs(255, 0, 0, 0, 24, 8); // L4
       m_Candle.setLEDs(255, 0, 0, 0, 48, 8);
     }
 //24 per side
