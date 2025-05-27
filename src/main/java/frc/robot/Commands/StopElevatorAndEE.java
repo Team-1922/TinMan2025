@@ -13,12 +13,14 @@ public class StopElevatorAndEE extends Command {
 
   EndEffector m_EE;
   ElevatorSubsystem m_Elevator;
-  /** stops the elevator and end effector, note this does not stop the collector
+
+  /**
+   * stops the elevator and end effector, note this does not stop the collector
    */
-  public StopElevatorAndEE(EndEffector EE, ElevatorSubsystem elevatorSubsystem){
+  public StopElevatorAndEE(EndEffector EE, ElevatorSubsystem elevatorSubsystem) {
     m_EE = EE;
     m_Elevator = elevatorSubsystem;
-    addRequirements(m_EE,m_Elevator);
+    addRequirements(m_EE, m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -38,7 +40,8 @@ public class StopElevatorAndEE extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

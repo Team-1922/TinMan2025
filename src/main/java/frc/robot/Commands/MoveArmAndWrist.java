@@ -12,11 +12,14 @@ public class MoveArmAndWrist extends Command {
   EndEffector m_EE;
   Double m_TargetArmPos;
   Double m_TargetWristPos;
-  /** moves both arm and wrist to given positions
-   * @param TargetArmPos the target position for the arm
+
+  /**
+   * moves both arm and wrist to given positions
+   * 
+   * @param TargetArmPos   the target position for the arm
    * @param TargetWristPos the target position for the wrist
    */
-  public MoveArmAndWrist(EndEffector EE, Double TargetArmPos, double TargetWristPos ) {
+  public MoveArmAndWrist(EndEffector EE, Double TargetArmPos, double TargetWristPos) {
     m_EE = EE;
     m_TargetWristPos = TargetWristPos;
     m_TargetArmPos = TargetArmPos;
@@ -33,17 +36,18 @@ public class MoveArmAndWrist extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return 
-    Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos)<= 0.05 &&
-    Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos)<= 0.05;
+    return Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos) <= 0.05 &&
+        Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos) <= 0.05;
   }
 }

@@ -13,7 +13,8 @@ public class ReverseCollector extends Command {
   EndEffector m_EE;
   boolean m_StartedWithCoral;
   Timer m_Timer = new Timer();
-  /** spins collector so it would spit out coral if on ground*/
+
+  /** spins collector so it would spit out coral if on ground */
   public ReverseCollector(EndEffector endEffector) {
     m_EE = endEffector;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,7 +23,7 @@ public class ReverseCollector extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //m_StartedWithCoral = m_EE.HasCoral();
+    // m_StartedWithCoral = m_EE.HasCoral();
     m_EE.collect(.25, -.25, .15);
     m_Timer.reset();
   }
@@ -30,9 +31,9 @@ public class ReverseCollector extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //if (m_EE.HasCoral() != m_StartedWithCoral){
-    //  m_Timer.start();
-   // }
+    // if (m_EE.HasCoral() != m_StartedWithCoral){
+    // m_Timer.start();
+    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +47,6 @@ public class ReverseCollector extends Command {
   @Override
   public boolean isFinished() {
     return false;
-    //m_Timer.hasElapsed(0.25);
+    // m_Timer.hasElapsed(0.25);
   }
 }

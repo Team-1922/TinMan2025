@@ -10,9 +10,12 @@ import frc.robot.subsystems.ElevatorSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class StopElevator extends Command {
   ElevatorSubsystem m_ElevatorSubsystem;
-  /** Creates a new GoToStation. <p>
+
+  /**
+   * Creates a new GoToStation.
+   * <p>
    * raises elevator so the EndEffector is at the height of the station
-  */
+   */
   public StopElevator(ElevatorSubsystem elevator) {
 
     m_ElevatorSubsystem = elevator;
@@ -35,7 +38,7 @@ public class StopElevator extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
- 
+
   }
 
   // Returns true when the command should end.
