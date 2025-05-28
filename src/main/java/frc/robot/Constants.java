@@ -42,8 +42,8 @@ public final class Constants {
     public static final double L2Position = FloorPosition + 11.1 / ConversionFactor;// 41.6 ; // placeholder?
     public static final double L3Position = FloorPosition + 27.8 / ConversionFactor; // 28.9;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
-    public static final double AlgaeLowPosition = 31.08 / ConversionFactor; // placeholder
-    public static final double AlgaeHighPosition = 38.22 / ConversionFactor; // placeholder
+    public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
+    public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
     public static final double StationPosition = FloorPosition + 13.4 / ConversionFactor;// 11.5; // placeholder
     public static final double StationHalfWayPosition = FloorPosition + 5 / ConversionFactor;// 11.5; // placeholder
     public static final double CoralStuckPosition = FloorPosition + 17 / ConversionFactor; // for if coral is stuck
@@ -166,9 +166,9 @@ public final class Constants {
 
     public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
         .withGravityType(GravityTypeValue.Arm_Cosine)
-        .withKG(0.024)
-        .withKP(2)
-        .withKS(.04);
+        .withKG(0.02)
+        .withKP(4)
+        .withKS(.02);
 
     public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
         .withKP(2);
@@ -183,10 +183,10 @@ public final class Constants {
         .withDutyCycleClosedLoopRampPeriod(0);
 
     public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.31982421875));
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.633837890625));
 
     public static final CANcoderConfiguration ArmCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.49560546875)
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.076904296875)
             .withAbsoluteSensorDiscontinuityPoint(0.8));
 
     public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
