@@ -34,13 +34,14 @@ public final class Constants {
   public static class ElevatorConstants {
 
     public static final int leftElevatatorMotorID = 6;
+
     public static final int rightElevatorMotorID = 5;
 
     public static final double ConversionFactor = 2 * (Math.PI * 1.432) / 9;
     public static final double FloorPosition = 0.2 / ConversionFactor;
     public static final double L1Position = FloorPosition;
-    public static final double L2Position = FloorPosition + 11.1 / ConversionFactor;// 41.6 ; // placeholder?
-    public static final double L3Position = FloorPosition + 27.8 / ConversionFactor; // 28.9;
+    public static final double L2Position = FloorPosition + 10.7 / ConversionFactor;// 10.9 ; // placeholder?
+    public static final double L3Position = FloorPosition + 27.5 / ConversionFactor; // 27.7;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
     public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
@@ -108,11 +109,11 @@ public final class Constants {
     public static final double FloorWristAngle = -0.02; // angle to collect off the floor
     public static final double L1WristAngle = 0.23; // angle to score L1
     public static final double L2WristAngle = -0.15; //
-    public static final double L3WristAngle = -0.175;
-    public static final double L4WristAngle = -0.128;
+    public static final double L3WristAngle = -0.075;
+    public static final double L4WristAngle = -0.05; //128;
     public static final double AlgaeWristAngle = 0.12; // placeholder
     public static final double StowedWristAngle = .01; // the angle for defence
-    public static final double VerticalWristAngle = -0.02;
+    public static final double VerticalWristAngle = 0.01;
     public static final double StationWristAngle = -0.205; // placeholder angle for collecting at station
 
     // arm angles
@@ -121,10 +122,11 @@ public final class Constants {
     public static final double L2ArmAngle = 0.138; // underflows at -0.2
     public static final double L3ArmAngle = 0.154;
 
-    public static final double L4ArmAngle = .14;
+    public static final double L4ArmAngle = .125;
+    ;
     public static final double AlgaeArmAngle = .122; // placeholder
     public static final double StowedArmAngle = 0.2; // the angle for starting configuration
-    public static final double VerticalArmAngle = 0.205;
+    public static final double VerticalArmAngle = 0.206;
 
     public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
 
@@ -166,9 +168,9 @@ public final class Constants {
 
     public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
         .withGravityType(GravityTypeValue.Arm_Cosine)
-        .withKG(0.02)
-        .withKP(4)
-        .withKS(.02);
+        .withKG(0.019)
+        .withKP(3.5)
+        .withKS(.018);
 
     public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
         .withKP(2);

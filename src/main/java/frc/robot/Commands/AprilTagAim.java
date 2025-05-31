@@ -25,8 +25,7 @@ public class AprilTagAim extends Command {
                                                                                     // angular velocity
 
   /** Creates a new LeftAim. */
-  public AprilTagAim(
-      LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
+  public AprilTagAim(LimelightSubsystem LimeLightSub, CommandSwerveDrivetrain drivetrain) {
     m_LimelightSubsystem = LimeLightSub;
     m_Drivetrain = drivetrain;
     TimeSinceLastSeenTag = new Timer();

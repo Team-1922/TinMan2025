@@ -291,6 +291,7 @@ public class RobotContainer {
 
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger
+        m_driveController.button(3).onTrue(m_StoweEE); // X
         // m_driveController.a().whileTrue(m_FloorGroup);
         // m_driveController.b().whileTrue(m_L4Group);
         // m_driveController.pov(0).whileTrue(m_L3Group);

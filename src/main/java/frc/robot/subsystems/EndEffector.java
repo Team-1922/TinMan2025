@@ -247,7 +247,8 @@ public class EndEffector extends SubsystemBase {
        * }
        */
       // m_TOF.getRange();
-
+      SmartDashboard.putBoolean("hasCoral",measurement.distance_mm >= TOFConstants.TOFMinDistance &&
+      measurement.distance_mm <= TOFConstants.TOFMaxDistance);
       return measurement.distance_mm >= TOFConstants.TOFMinDistance &&
           measurement.distance_mm <= TOFConstants.TOFMaxDistance;
     } else {

@@ -137,9 +137,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
       );
     } else {
       return new SequentialCommandGroup( // L3 and L4
-          new ParallelCommandGroup(
-              new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
-              TargetCommandGroup),
+          new SequentialCommandGroup(
+              TargetCommandGroup,
+              new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3))),
           new ParallelRaceGroup(
               new CloseToReef(LL), // checks if the robot is close enough to the reef to score
               new SequentialCommandGroup(
