@@ -45,8 +45,9 @@ import frc.robot.Constants.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second
-                                                                                      // max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(1.25
+    ).in(RadiansPerSecond); // 3/4 of a rotation per second
+      //1.25 turn, 4 max speed                                                                                // max angular velocity
     // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -307,7 +308,7 @@ public class RobotContainer {
                                                                    // climbing .
         m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
-        m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
+        m_operatorController.pov(0).onTrue(m_L2Group);// incase coral gets stuck or elevator gets stuck
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
         m_operatorController.button(10).onTrue(m_L2algaeRemove);

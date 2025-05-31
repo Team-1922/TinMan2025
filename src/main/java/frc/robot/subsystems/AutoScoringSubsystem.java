@@ -131,7 +131,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
           TargetCommandGroup,
           new ParallelRaceGroup(new WaitCommand(0.75), new Collect(m_EE, 0.02)),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle),
+          new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
+         
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition)
 
       );

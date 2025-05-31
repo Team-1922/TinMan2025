@@ -40,7 +40,7 @@ public final class Constants {
     public static final double ConversionFactor = 2 * (Math.PI * 1.432) / 9;
     public static final double FloorPosition = 0.2 / ConversionFactor;
     public static final double L1Position = FloorPosition;
-    public static final double L2Position = FloorPosition + 10.7 / ConversionFactor;// 10.9 ; // placeholder?
+    public static final double L2Position = FloorPosition + 8.7 / ConversionFactor;// 10.9 ; // placeholder?
     public static final double L3Position = FloorPosition + 27.5 / ConversionFactor; // 27.7;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
@@ -106,27 +106,27 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
     // wrist angles
-    public static final double FloorWristAngle = -0.02; // angle to collect off the floor
+    public static final double FloorWristAngle = -0.017; // angle to collect off the floor
     public static final double L1WristAngle = 0.23; // angle to score L1
     public static final double L2WristAngle = -0.15; //
-    public static final double L3WristAngle = -0.075;
-    public static final double L4WristAngle = -0.05; //128;
+    public static final double L3WristAngle = -0.085;
+    public static final double L4WristAngle = -0.055; //128;
     public static final double AlgaeWristAngle = 0.12; // placeholder
     public static final double StowedWristAngle = .01; // the angle for defence
     public static final double VerticalWristAngle = 0.01;
     public static final double StationWristAngle = -0.205; // placeholder angle for collecting at station
 
     // arm angles
-    public static final double FloorArmAngle = -0.072;
+    public static final double FloorArmAngle = -0.075;
     public static final double L1ArmAngle = 0.128;
-    public static final double L2ArmAngle = 0.138; // underflows at -0.2
+    public static final double L2ArmAngle = 0.148; // underflows at -0.2
     public static final double L3ArmAngle = 0.154;
 
     public static final double L4ArmAngle = .125;
     ;
     public static final double AlgaeArmAngle = .122; // placeholder
     public static final double StowedArmAngle = 0.2; // the angle for starting configuration
-    public static final double VerticalArmAngle = 0.206;
+    public static final double VerticalArmAngle = 0.215;
 
     public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
 
