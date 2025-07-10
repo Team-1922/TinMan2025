@@ -74,6 +74,10 @@ public class LimelightSubsystem extends SubsystemBase {
     }
   }
 
+  public String getLimelightSide(){
+    return m_LimelightSide;
+  }
+
 /** @return limelight <b>tx</b> (meters) */
   public double getTx(){
     return m_Pos[0];

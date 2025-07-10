@@ -54,6 +54,9 @@ public class AprilTagAim extends Command {
         .withVelocityY(m_LimelightSubsystem.getTy() - targetPose2d.getY() * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(m_LimelightSubsystem.getYaw() - targetPose2d.getRotation().getDegrees() * MaxAngularRate) // Drive counterclockwise with negative X (left)
     ).execute();
+    if(m_LimelightSubsystem.getLimelightSide() == "right"){
+      m_Drivetrain.applyRequest(() -> new SwerveRequest.RobotCentric().withVelocityX(1)).execute();
+    }
 
     /* 
     m_Drivetrain.applyRequest(() ->
