@@ -20,6 +20,8 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
+
 public final class Constants {
   /** Creates a new Constants. */
 
@@ -50,8 +52,7 @@ public final class Constants {
       public static final double CoralStuckPosition = FloorPosition +17/ConversionFactor; // for if coral is stuck
       public static final double AlgaeL2 = FloorPosition + 13.17/ConversionFactor;
 
-      public static final double LlAimPosition = 23; // position used while aiming using the limelights 
-//
+      public static final double LlAimPosition = 23; // position used while aiming using the limelights //
 
       // motion magic configs
       
@@ -273,8 +274,19 @@ public final class Constants {
 
     }
 
+    public static class scoringPositions{
+      public static final Pose2d BLUE_FRONT = new Pose2d();
+      public static final Pose2d BLUE_FRONT_RIGHT = new Pose2d();
+      public static final Pose2d BLUE_FRONT_LEFT = new Pose2d();
+      public static final Pose2d BLUE_BACK = new Pose2d();
+      public static final Pose2d BLUE_BACK_RIGHT = new Pose2d();
+      public static final Pose2d BLUE_BACK_LEFT = new Pose2d();
 
-  
-
-
+      public static final Pose2d RED_FRONT = new Pose2d();
+      public static final Pose2d RED_FRONT_RIGHT = new Pose2d();
+      public static final Pose2d RED_FRONT_LEFT = new Pose2d();
+      public static final Pose2d RED_BACK = new Pose2d();
+      public static final Pose2d RED_BACK_RIGHT = new Pose2d();
+      public static final Pose2d RED_BACK_LEFT = new Pose2d();
+    }
 }

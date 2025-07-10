@@ -72,9 +72,9 @@ public class RobotContainer {
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final Localization m_LocalizationLeft = new Localization(logger, m_drivetrain);
- //   private final Localization m_LocalizationRight = new Localization("right");
-// .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
+    //private final Localization m_LocalizationLeft = new Localization(logger, m_drivetrain);
+    //private final Localization m_LocalizationRight = new Localization("right");
+    //.addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");

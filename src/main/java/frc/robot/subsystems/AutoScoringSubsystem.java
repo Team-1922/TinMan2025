@@ -62,9 +62,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
     PutTargetOnDashboard();
   }
 
-
 /** returns the current target level
-  * <p> 0 = L2
+   * <p> 0 = L2
    * <p> 1 = L3
    * <p> 2 = L4
  */
@@ -121,7 +120,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * <p> 2 = L4
    */
   public SequentialCommandGroup GetTargetCommandGroup(int Target){
-    if(Target ==0){
+    if(Target == 0){
       return new SequentialCommandGroup(// L2
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_Elevator, ElevatorConstants.L2Position),
@@ -160,9 +159,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * 
    * @param TargetCommandGroup use {@code GetTargetCommandGroup()}
    * @param side "left" or "right"
-   * @return parralel command group that will both aim and move the EE to the position for scoring
+   * @return parallel command group that will both aim and move the EE to the position for scoring
    */
-  public SequentialCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup,String side){
+  public SequentialCommandGroup TargetAndAim(SequentialCommandGroup TargetCommandGroup, String side){
     LimelightSubsystem LL;
     if (side == "left") {
       LL = m_LimelightSubsystemLeft;
@@ -173,7 +172,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
       return //new SequentialCommandGroup(new WaitCommand(0));
         new SequentialCommandGroup( // L2
           TargetCommandGroup, 
-          new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
+          new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
           new ParallelRaceGroup(new WaitCommand(0.75),new ReverseCollector(m_EE)),
           new AprilTagAimReverse(LL, m_Drivetrain),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),

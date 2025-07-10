@@ -7,6 +7,7 @@ package frc.robot.Commands;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants;
@@ -14,6 +15,7 @@ import frc.robot.Constants.LimelightConstants;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LimelightSubsystem;
+
 import static edu.wpi.first.units.Units.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -42,16 +44,24 @@ public class AprilTagAim extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    Pose2d targetPose2d = m_LimelightSubsystem.getScoringPose2d();
     if(!m_LimelightSubsystem.HasTarget()){
       TimeSinceLastSeenTag.reset();
     }
+    
+    m_Drivetrain.applyRequest(() ->
+      new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.getTx() - targetPose2d.getX() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
+        .withVelocityY(m_LimelightSubsystem.getTy() - targetPose2d.getY() * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
+        .withRotationalRate(m_LimelightSubsystem.getYaw() - targetPose2d.getRotation().getDegrees() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+    ).execute();
 
+    /* 
     m_Drivetrain.applyRequest(() ->
       new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
         .withVelocityY(m_LimelightSubsystem.RobotYDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
         .withRotationalRate(m_LimelightSubsystem.AimTargetYawDutyCycle() * MaxAngularRate) // Drive counterclockwise with negative X (left)
     ).execute();
+    */
   }
 
   // Called once the command ends or is interrupted.
