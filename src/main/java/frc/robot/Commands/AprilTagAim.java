@@ -37,7 +37,7 @@ public class AprilTagAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_LimelightSubsystem.AimTargetYawDutyCycle();
+    //m_LimelightSubsystem.AimTargetYawDutyCycle();
     TimeSinceLastSeenTag.start();
   }
 
@@ -48,16 +48,17 @@ public class AprilTagAim extends Command {
     if(!m_LimelightSubsystem.HasTarget()){
       TimeSinceLastSeenTag.reset();
     }
-    
+    m_LimelightSubsystem.UpdateData();
     m_Drivetrain.applyRequest(() ->
       new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.getTx() - targetPose2d.getX() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
         .withVelocityY(m_LimelightSubsystem.getTy() - targetPose2d.getY() * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
-        .withRotationalRate(m_LimelightSubsystem.getYaw() - targetPose2d.getRotation().getDegrees() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        .withRotationalRate(((Math.toDegrees(m_LimelightSubsystem.getYaw())) - targetPose2d.getRotation().getDegrees()) * 1) // Drive counterclockwise with negative X (left)
     ).execute();
+    /* 
     if(m_LimelightSubsystem.getLimelightSide() == "right"){
       m_Drivetrain.applyRequest(() -> new SwerveRequest.RobotCentric().withVelocityX(1)).execute();
     }
-
+    */
     /* 
     m_Drivetrain.applyRequest(() ->
       new SwerveRequest.RobotCentric().withVelocityX(m_LimelightSubsystem.RobotXDutyCycle() * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)

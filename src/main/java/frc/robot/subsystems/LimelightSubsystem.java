@@ -55,10 +55,11 @@ public class LimelightSubsystem extends SubsystemBase {
       m_TargetCenter = LimelightConstants.leftTargetCenter;
       m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     };
+    SmartDashboard.putData("Field", m_Field2d);
   }
 
 /** updates the target values */ 
-  private void UpdateData(){
+  public void UpdateData(){
     m_tv = m_LLNetworkTable.getEntry("tv"); // 0 if no target, 1 if it has a target
     if(m_tv.getInteger(0) == 1){
       m_targetID = (int)m_LLNetworkTable.getEntry("tid").getDouble(0);
@@ -70,7 +71,6 @@ public class LimelightSubsystem extends SubsystemBase {
     
     if(HasTarget()){
       m_Field2d.setRobotPose(m_Pos2D);
-      SmartDashboard.putData("Field", m_Field2d);
     }
   }
 
@@ -90,7 +90,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
 /** @return limelight <b>Yaw</b> (Rad) */
   public double getYaw(){
-    return m_Pos[4] * Math.PI/180;
+    return m_Pos[5] * Math.PI/180;
   }
 
   /** checks if limelight sees an apriltag */

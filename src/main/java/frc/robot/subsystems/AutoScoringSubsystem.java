@@ -181,9 +181,10 @@ public class AutoScoringSubsystem extends SubsystemBase {
         );
     } else {
       return new SequentialCommandGroup( // L3 and L4
-        new ParallelCommandGroup(
-          new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5)),
-          TargetCommandGroup
+        new SequentialCommandGroup(
+        TargetCommandGroup,
+        new ParallelRaceGroup( new AprilTagAim(LL, m_Drivetrain),new WaitCommand(3.5))
+          
         ),
         new WaitCommand(0.25),
         new ParallelRaceGroup(new WaitCommand(0.65),
