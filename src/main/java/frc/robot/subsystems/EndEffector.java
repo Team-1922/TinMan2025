@@ -24,6 +24,7 @@ import frc.robot.Constants.*;
 public class EndEffector extends SubsystemBase {
   TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
   TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
+  TalonFX m_roller = new TalonFX(EndEffectorConstants.rollerMotorID, "Elevator");
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
 
@@ -56,6 +57,7 @@ public class EndEffector extends SubsystemBase {
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);    
     m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+    m_roller.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID,true));
     
     m_TOF.setRangingMode(RangingMode.Short, 25);
     m_TOF2.setRangingMode(RangingMode.Short, 25);
@@ -93,6 +95,7 @@ public class EndEffector extends SubsystemBase {
   /** spins motor at speed given, percent output */
   public void collect(double speed){
     m_rightCollect.set(speed);
+    
   }
 
   public void stopCollector(){

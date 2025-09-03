@@ -159,21 +159,12 @@ public class RobotContainer {
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
-
-        new ParallelCommandGroup(
-            new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
-            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationHalfWayPosition)
-        ),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
+        new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
         new StationCollect(m_EE, -0.2),
         new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
-        new ParallelCommandGroup(
-            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-            new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
-        ),
+        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
     );
 

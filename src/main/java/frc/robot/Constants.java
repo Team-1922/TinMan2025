@@ -41,7 +41,7 @@ public final class Constants {
       public static final int rightElevatorMotorID = 5; 
 
       public static final double ConversionFactor = 2*(Math.PI*1.432)/9; 
-      public static final double FloorPosition = 0.2/ConversionFactor;
+      public static final double FloorPosition = 0.277/ConversionFactor;
       public static final double L1Position = FloorPosition;
       public static final double L2Position = FloorPosition + 41.2/ConversionFactor;//41.6 ; // placeholder?
       public static final double L3Position = FloorPosition+ 27.8/ConversionFactor; //28.9;
@@ -98,6 +98,7 @@ public final class Constants {
       // motor ids 
       public static final int rightCollectorMotorID = 7;
       public static final int leftCollectorMotorID = 8; 
+      public static final int rollerMotorID = 4; 
       public static final int endEffectorWristMotorID = 26; 
       public static final int endEffectorArmMotorID = 19;
 
@@ -108,7 +109,7 @@ public final class Constants {
       public static final double collectorRPM = 10; // check this 
 
       // wrist angles
-      public static final double FloorWristAngle = -0.55; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0.43; //  angle to collect off the floor 
       public static final double L1WristAngle = FloorWristAngle + .29; // angle to score L1 
       public static final double L2WristAngle = FloorWristAngle + .15; 
       public static final double L3WristAngle = FloorWristAngle - .03;
@@ -119,7 +120,7 @@ public final class Constants {
       public static final double StationWristAngle = FloorWristAngle + .08; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.298; 
+      public static final double FloorArmAngle = 0.37; 
       public static final double L1ArmAngle = FloorArmAngle + .21; 
       public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle + .24;
@@ -127,7 +128,7 @@ public final class Constants {
       public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
       public static final double StowedArmAngle = FloorArmAngle + .33; // the angle for starting configuration
       public static final double VerticalArmAngle = FloorArmAngle + .27; 
-      public static final double StationHalfwayArmAngle = FloorArmAngle + .44;
+      public static final double StationHalfwayArmAngle = FloorArmAngle + .30;
       public static final double StationArmAngle = FloorArmAngle + .49; // placeholder angle for collecting at the station
       
 
