@@ -120,7 +120,7 @@ public final class Constants {
       public static final double StationWristAngle = FloorWristAngle + .08; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = 0.37; 
+      public static final double FloorArmAngle = -0.32; 
       public static final double L1ArmAngle = FloorArmAngle + .21; 
       public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle + .24;
