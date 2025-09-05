@@ -106,7 +106,7 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
     // wrist angles
-    public static final double FloorWristAngle = -0.017; // angle to collect off the floor
+    public static final double FloorWristAngle = -0.012; // angle to collect off the floor
     public static final double L1WristAngle = 0.23; // angle to score L1
     public static final double L2WristAngle = -0.15; //
     public static final double L3WristAngle = -0.085;
