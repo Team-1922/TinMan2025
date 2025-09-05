@@ -95,7 +95,7 @@ public final class Constants {
     // motor ids
     public static final int rightCollectorMotorID = 8;
     public static final int leftCollectorMotorID = 7;
-    public static final int topCollectorMotorID = 0;
+    public static final int topCollectorMotorID = 4;
     public static final int endEffectorWristMotorID = 26;
     public static final int endEffectorArmMotorID = 19;
 
@@ -114,20 +114,17 @@ public final class Constants {
     public static final double AlgaeWristAngle = 0.12; // placeholder
     public static final double StowedWristAngle = .01; // the angle for defence
     public static final double VerticalWristAngle = 0.01;
-    public static final double StationWristAngle = -0.205; // placeholder angle for collecting at station
+    public static final double StationWristAngle = -0.185; // placeholder angle for collecting at station
 
     // arm angles
     public static final double FloorArmAngle = -0.075;
     public static final double L1ArmAngle = 0.128;
     public static final double L2ArmAngle = 0.148; // underflows at -0.2
     public static final double L3ArmAngle = 0.154;
-
     public static final double L4ArmAngle = .125;
-    ;
     public static final double AlgaeArmAngle = .122; // placeholder
     public static final double StowedArmAngle = 0.2; // the angle for starting configuration
     public static final double VerticalArmAngle = 0.215;
-
     public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()

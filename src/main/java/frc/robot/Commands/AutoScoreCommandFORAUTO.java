@@ -23,8 +23,7 @@ public class AutoScoreCommandFORAUTO extends Command {
    * This one is specifically for auto as it only scores in L4, and does not
    * change after incrementing target value
    */
-  public AutoScoreCommandFORAUTO(AutoScoringSubsystem AutoScore, ElevatorSubsystem Elevator, EndEffector EE,
-      String side) {
+  public AutoScoreCommandFORAUTO(AutoScoringSubsystem AutoScore, ElevatorSubsystem Elevator, EndEffector EE,String side) {
     m_AutoScoringSubsystem = AutoScore;
     m_side = side;
     m_EE = EE;
@@ -37,8 +36,7 @@ public class AutoScoreCommandFORAUTO extends Command {
   @Override
   public void initialize() {
     // m_AutoScoringSubsystem ->
-    m_AutoScoringSubsystem.TargetAndAim(
-        m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side, 2).schedule();
+    m_AutoScoringSubsystem.TargetAndAim(m_AutoScoringSubsystem.GetTargetCommandGroup(2), m_side, 2).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -73,19 +73,15 @@ public class RobotContainer {
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
 
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
-    private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem,
-            m_ElevatorSubsystem, m_EE, "right");
-    private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem,
-            m_ElevatorSubsystem, m_EE, "left");
-    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(
-            m_AutoScoringSubsystem);
+    private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem,m_ElevatorSubsystem, m_EE, "right");
+    private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem,m_ElevatorSubsystem, m_EE, "left");
+    private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     private final StationCollect m_StationCollect = new StationCollect(m_EE, -0.2);
     // elevator commands
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
 
-    final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem,
-            m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
+    final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem,m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
     // EE commands
 
     private final StopArm m_StopArm = new StopArm(m_EE);
@@ -99,10 +95,8 @@ public class RobotContainer {
     // private final EeL3 m_L3 = new EeL3(m_EE);
     // private final EeL4 m_L4 = new EeL4( m_EE);
     // private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final MoveArmAndWrist m_StoweEE = new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle,
-            EndEffectorConstants.StowedWristAngle);
-    private final MoveArmAndWrist m_EeVertical = new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle,
-            EndEffectorConstants.VerticalWristAngle);
+    private final MoveArmAndWrist m_StoweEE = new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle);
+    private final MoveArmAndWrist m_EeVertical = new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle,EndEffectorConstants.VerticalWristAngle);
 
     // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
@@ -133,7 +127,6 @@ public class RobotContainer {
                                                                                         // coral is stuck
             new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
             new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.CoralStuckPosition)
-
     );
 
     private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(
