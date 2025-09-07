@@ -30,8 +30,8 @@ public class MoveArmAndWrist extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.ToArmAngle(m_TargetArmPos);
     m_EE.ToWristAngle(m_TargetWristPos);
+    m_EE.ToArmAngle(m_TargetArmPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -110,7 +110,7 @@ public final class Constants {
     public static final double L1WristAngle = 0.23; // angle to score L1
     public static final double L2WristAngle = -0.15; //
     public static final double L3WristAngle = -0.085;
-    public static final double L4WristAngle = -0.105; //128;
+    public static final double L4WristAngle = -0.072; //128;
     public static final double AlgaeWristAngle = 0.12; // placeholder
     public static final double StowedWristAngle = .01; // the angle for defence
     public static final double VerticalWristAngle = 0.01;
@@ -121,10 +121,10 @@ public final class Constants {
     public static final double L1ArmAngle = 0.128;
     public static final double L2ArmAngle = 0.148; // underflows at -0.2
     public static final double L3ArmAngle = 0.154;
-    public static final double L4ArmAngle = .13;
+    public static final double L4ArmAngle = .15;
     public static final double AlgaeArmAngle = .122; // placeholder
-    public static final double StowedArmAngle = 0.2; // the angle for starting configuration
-    public static final double VerticalArmAngle = 0.215;
+    public static final double StowedArmAngle = 0.21; // the angle for starting configuration
+    public static final double VerticalArmAngle = 0.22;
     public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
