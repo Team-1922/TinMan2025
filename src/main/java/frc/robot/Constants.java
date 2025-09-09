@@ -96,27 +96,30 @@ public final class Constants {
 
     public static final double collectorRPM = 10; // check this
 
-    // wrist angles
-    public static final double FloorWristAngle = -0.012; // angle to collect off the floor
-    public static final double L1WristAngle = 0.23; // angle to score L1
-    public static final double L2WristAngle = -0.15; //
-    public static final double L3WristAngle = -0.085;
-    public static final double L4WristAngle = -0.072; //128;
-    public static final double AlgaeWristAngle = 0.12; // placeholder
-    public static final double StowedWristAngle = .01; // the angle for defence
-    public static final double VerticalWristAngle = 0.01;
-    public static final double StationWristAngle = -0.185; // placeholder angle for collecting at station
+      // wrist angles
+      public static final double FloorWristAngle = -0.55; //  angle to collect off the floor 
+      public static final double L1WristAngle = FloorWristAngle + .29; // angle to score L1 
+      public static final double L2WristAngle = FloorWristAngle + .15; 
+      public static final double L3WristAngle = FloorWristAngle - .03;
+      public static final double L4WristAngle = FloorWristAngle - .03; 
+      public static final double AlgaeWristAngle = FloorWristAngle + .18; // placeholder
+      public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
+      public static final double VerticalWristAngle = FloorWristAngle + .07;
+      public static final double StationWristAngle = FloorWristAngle + .08; // placeholder angle for collecting at station
 
-    // arm angles
-    public static final double FloorArmAngle = -0.075;
-    public static final double L1ArmAngle = 0.128;
-    public static final double L2ArmAngle = 0.148; // underflows at -0.2
-    public static final double L3ArmAngle = 0.154;
-    public static final double L4ArmAngle = .15;
-    public static final double AlgaeArmAngle = .122; // placeholder
-    public static final double StowedArmAngle = 0.21; // the angle for starting configuration
-    public static final double VerticalArmAngle = 0.22;
-    public static final double StationArmAngle = 0.22; // placeholder angle for collecting at the station
+
+      //arm angles
+      public static final double FloorArmAngle = -0.298; 
+      public static final double L1ArmAngle = FloorArmAngle + .21; 
+      public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
+      public static final double L3ArmAngle = FloorArmAngle + .24;
+      public static final double L4ArmAngle = FloorArmAngle + .21;
+      public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
+      public static final double StowedArmAngle = FloorArmAngle + .33; // the angle for starting configuration
+      public static final double VerticalArmAngle = FloorArmAngle + .27; 
+      public static final double StationHalfwayArmAngle = FloorArmAngle + .44;
+      public static final double StationArmAngle = FloorArmAngle + .49; // placeholder angle for collecting at the station
+      
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
