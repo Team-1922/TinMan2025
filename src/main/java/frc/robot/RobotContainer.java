@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.MoveArm;
@@ -39,13 +38,11 @@ import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.Localization;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
@@ -66,13 +63,10 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     final EndEffector m_EE = new EndEffector();
-    private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
-    private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    private final Localization m_LocalizationLeft = new Localization(logger, m_drivetrain);
  //   private final Localization m_LocalizationRight = new Localization("right");
 // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
@@ -160,16 +154,10 @@ public class RobotContainer {
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
 
-        new ParallelCommandGroup(
-            new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
-            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationHalfWayPosition)
-        ),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
         new StationCollect(m_EE, -0.2),
-        new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
         new ParallelCommandGroup(
             new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
             new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
@@ -180,9 +168,7 @@ public class RobotContainer {
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
     public final SequentialCommandGroup m_backFromStation = new SequentialCommandGroup(
 
-    new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
     new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
     new ParallelCommandGroup(
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
@@ -232,8 +218,6 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        m_ClimberSubsystem.setDefaultCommand(m_ClimbCommand);
-
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         m_drivetrain.setDefaultCommand(
@@ -271,27 +255,27 @@ public class RobotContainer {
  
    
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right")); // Right Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right", 1)); // Right Bumper
                 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right", 0)); // Right Bumper 
 
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left")); // left Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left", 2)); // left Bumper 
     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left")); // left Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left", 1)); // left Bumper
                     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left", 0)); // left Bumper 
           
       
       
-      //  m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
-      //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+        m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
+        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
@@ -326,7 +310,6 @@ public class RobotContainer {
 
 
       OPERATOR
-         climbing - Left Joystick
          chose scoring target   - LB
          end effector to L1 - Y
          move arm to Collect position/the floor - A

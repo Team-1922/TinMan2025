@@ -23,14 +23,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public final class Constants {
   /** Creates a new Constants. */
 
-  public static class ClimberConstants {
-    public static final int climberMotorID = 2;
-    // public static final int climber2MotorID = 2;
-    public static final double ClimberMaxVoltage = 5; // 8 is too high
-    public static final int ClimbControllerAxis = 1;
-
-  }
-
   public static class ElevatorConstants {
 
     public static final int leftElevatatorMotorID = 6;
@@ -46,7 +38,6 @@ public final class Constants {
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
     public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
     public static final double StationPosition = FloorPosition + 13.4 / ConversionFactor;// 11.5; // placeholder
-    public static final double StationHalfWayPosition = FloorPosition + 5 / ConversionFactor;// 11.5; // placeholder
     public static final double CoralStuckPosition = FloorPosition + 17 / ConversionFactor; // for if coral is stuck
     public static final double AlgaeL2 = FloorPosition + 13.17 / ConversionFactor;
 
@@ -247,5 +238,4 @@ public final class Constants {
     public static final double TargetZSpeedMultiplier = 0.68;
 
   }
-
 }

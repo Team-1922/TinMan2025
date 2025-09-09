@@ -179,7 +179,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * // send elevator up
    * // move arm and wrist to position
    * // collect
-   * // move arm and wrist up a little so they don't hit climber/elevator
+   * // move arm and wrist up a little so they don't hit elevator
    * // move elevator down
    * // move arm and wrist back into vertical position
    * );
