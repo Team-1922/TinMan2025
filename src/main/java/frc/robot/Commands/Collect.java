@@ -4,7 +4,6 @@
 
 package frc.robot.Commands;
 
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.EndEffector;
@@ -15,10 +14,13 @@ public class Collect extends Command {
   boolean m_StartedWithCoral;
   Timer m_Timer = new Timer();
   double m_speed;
-  /** runs the intake so it would pick up a game piece if on the ground 
-   * <p> speed value should be negitive 
-  */
-  public Collect( EndEffector collector,double speed) {
+
+  /**
+   * runs the intake so it would pick up a game piece if on the ground
+   * <p>
+   * speed value should be negitive
+   */
+  public Collect(EndEffector collector, double speed) {
     m_EE = collector;
     m_speed = speed;
 
@@ -28,27 +30,28 @@ public class Collect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  m_StartedWithCoral = m_EE.HasCoral();
-  m_EE.collect(m_speed);
-  
+    m_StartedWithCoral = m_EE.HasCoral();
+    m_EE.collect(-.60, .30, -.40);
+    // m_EE.collect(m_speed);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   if( m_EE.HasCoral() != m_StartedWithCoral){
-    m_Timer.start();    
-   }else{
-    m_Timer.reset();
-   } 
+    if (m_EE.HasCoral() != m_StartedWithCoral) {
+      m_Timer.start();
+    } else {
+      m_Timer.reset();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
- m_EE.stopCollector();
- m_Timer.stop();
-// m_Timer.reset();
+    m_EE.stopCollector();
+    m_Timer.stop();
+    // m_Timer.reset();
   }
 
   // Returns true when the command should end.
@@ -56,6 +59,7 @@ public class Collect extends Command {
   public boolean isFinished() {
     return m_Timer.hasElapsed(0.3);
     // m_Timer.hasElapsed(0.5);
-    // because this command will be used for collecting and scoring, this should end the command when the opposite happens
+    // because this command will be used for collecting and scoring, this should end
+    // the command when the opposite happens
   }
 }

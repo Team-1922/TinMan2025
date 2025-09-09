@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.*;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -19,11 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.ClimbCommand;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.MoveArm;
@@ -39,43 +38,37 @@ import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-// was 0.75
+    // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
     private final SwerveRequest.RobotCentric RcDrive = new SwerveRequest.RobotCentric() 
-    .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-    .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    
-    
-    //private final Telemetry logger = new Telemetry(MaxSpeed);
-
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+    private final Telemetry logger = new Telemetry(MaxSpeed);
     private final CommandXboxController m_driveController = new CommandXboxController(0); // DRIVER CONTROLLER
     private final CommandXboxController m_operatorController = new CommandXboxController(1); // operator
-    public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-     final EndEffector m_EE = new EndEffector();
-    private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+    final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+    final EndEffector m_EE = new EndEffector();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
-    private final ClimbCommand m_ClimbCommand = new ClimbCommand(m_ClimberSubsystem, m_operatorController);
-   
-
+    public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
+ //   private final Localization m_LocalizationRight = new Localization("right");
+// .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
@@ -90,67 +83,59 @@ public class RobotContainer {
      final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
     // EE commands
 
- 
-
     private final StopArm m_StopArm = new StopArm(m_EE);
-
     private final SendableChooser<Command> autoChooser;
-
-
 
     // EE+elevator commands
 
-
-//    private final EeL1 m_L1 = new EeL1(m_EE);
- //   private final EeL2 m_L2 = new EeL2( m_EE);
- //   private final EeL3 m_L3 = new EeL3(m_EE);
- //   private final EeL4 m_L4 = new EeL4( m_EE);
- //   private final EeFloor m_Floor = new EeFloor( m_EE);
+    // private final EeL1 m_L1 = new EeL1(m_EE);
+    // private final EeL2 m_L2 = new EeL2( m_EE);
+    // private final EeL3 m_L3 = new EeL3(m_EE);
+    // private final EeL4 m_L4 = new EeL4( m_EE);
+    // private final EeFloor m_Floor = new EeFloor( m_EE);
     private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle);
     private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
-
 
     // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L1Position),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.L1ArmAngle, EndEffectorConstants.L1WristAngle)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L1Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L1ArmAngle, EndEffectorConstants.L1WristAngle)
     );
 
     private final SequentialCommandGroup m_L2Group = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L2Position),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L2Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle)
     );
     private final SequentialCommandGroup m_L3Group = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.L3ArmAngle, EndEffectorConstants.L3WristAngle)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L3ArmAngle, EndEffectorConstants.L3WristAngle)
     );
 
     private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
     );
 
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-           new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-           new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
     );
 
 
     private final SequentialCommandGroup m_CORALSTUCKgroup = new SequentialCommandGroup(// sends elevator up, for if a coral is stuck
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.CoralStuckPosition)
-
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.CoralStuckPosition)
     );
 
     private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(  
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
-        );
+    );
 
    // private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
 
@@ -169,62 +154,39 @@ public class RobotContainer {
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
 
-        new ParallelCommandGroup(
-            new MoveArm(m_EE,EndEffectorConstants.StationHalfwayArmAngle),
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.StationHalfWayPosition)
-        ),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
         new StationCollect(m_EE, -0.2),
-        new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
         new ParallelCommandGroup(
             new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
             new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
-         ),
-         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
-        
+        ),
+        new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
     public final SequentialCommandGroup m_backFromStation = new SequentialCommandGroup(
 
-    new MoveArm(m_EE, EndEffectorConstants.StationHalfwayArmAngle),
     new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationHalfWayPosition),
     new ParallelCommandGroup(
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
      ),
      new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
- 
-
-
     );
-
 
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position)
-    
-
-
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position)
     );
 
     public final SequentialCommandGroup m_L2algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
-    new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-    new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.AlgaeL2)
-    
-
-
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.AlgaeL2)
     );
-
-    
-
-    
 
     public RobotContainer() {
         configureBindings();
@@ -256,8 +218,6 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        m_ClimberSubsystem.setDefaultCommand(m_ClimbCommand);
-
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         m_drivetrain.setDefaultCommand(
@@ -284,7 +244,7 @@ public class RobotContainer {
        // m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
        // m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-       // m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
+        m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
 
 
        // DRIVER CONTROLS
@@ -295,28 +255,27 @@ public class RobotContainer {
  
    
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right")); // Right Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right", 1)); // Right Bumper
                 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right")); // Right Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right", 0)); // Right Bumper 
 
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left")); // left Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left", 2)); // left Bumper 
     
-
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left")); // left Bumper
+            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left", 1)); // left Bumper
                     
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left")); // left Bumper 
+            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left", 0)); // left Bumper 
           
       
       
-      //  m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
-      //  m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
+        m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
+        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
@@ -329,16 +288,16 @@ public class RobotContainer {
         m_operatorController.button(1).onTrue(m_FloorGroup); // A
 
         m_operatorController.button(3).onTrue(m_StoweEE); // X
-        m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing . 
+        m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing. 
         m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
-      //  m_operatorController.pov(270).whileTrue(m_stationCollect);
+        // m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
         m_operatorController.pov(270).onTrue(m_verticalStowGroup);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
         m_operatorController.button(10).onTrue(m_L2algaeRemove);
-            //m_L3Group);
+            //m_L3Group); 
         /*
      DRIVER
         drive  -  both joysticks
@@ -351,7 +310,6 @@ public class RobotContainer {
 
 
       OPERATOR
-         climbing - Left Joystick
          chose scoring target   - LB
          end effector to L1 - Y
          move arm to Collect position/the floor - A
@@ -359,7 +317,7 @@ public class RobotContainer {
          stop elevator/arm/collector   - B
          collect from station - RT
          move arm back from station (incase it gets stuck there) - LT
-*/
+    */
 
 
     }

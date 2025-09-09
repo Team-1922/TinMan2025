@@ -11,7 +11,10 @@ import frc.robot.subsystems.EndEffector;
 public class StopArm extends Command {
 
   EndEffector m_EE;
-  /** Creates a new AngleFloor. <p>
+
+  /**
+   * Creates a new AngleFloor.
+   * <p>
    * angles the collector to the <b>floor</b> to collect
    */
   public StopArm(EndEffector EE) {
@@ -35,7 +38,8 @@ public class StopArm extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

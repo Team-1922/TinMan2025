@@ -11,11 +11,12 @@ import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class StationCollect extends Command {
- 
+
   EndEffector m_EE = new EndEffector();
   double m_speed;
+
   /** Creates a new StationCollect. */
-  public StationCollect( EndEffector Collector, double speed) {
+  public StationCollect(EndEffector Collector, double speed) {
     m_EE = Collector;
     m_speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,8 +25,9 @@ public class StationCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.collect(m_speed);
-    //m_AutoScoringSubsystem.StationPickupGroup();
+    m_EE.collect(-.1, .1, -.1);
+    // m_EE.collect(m_speed);
+    // m_AutoScoringSubsystem.StationPickupGroup();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,8 +45,7 @@ public class StationCollect extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return 
-    m_EE.HasCoral() == true ;
-  //  m_EE.HasStationCoral() == true;
+    return m_EE.HasCoral() == true;
+    // m_EE.HasStationCoral() == true;
   }
 }

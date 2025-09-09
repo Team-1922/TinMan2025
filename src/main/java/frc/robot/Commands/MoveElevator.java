@@ -4,7 +4,6 @@
 
 package frc.robot.Commands;
 
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -13,8 +12,9 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class MoveElevator extends Command {
   ElevatorSubsystem m_Elevator;
   double m_target;
+
   /** Moves Elevator to given position */
-  public MoveElevator( ElevatorSubsystem elevatorSubsystem, double TargetPos) {
+  public MoveElevator(ElevatorSubsystem elevatorSubsystem, double TargetPos) {
     m_Elevator = elevatorSubsystem;
     addRequirements(m_Elevator);
     m_target = TargetPos;
@@ -24,23 +24,24 @@ public class MoveElevator extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     m_Elevator.GoToPosition(m_target);}
+    m_Elevator.GoToPosition(m_target);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return   Math.abs(m_Elevator.getElevatorPos() - m_target ) <0.1;
+    return Math.abs(m_Elevator.getElevatorPos() - m_target) < 0.1;
   }
 }

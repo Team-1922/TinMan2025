@@ -10,10 +10,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
+import au.grapplerobotics.CanBridge;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  
+
   private final RobotContainer m_robotContainer;
   private final EndEffector m_EE;
   private final ElevatorSubsystem m_Elevator;
@@ -24,15 +25,16 @@ public class Robot extends TimedRobot {
     m_EE = m_robotContainer.m_EE;
     m_Elevator = m_robotContainer.m_ElevatorSubsystem;
     m_LED = m_robotContainer.m_LED;
-  //  m_EE = new EndEffector();
-   // m_Elevator = new ElevatorSubsystem();
-    //m_LED = new LedSubsystem(m_EE);
-  
+    CanBridge.runTCP();
+    // m_EE = new EndEffector();
+    // m_Elevator = new ElevatorSubsystem();
+    // m_LED = new LedSubsystem(m_EE);
+
   }
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
+    CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -41,7 +43,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   @Override
   public void disabledExit() {
@@ -88,10 +91,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopExit() {
-    m_EE.ConfigEeBrake();
-    m_EE.stopEE(); 
+    // m_EE.ConfigEeBrake();
+    m_EE.stopEE();
     m_Elevator.StopElevator();
-     
+
   }
 
   @Override
@@ -100,11 +103,14 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 
   @Override
-  public void testExit() {}
+  public void testExit() {
+  }
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }

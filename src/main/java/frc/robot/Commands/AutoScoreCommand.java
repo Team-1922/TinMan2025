@@ -37,7 +37,7 @@ public class AutoScoreCommand extends Command {
   public void initialize() {
     target = m_AutoScoringSubsystem.GetTargetLevel();
     m_AutoScoringSubsystem.TargetAndAim(
-      m_AutoScoringSubsystem.GetTargetCommandGroup(target), m_side).schedule();
+      m_AutoScoringSubsystem.GetTargetCommandGroup(target), m_side, m_AutoScoringSubsystem.GetTargetLevel()).schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
