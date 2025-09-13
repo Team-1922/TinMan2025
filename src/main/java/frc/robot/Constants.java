@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
@@ -20,8 +21,15 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public final class Constants {
   /** Creates a new Constants. */
+
+  public static class DriveTrainConstants{
+    private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond);
+  }
 
   public static class ElevatorConstants {
 
@@ -97,7 +105,7 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = -0.55; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0; //  angle to collect off the floor 
       public static final double L1WristAngle = FloorWristAngle + .29; // angle to score L1 
       public static final double L2WristAngle = FloorWristAngle + .15; 
       public static final double L3WristAngle = FloorWristAngle - .03;
@@ -109,7 +117,7 @@ public final class Constants {
 
 
       //arm angles
-      public static final double FloorArmAngle = -0.298; 
+      public static final double FloorArmAngle = -0.08; //-0.298 ; 
       public static final double L1ArmAngle = FloorArmAngle + .21; 
       public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle + .24;
@@ -240,5 +248,23 @@ public final class Constants {
     public static final double MaxTargetZ = 1.85; // meters
     public static final double TargetZSpeedMultiplier = 0.68;
 
+  }
+
+  public static class scoringPositions{
+      public static final Pose2d BLUE_FRONT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_FRONT_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_FRONT_LEFT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK_LEFT = new Pose2d(0,0,new Rotation2d(0));
+
+      public static final Pose2d RED_FRONT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_FRONT_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_FRONT_LEFT = new Pose2d(13.8,2.96,new Rotation2d(2.077));
+      public static final Pose2d RED_BACK = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_BACK_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_BACK_LEFT = new Pose2d(0,0,new Rotation2d(0));
+
+      public static final double m_a = 119.0/180.0*Math.PI;
   }
 }
