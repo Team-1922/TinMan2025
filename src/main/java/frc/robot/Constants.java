@@ -20,6 +20,9 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public final class Constants {
   /** Creates a new Constants. */
 
@@ -97,7 +100,7 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = -0.55; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0; //-.55  angle to collect off the floor 
       public static final double L1WristAngle = FloorWristAngle + .29; // angle to score L1 
       public static final double L2WristAngle = FloorWristAngle + .15; 
       public static final double L3WristAngle = FloorWristAngle - .03;
@@ -109,13 +112,13 @@ public final class Constants {
 
 
       //arm angles
-      public static final double FloorArmAngle = -0.298; 
+      public static final double FloorArmAngle = -0.19; 
       public static final double L1ArmAngle = FloorArmAngle + .21; 
       public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle + .24;
       public static final double L4ArmAngle = FloorArmAngle + .21;
       public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
-      public static final double StowedArmAngle = FloorArmAngle + .33; // the angle for starting configuration
+      public static final double StowedArmAngle = FloorArmAngle + .32; // the angle for starting configuration
       public static final double VerticalArmAngle = FloorArmAngle + .27; 
       public static final double StationHalfwayArmAngle = FloorArmAngle + .44;
       public static final double StationArmAngle = FloorArmAngle + .49; // placeholder angle for collecting at the station
@@ -176,10 +179,10 @@ public final class Constants {
         .withDutyCycleClosedLoopRampPeriod(0);
 
     public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.633837890625));
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.615479));
 
     public static final CANcoderConfiguration ArmCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.076904296875)
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.101223)
             .withAbsoluteSensorDiscontinuityPoint(0.8));
 
     public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
@@ -221,7 +224,7 @@ public final class Constants {
     public static final double leftTargetLeftEdge = 0.73; // meters, farthest left the left limelight sees the apriltag
                                                           // (for aiming right side)
     public static final double leftTargetRightEdge = -0.46; // meters
-    public static final double leftTargetCenter = 0.17; // meters
+    public static final double leftTargetCenter = 0.7; // meters
 
     public static final double AimingSpeedMultiplier = 0.7; // kP for lateral aiming 0.84 for the right target/left
                                                             // limelight/LL3
@@ -229,7 +232,7 @@ public final class Constants {
     public static final double RightLateralFF = 0.005; // feed forward on aiming right target
     public static final double LeftLateralFF = 0.002;
 
-    public static final double MaxAimSpeed = 3;// meters per second
+    public static final double MaxAimSpeed = 2;// meters per second
 
     public static final double TargetYDeadband = 0.05; // meters
     public static final double TargetYawDeadband = 4; // deg
@@ -241,4 +244,22 @@ public final class Constants {
     public static final double TargetZSpeedMultiplier = 0.68;
 
   }
+
+   public static class scoringPositions{
+      public static final Pose2d BLUE_FRONT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_FRONT_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_FRONT_LEFT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d BLUE_BACK_LEFT = new Pose2d(0,0,new Rotation2d(0));
+
+      public static final Pose2d RED_FRONT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_FRONT_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_FRONT_LEFT = new Pose2d(13.65,2.93,new Rotation2d(Math.toRadians(120)));
+      public static final Pose2d RED_BACK = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_BACK_RIGHT = new Pose2d(0,0,new Rotation2d(0));
+      public static final Pose2d RED_BACK_LEFT = new Pose2d(0,0,new Rotation2d(0));
+    
+      public static final double m_a = 119.0/180.0*Math.PI;
+    } 
 }

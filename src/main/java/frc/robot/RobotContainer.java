@@ -46,7 +46,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
 
 public class RobotContainer {
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond)/3; // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */

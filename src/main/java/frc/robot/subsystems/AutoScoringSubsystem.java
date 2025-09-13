@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.AprilTagAim;
-import frc.robot.Commands.AprilTagAimReverse;
 import frc.robot.Commands.CloseToReef;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.MoveArm;
@@ -141,13 +140,16 @@ public class AutoScoringSubsystem extends SubsystemBase {
       return new SequentialCommandGroup( // L3 and L4
           new SequentialCommandGroup(
               TargetCommandGroup,
-              new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3))),
+              new ParallelRaceGroup(
+                new AprilTagAim(LL, m_Drivetrain),
+                new WaitCommand(3))),
           new ParallelRaceGroup(
               new CloseToReef(LL), // checks if the robot is close enough to the reef to score
               new SequentialCommandGroup(
                   new WaitCommand(0.25),
-                  new ParallelRaceGroup(new WaitCommand(0.65),
-                      new Collect(m_EE, -0.4)))),
+                  new ParallelRaceGroup(
+                    new WaitCommand(0.65),
+                    new Collect(m_EE, -0.4)))),
 
           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
