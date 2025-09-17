@@ -45,8 +45,10 @@ import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 public class RobotContainer {
+    private Pigeon2 m_Pigeon2 = new Pigeon2(0);
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     // was 0.75
@@ -65,7 +67,7 @@ public class RobotContainer {
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController);
+    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2);
  //   private final Localization m_LocalizationRight = new Localization("right");
 // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
@@ -245,8 +247,6 @@ public class RobotContainer {
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
 
- 
-   
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
 
