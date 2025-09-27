@@ -289,7 +289,7 @@ public class RobotContainer {
 
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing. 
-        m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
         // m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 

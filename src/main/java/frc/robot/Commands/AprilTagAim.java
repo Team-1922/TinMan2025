@@ -50,10 +50,10 @@ public class AprilTagAim extends Command {
       TimeSinceLastSeenTag.reset();
     }
     m_LimelightSubsystem.UpdateData();
-    m_Drivetrain.applyRequest(() ->
-      new SwerveRequest.RobotCentric().withVelocityX((m_LimelightSubsystem.getTx() - targetPose2d.getX()) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
-        .withVelocityY((m_LimelightSubsystem.getTy() - targetPose2d.getY()) * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
-        .withRotationalRate(Math.toDegrees(m_LimelightSubsystem.getYaw() - targetPose2d.getRotation().getRadians())) // Drive counterclockwise with negative X (left)
+    m_Drivetrain.applyRequest(() -> new SwerveRequest.RobotCentric()
+      .withVelocityX((targetPose2d.getX() - m_LimelightSubsystem.getTx()) * LimelightConstants.MaxAimSpeed) // Drive forward with negative Y (forward)
+      .withVelocityY((targetPose2d.getY() - m_LimelightSubsystem.getTy()) * LimelightConstants.MaxAimSpeed) // Drive left with negative X (left)
+      .withRotationalRate(Math.toDegrees(targetPose2d.getRotation().getRadians() - m_LimelightSubsystem.getYaw())) // Drive counterclockwise with negative X (left)
     ).execute();
   }
 
