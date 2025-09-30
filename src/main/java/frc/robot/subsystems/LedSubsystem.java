@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.LarsonAnimation;
+import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,7 +16,7 @@ import frc.robot.Constants.TOFConstants;
 import frc.robot.generated.TunerConstants;
 
 public class LedSubsystem extends SubsystemBase {
-  CANdle m_Candle = new CANdle(LEDConstants.CandleID);// candle is on RIO canbus
+  CANdle m_Candle; // candle is on RIO canbus
   EndEffector m_EE; // = new EndEffector();
   // public final CommandSwerveDrivetrain m_drivetrain =
   // TunerConstants.createDrivetrain();
@@ -25,6 +27,7 @@ public class LedSubsystem extends SubsystemBase {
   /** Creates a new LedSubsystem. */
   public LedSubsystem(EndEffector EE, AutoScoringSubsystem autoScoringSubsystem,
       LimelightSubsystem LeftLimelightSubsystem, LimelightSubsystem RightLimelightSubsystem) {
+    m_Candle = new CANdle(LEDConstants.CandleID);
     m_EE = EE;
     m_AutoScoringSubsystem = autoScoringSubsystem;
     m_LeftLL = LeftLimelightSubsystem;
@@ -65,7 +68,7 @@ public class LedSubsystem extends SubsystemBase {
       m_Candle.setLEDs(0, 255, 0, 0, 24, 8);// L2
       m_Candle.setLEDs(0, 255, 0, 0, 48, 8);
     } else if (m_AutoScoringSubsystem.GetTargetLevel() == 1) {
-      m_Candle.setLEDs(255, 255, 0, 0, 24, 8); // L3
+      m_Candle.setLEDs(255, 255, 0, 0, 24, 8); // L3 
       m_Candle.setLEDs(255, 255, 0, 0, 48, 8);
     } else {
       m_Candle.setLEDs(255, 0, 0, 0, 24, 8); // L4
@@ -75,8 +78,9 @@ public class LedSubsystem extends SubsystemBase {
   }
 
   public void disabledAnimation() {
-    // m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
-    m_Candle.animate(new LarsonAnimation(255, 166, 0, 0, 0, 24, BounceMode.Back, 4, 8), 0);
+    m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
+    // m_Candle.setLEDs(255, 255, 255, 255, 0, 80);
+    m_Candle.animate(new LarsonAnimation(255, 166, 0, 0, 0, 24, BounceMode.Back, 4, 8) , 0);
     m_Candle.animate(new LarsonAnimation(255, 166, 0, 0, 0, 24, BounceMode.Back, 4, 32), 1);
   }
 

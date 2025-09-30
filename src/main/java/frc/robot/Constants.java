@@ -203,7 +203,7 @@ public final class Constants {
   }
 
   public static class LEDConstants {
-    public static final int CandleID = 0;
+    public static final int CandleID = 18;
     public static final int TotalLEDs = 56; // placeholder
   }
 
