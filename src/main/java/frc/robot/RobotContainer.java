@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.Collect;
-import frc.robot.Commands.DriveCommand;
 import frc.robot.Commands.IncrementTargetLocation;
 import frc.robot.Commands.MoveArm;
 import frc.robot.Commands.MoveArmAndWrist;
@@ -52,6 +51,9 @@ public class RobotContainer {
     // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
+    .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+    .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final SwerveRequest.RobotCentric RcDrive = new SwerveRequest.RobotCentric() 
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -65,9 +67,8 @@ public class RobotContainer {
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController);
- //   private final Localization m_LocalizationRight = new Localization("right");
-// .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
+    //   private final Localization m_LocalizationRight = new Localization("right");
+    // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
@@ -218,14 +219,14 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         m_drivetrain.setDefaultCommand(
-            m_DriveCommand
-            // m_drivetrain will execute this command periodically
+            m_drivetrain.applyRequest(() ->
+            drive.withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
+                .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
+                .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            )
         );
 
-
-
-
-       m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
+       // m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
     //   m_driveController.b().whileTrue(m_drivetrain.applyRequest(() ->
      //      point.withModuleDirection(new Rotation2d(-m_driveController.getLeftY(), -m_driveController.getLeftX()))
        // ));

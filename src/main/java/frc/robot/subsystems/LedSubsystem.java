@@ -78,7 +78,7 @@ public class LedSubsystem extends SubsystemBase {
   }
 
   public void disabledAnimation() {
-    m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
+    // m_Candle.animate( new RainbowAnimation(1, 0.5, LEDConstants.TotalLEDs));
     // m_Candle.setLEDs(255, 255, 255, 255, 0, 80);
     m_Candle.animate(new LarsonAnimation(255, 166, 0, 0, 0, 24, BounceMode.Back, 4, 8) , 0);
     m_Candle.animate(new LarsonAnimation(255, 166, 0, 0, 0, 24, BounceMode.Back, 4, 32), 1);
