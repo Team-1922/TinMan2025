@@ -108,7 +108,8 @@ public class EndEffector extends SubsystemBase {
   public void ConfigEeBrake() {
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);
-
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECollectorConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECollectorConfigs);
   }
 
   // COLLECTOR CODE

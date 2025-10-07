@@ -130,15 +130,32 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new MoveElevator(m_Elevator, ElevatorConstants.L3Position),
           new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3.5)),
           TargetCommandGroup,
-          new ParallelRaceGroup(new WaitCommand(0.75), new Collect(m_EE, 0.02)),
-          new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle),
-          new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
-         
-          new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition)
-
+          new WaitCommand(0.25),
+          new ParallelRaceGroup(new WaitCommand(0.75), new Collect(m_EE, -0.4)),  
+          new MoveElevator(m_Elevator,ElevatorConstants.L2Position + 5),                     
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
       );
+
+    } else if(TargetLevel == 1) {
+      return new SequentialCommandGroup( // L3
+        new SequentialCommandGroup(
+          TargetCommandGroup,
+          new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3))),
+        new ParallelRaceGroup(
+          new CloseToReef(LL), // checks if the robot is close enough to the reef to score
+          new SequentialCommandGroup(
+              new WaitCommand(0.25),
+              new ParallelRaceGroup(new WaitCommand(0.65),
+                  new Collect(m_EE, -0.4)))),
+        new MoveElevator(m_Elevator,ElevatorConstants.L3Position + 3),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
+    
     } else {
-      return new SequentialCommandGroup( // L3 and L4
+      return new SequentialCommandGroup( // L4
           new SequentialCommandGroup(
               TargetCommandGroup,
               new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3))),
@@ -146,9 +163,10 @@ public class AutoScoringSubsystem extends SubsystemBase {
               new CloseToReef(LL), // checks if the robot is close enough to the reef to score
               new SequentialCommandGroup(
                   new WaitCommand(0.25),
-                  new ParallelRaceGroup(new WaitCommand(0.65),
-                      new Collect(m_EE, -0.4)))),
-
+                  new ParallelRaceGroup(
+                    new WaitCommand(0.65),
+                    new Collect(m_EE, -0.4)))),
+          new MoveElevator(m_Elevator,ElevatorConstants.L4Position + 1.25),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));

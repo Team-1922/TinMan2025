@@ -75,6 +75,34 @@
      "val":2.0899424410414196
     }
    },
+   "Front right station":{
+    "x":{
+     "exp":"3.605391502380371 m",
+     "val":3.605391502380371
+    },
+    "y":{
+     "exp":"2.448759078979492 m",
+     "val":2.448759078979492
+    },
+    "heading":{
+     "exp":"1.0390721998916257 rad",
+     "val":1.0390721998916257
+    }
+   },
+   "FrontRightStation":{
+    "x":{
+     "exp":"Front right station.x",
+     "val":3.605391502380371
+    },
+    "y":{
+     "exp":"Front right station.y",
+     "val":2.448759078979492
+    },
+    "heading":{
+     "exp":"Front right station.heading",
+     "val":1.0390721998916257
+    }
+   },
    "H":{
     "x":{
      "exp":"g.x",

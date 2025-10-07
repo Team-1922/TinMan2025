@@ -28,7 +28,7 @@ public class AutoScoreCommandFORAUTO extends Command {
     m_side = side;
     m_EE = EE;
     m_Elevator = Elevator;
-    addRequirements(m_AutoScoringSubsystem, m_Elevator, m_EE);
+    addRequirements(m_AutoScoringSubsystem, m_Elevator, m_EE); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

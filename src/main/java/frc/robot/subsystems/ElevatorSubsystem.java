@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.beans.Encoder;
+
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;

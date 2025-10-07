@@ -98,28 +98,26 @@ public final class Constants {
 
       // wrist angles
       public static final double FloorWristAngle = 0; //  angle to collect off the floor 
-      public static final double L1WristAngle = FloorWristAngle + .29; // angle to score L1 
-      public static final double L2WristAngle = FloorWristAngle + .15; 
-      public static final double L3WristAngle = FloorWristAngle - .03;
-      public static final double L4WristAngle = FloorWristAngle - .03; 
+      public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
+      public static final double L2WristAngle = FloorWristAngle - .11; 
+      public static final double L3WristAngle = FloorWristAngle - .09;
+      public static final double L4WristAngle = FloorWristAngle - .05; 
       public static final double AlgaeWristAngle = FloorWristAngle + .18; // placeholder
       public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
       public static final double VerticalWristAngle = FloorWristAngle + .07;
-      public static final double StationWristAngle = FloorWristAngle + .08; // placeholder angle for collecting at station
-
+      public static final double StationWristAngle = FloorWristAngle - .175;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -0.08; //-0.298 ; 
-      public static final double L1ArmAngle = FloorArmAngle + .21; 
-      public static final double L2ArmAngle = FloorArmAngle - .075; // underflows at -0.2
-      public static final double L3ArmAngle = FloorArmAngle + .24;
-      public static final double L4ArmAngle = FloorArmAngle + .21;
+      public static final double FloorArmAngle = -.068; //-0.298 ; 
+      public static final double L1ArmAngle = FloorArmAngle + .14; 
+      public static final double L2ArmAngle = FloorArmAngle + .21; // underflows at -0.2
+      public static final double L3ArmAngle = FloorArmAngle + .21;
+      public static final double L4ArmAngle = FloorArmAngle + .22;                                                                                                                                                                      
       public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
-      public static final double StowedArmAngle = FloorArmAngle + .33; // the angle for starting configuration
-      public static final double VerticalArmAngle = FloorArmAngle + .27; 
+      public static final double StowedArmAngle = FloorArmAngle + .30; // the angle for starting configuration
+      public static final double VerticalArmAngle = FloorArmAngle + .26; 
       public static final double StationHalfwayArmAngle = FloorArmAngle + .44;
-      public static final double StationArmAngle = FloorArmAngle + .49; // placeholder angle for collecting at the station
-      
+      public static final double StationArmAngle = FloorArmAngle + .309; // placeholder angle for collecting at the station
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -192,7 +190,11 @@ public final class Constants {
 
     public static final MotorOutputConfigs EEClimbedConfigs = new MotorOutputConfigs()
         .withNeutralMode(NeutralModeValue.Brake);
-  }
+    
+
+    public static final MotorOutputConfigs EECollectorConfigs = new MotorOutputConfigs()
+        .withNeutralMode(NeutralModeValue.Brake);
+    }
 
   public static class LEDConstants {
     public static final int CandleID = 18;
@@ -229,7 +231,7 @@ public final class Constants {
     public static final double RightLateralFF = 0.005; // feed forward on aiming right target
     public static final double LeftLateralFF = 0.002;
 
-    public static final double MaxAimSpeed = 3;// meters per second
+    public static final double MaxAimSpeed = 2.4;// meters per second
 
     public static final double TargetYDeadband = 0.05; // meters
     public static final double TargetYawDeadband = 4; // deg

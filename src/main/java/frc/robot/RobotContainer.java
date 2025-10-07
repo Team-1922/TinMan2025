@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.IncrementTargetLocation;
@@ -70,13 +71,13 @@ public class RobotContainer {
     //   private final Localization m_LocalizationRight = new Localization("right");
     // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
-    private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
+    private final AutoScoreCommand m_RightAutoScoreForAuto = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem, m_EE,"right");
+    private final AutoScoreCommand m_LeftAutoScoreForAuto = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     private final StationCollect m_StationCollect = new StationCollect(m_EE, -0.2);
-    //elevator commands
+    // elavator commands
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
 
@@ -98,7 +99,6 @@ public class RobotContainer {
 
     // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L1Position),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.L1ArmAngle, EndEffectorConstants.L1WristAngle)
     );
@@ -132,8 +132,8 @@ public class RobotContainer {
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.CoralStuckPosition)
     );
 
-    private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(  
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+    private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
     );
 
@@ -148,21 +148,15 @@ public class RobotContainer {
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position)
     );
 
-
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-        new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
 
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.StationPosition),
+        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
-        new StationCollect(m_EE, -0.2),
-        new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new ParallelCommandGroup(
-            new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-            new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
-        ),
+        new StationCollect(m_EE, -0.2)
+        /*new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
+        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
+        */
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
@@ -219,8 +213,8 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         m_drivetrain.setDefaultCommand(
-            m_drivetrain.applyRequest(() ->
-            drive.withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
+            m_drivetrain.applyRequest(() -> drive
+                .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
                 .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
@@ -266,10 +260,6 @@ public class RobotContainer {
         m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left", 0)); // left Bumper 
           
-      
-      
-        m_driveController.button(6).whileTrue(m_RightAutoScore); // right bumper
-        m_driveController.button(5).whileTrue(m_LeftAutoScore); // left bumper
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
@@ -278,19 +268,18 @@ public class RobotContainer {
         // OPERATOR CONTROLS
 
         m_operatorController.button(5).onTrue(m_IncrementTargetLocation); // Left Bumper
-        m_operatorController.button(4).onTrue(m_L1Group); // Y
+        m_operatorController.button(6).onTrue(m_L1Group); // Right Bumper
         m_operatorController.button(1).onTrue(m_FloorGroup); // A
-
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing. 
-        m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
         // m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck
-        m_operatorController.pov(270).onTrue(m_verticalStowGroup);
+        m_operatorController.pov(270).onTrue(m_L2algaeRemove);
         m_operatorController.pov(90).onTrue(m_algaeRemove);
-        m_operatorController.button(10).onTrue(m_L2algaeRemove);
+        m_operatorController.button(10).onTrue(m_verticalStowGroup);
             //m_L3Group); 
         /*
      DRIVER

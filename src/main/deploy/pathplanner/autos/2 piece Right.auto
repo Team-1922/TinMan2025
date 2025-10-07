@@ -13,38 +13,31 @@
         {
           "type": "named",
           "data": {
-            "name": "LeftL4"
+            "name": "RightL4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C E to Station.0"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "C E to Station.1"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Station to D"
+            "pathName": "C D to Station"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "RightL4"
+            "name": "StationCollect"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to C"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LeftL4"
           }
         }
       ]
