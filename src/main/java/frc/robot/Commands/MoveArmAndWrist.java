@@ -49,7 +49,7 @@ public class MoveArmAndWrist extends Command {
   @Override
   public boolean isFinished() {
     // log current angle
-    Boolean done = Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos) <= 0.05 && Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos) <= 0.05;;
+    Boolean done = Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos) <= 0.05 && Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos) <= 0.05;
     SmartDashboard.putNumber("ArmAngle", m_EE.getCurrentArmAngle() - m_TargetArmPos);
     SmartDashboard.putNumber("WristAngle", m_EE.getCurrentWristAngle() - m_TargetWristPos);
     SmartDashboard.putBoolean("MoveArmWrist", done);

@@ -97,7 +97,7 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = 0.02; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0; //  angle to collect off the floor 
       public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
       public static final double L2WristAngle = FloorWristAngle - .21; 
       public static final double L3WristAngle = FloorWristAngle - .21;
@@ -108,7 +108,7 @@ public final class Constants {
       public static final double StationWristAngle = FloorWristAngle - .175;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -.07; //-0.298 ; 
+      public static final double FloorArmAngle = 0; 
       public static final double L1ArmAngle = FloorArmAngle + .14; 
       public static final double L2ArmAngle = FloorArmAngle + .26; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle + .26;
@@ -137,7 +137,7 @@ public final class Constants {
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
         .withFeedbackRemoteSensorID(endEffectorWristEncoderID)
         .withRotorToSensorRatio(20)
-        .withSensorToMechanismRatio(1);;
+        .withSensorToMechanismRatio(1);
 
     public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
         .withStatorCurrentLimitEnable(true)

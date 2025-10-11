@@ -45,15 +45,15 @@ public class AutoScoringSubsystem extends SubsystemBase {
   public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain) {
     TargetLevel = 2;
     m_Drivetrain = drivetrain;
+    SmartDashboard.putNumber("TargetLevel", TargetLevel);
   }
 
   /**
    * increments target level by 1
    */
   public void incrementTarget() {
-    TargetLevel = ((TargetLevel + 1) % 3); // adding 2 would not work because to get from L2 to L3 it would go, (0+1)%3,
+    SmartDashboard.putNumber("TargetLevel", ((GetTargetLevel() + 1) % 3)); // adding 2 would not work because to get from L2 to L3 it would go, (0+1)%3,
                                            // which = 0, then add 2, so it would be stuck at 2
-    PutTargetOnDashboard();
   }
 
   /**
@@ -66,11 +66,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * 2 = L4
    */
   public int GetTargetLevel() {
-    return TargetLevel;
-  }
-
-  public void PutTargetOnDashboard() {
-    SmartDashboard.putNumber("TargetLevel", TargetLevel + 2);
+    return (int)SmartDashboard.getNumber("TargetLevel", 2);
   }
 
   /**

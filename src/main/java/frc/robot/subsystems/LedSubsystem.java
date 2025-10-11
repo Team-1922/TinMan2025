@@ -9,6 +9,7 @@ import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
@@ -67,12 +68,15 @@ public class LedSubsystem extends SubsystemBase {
     if (m_AutoScoringSubsystem.GetTargetLevel() == 0) {
       m_Candle.setLEDs(0, 255, 0, 0, 24, 8);// L2
       m_Candle.setLEDs(0, 255, 0, 0, 48, 8);
+      SmartDashboard.putString("LEDTargetLevel", "L2");
     } else if (m_AutoScoringSubsystem.GetTargetLevel() == 1) {
       m_Candle.setLEDs(255, 255, 0, 0, 24, 8); // L3 
       m_Candle.setLEDs(255, 255, 0, 0, 48, 8);
+      SmartDashboard.putString("LEDTargetLevel", "L3");
     } else {
       m_Candle.setLEDs(255, 0, 0, 0, 24, 8); // L4
       m_Candle.setLEDs(255, 0, 0, 0, 48, 8);
+      SmartDashboard.putString("LEDTargetLevel", "L4");
     }
     // 24 per side
   }
