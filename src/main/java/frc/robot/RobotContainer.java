@@ -133,7 +133,7 @@ public class RobotContainer {
     );
 
     private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
     );
 
@@ -173,7 +173,7 @@ public class RobotContainer {
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position+7)
     );
 
     public final SequentialCommandGroup m_L2algaeRemove = new SequentialCommandGroup(
@@ -263,6 +263,7 @@ public class RobotContainer {
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
+        m_driveController.button(2).onTrue(m_L1Group);
         
 
         // OPERATOR CONTROLS

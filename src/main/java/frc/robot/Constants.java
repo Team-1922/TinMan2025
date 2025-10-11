@@ -32,8 +32,8 @@ public final class Constants {
     public static final double ConversionFactor = 2 * (Math.PI * 1.432) / 9;
     public static final double FloorPosition = 0.2 / ConversionFactor;
     public static final double L1Position = FloorPosition;
-    public static final double L2Position = FloorPosition + 8.7 / ConversionFactor;// 10.9 ; // placeholder?
-    public static final double L3Position = FloorPosition + 27.5 / ConversionFactor; // 27.7;
+    public static final double L2Position = FloorPosition + 4.6 / ConversionFactor;// 10.9 ; // placeholder?
+    public static final double L3Position = FloorPosition + 20.3 / ConversionFactor; // 27.7;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
     public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
@@ -97,22 +97,22 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = 0; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0.02; //  angle to collect off the floor 
       public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
-      public static final double L2WristAngle = FloorWristAngle - .11; 
-      public static final double L3WristAngle = FloorWristAngle - .09;
-      public static final double L4WristAngle = FloorWristAngle - .05; 
+      public static final double L2WristAngle = FloorWristAngle - .21; 
+      public static final double L3WristAngle = FloorWristAngle - .21;
+      public static final double L4WristAngle = FloorWristAngle - .07; 
       public static final double AlgaeWristAngle = FloorWristAngle + .18; // placeholder
       public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
       public static final double VerticalWristAngle = FloorWristAngle + .07;
       public static final double StationWristAngle = FloorWristAngle - .175;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -.068; //-0.298 ; 
+      public static final double FloorArmAngle = -.07; //-0.298 ; 
       public static final double L1ArmAngle = FloorArmAngle + .14; 
-      public static final double L2ArmAngle = FloorArmAngle + .21; // underflows at -0.2
-      public static final double L3ArmAngle = FloorArmAngle + .21;
-      public static final double L4ArmAngle = FloorArmAngle + .22;                                                                                                                                                                      
+      public static final double L2ArmAngle = FloorArmAngle + .26; // underflows at -0.2
+      public static final double L3ArmAngle = FloorArmAngle + .26;
+      public static final double L4ArmAngle = FloorArmAngle + .19;                                                                                                                                                                      
       public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
       public static final double StowedArmAngle = FloorArmAngle + .30; // the angle for starting configuration
       public static final double VerticalArmAngle = FloorArmAngle + .26; 
@@ -131,7 +131,7 @@ public final class Constants {
 
     public static final MotionMagicConfigs WristMotionMagicConfigs = new MotionMagicConfigs()
         .withMotionMagicExpo_kA(0.1)
-        .withMotionMagicExpo_kV(3.5);
+        .withMotionMagicExpo_kV(2.5);
 
     public static final FeedbackConfigs WristFeedbackConfigs = new FeedbackConfigs()
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -153,12 +153,12 @@ public final class Constants {
         .withSupplyCurrentLimitEnable(true)
         .withSupplyCurrentLimit(20)
         .withSupplyCurrentLowerLimit(20)
-        .withSupplyCurrentLowerTime(0.75);;
+        .withSupplyCurrentLowerTime(0.75);
 
     public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
         .withGravityType(GravityTypeValue.Arm_Cosine)
         .withKG(0.019)
-        .withKP(3.5)
+        .withKP(3)
         .withKS(.018);
 
     public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
