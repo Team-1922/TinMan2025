@@ -115,15 +115,16 @@ public class RobotContainer {
     );
 
     private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
+        //new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position)
+        //new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
     );
 
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.TravelFloorAngle),
+        new MoveWrist(m_EE, EndEffectorConstants.FloorWristAngle)
     );
 
 
@@ -150,7 +151,7 @@ public class RobotContainer {
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
 
-        new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
+        //new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
         new StationCollect(m_EE, -0.2)
         /*new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),

@@ -32,8 +32,8 @@ public final class Constants {
     public static final double ConversionFactor = 2 * (Math.PI * 1.432) / 9;
     public static final double FloorPosition = 0.2 / ConversionFactor;
     public static final double L1Position = FloorPosition;
-    public static final double L2Position = FloorPosition + 4.6 / ConversionFactor;// 10.9 ; // placeholder?
-    public static final double L3Position = FloorPosition + 20.3 / ConversionFactor; // 27.7;
+    public static final double L2Position = FloorPosition + 4.8 / ConversionFactor;// 10.9 ; // placeholder?
+    public static final double L3Position = FloorPosition + 21.3 / ConversionFactor; // 27.7;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
     public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
@@ -53,9 +53,9 @@ public final class Constants {
 
     public static final CurrentLimitsConfigs ElevatorCurrentLimitConfigs = new CurrentLimitsConfigs()
         .withStatorCurrentLimitEnable(true)
-        .withStatorCurrentLimit(30)
+        .withStatorCurrentLimit(60)
         .withSupplyCurrentLimitEnable(true)
-        .withSupplyCurrentLimit(30)
+        .withSupplyCurrentLimit(60)
         .withSupplyCurrentLowerLimit(29)
         .withSupplyCurrentLowerTime(0.75);
 
@@ -66,7 +66,7 @@ public final class Constants {
                                       // do. ;
 
     public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
-        .withKP(0.75)
+        .withKP(.75)
         .withKG(0.0225)
         .withKD(0.03)
         .withKS(0.0137);
@@ -87,46 +87,47 @@ public final class Constants {
     public static final int rightCollectorMotorID = 8;
     public static final int leftCollectorMotorID = 7;
     public static final int topCollectorMotorID = 4;
-    public static final int endEffectorWristMotorID = 26;
+    public static final int endEffectorWristMotorID = 20;
     public static final int endEffectorArmMotorID = 19;
 
-    public static final int endEffectorArmEncoderID = 5; // remember that the swerve encoders are the same device type
+    public static final int endEffectorArmEncoderID = 6; // remember that the swerve encoders are the same device type
                                                          // so can't have the same ID
-    public static final int endEffectorWristEncoderID = 6;
+    public static final int endEffectorWristEncoderID = 5;
 
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = 0.02; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0; //  angle to collect off the floor 
+      public static final double TravelFloorAngle = FloorWristAngle - .01;
       public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
-      public static final double L2WristAngle = FloorWristAngle - .21; 
-      public static final double L3WristAngle = FloorWristAngle - .21;
-      public static final double L4WristAngle = FloorWristAngle - .07; 
-      public static final double AlgaeWristAngle = FloorWristAngle + .18; // placeholder
+      public static final double L2WristAngle = FloorWristAngle - 0.217; 
+      public static final double L3WristAngle = FloorWristAngle - 0.217;
+      public static final double L4WristAngle = FloorWristAngle - 0.106; 
+      public static final double AlgaeWristAngle = FloorWristAngle + .106; // placeholder
       public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
       public static final double VerticalWristAngle = FloorWristAngle + .07;
-      public static final double StationWristAngle = FloorWristAngle - .175;//.18; // placeholder angle for collecting at station
+      public static final double StationWristAngle = FloorWristAngle - 0.223633;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = -.07; //-0.298 ; 
-      public static final double L1ArmAngle = FloorArmAngle + .14; 
-      public static final double L2ArmAngle = FloorArmAngle + .26; // underflows at -0.2
-      public static final double L3ArmAngle = FloorArmAngle + .26;
-      public static final double L4ArmAngle = FloorArmAngle + .19;                                                                                                                                                                      
-      public static final double AlgaeArmAngle = FloorArmAngle + .2; // placeholder
-      public static final double StowedArmAngle = FloorArmAngle + .30; // the angle for starting configuration
-      public static final double VerticalArmAngle = FloorArmAngle + .26; 
-      public static final double StationHalfwayArmAngle = FloorArmAngle + .44;
-      public static final double StationArmAngle = FloorArmAngle + .309; // placeholder angle for collecting at the station
+      public static final double FloorArmAngle = 0;  
+      public static final double L1ArmAngle = FloorArmAngle - .14; 
+      public static final double L2ArmAngle = FloorArmAngle - 0.235; // underflows at -0.2
+      public static final double L3ArmAngle = FloorArmAngle - 0.235;
+      public static final double L4ArmAngle = FloorArmAngle - 0.19;                                                                                                                                                                      
+      public static final double AlgaeArmAngle = FloorArmAngle - .21; // placeholder
+      public static final double StowedArmAngle = FloorArmAngle - .3; // the angle for starting configuration
+      public static final double VerticalArmAngle = FloorArmAngle - .28; 
+      public static final double StationHalfwayArmAngle = FloorArmAngle - 0.296;
+      public static final double StationArmAngle = FloorArmAngle - .309; // placeholder angle for collecting at the station
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
         .withFeedbackRemoteSensorID(endEffectorArmEncoderID)
-        .withRotorToSensorRatio(50)
-        .withSensorToMechanismRatio(1.5);
+        .withRotorToSensorRatio(1)
+        .withSensorToMechanismRatio(1);
 
     public static final MotionMagicConfigs ArmMotionMagicConfigs = new MotionMagicConfigs()
-        .withMotionMagicExpo_kV(10)
+        .withMotionMagicExpo_kV(15)
         .withMotionMagicExpo_kA(8);
 
     public static final MotionMagicConfigs WristMotionMagicConfigs = new MotionMagicConfigs()
@@ -137,7 +138,7 @@ public final class Constants {
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
         .withFeedbackRemoteSensorID(endEffectorWristEncoderID)
         .withRotorToSensorRatio(20)
-        .withSensorToMechanismRatio(1);;
+        .withSensorToMechanismRatio(11/12);;
 
     public static final CurrentLimitsConfigs EECurrentLimitConfigs = new CurrentLimitsConfigs()
         .withStatorCurrentLimitEnable(true)
@@ -159,7 +160,7 @@ public final class Constants {
         .withGravityType(GravityTypeValue.Arm_Cosine)
         .withKG(0.019)
         .withKP(3)
-        .withKS(.018);
+        .withKS(.02);
 
     public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
         .withKP(2);
@@ -174,19 +175,19 @@ public final class Constants {
         .withDutyCycleClosedLoopRampPeriod(0);
 
     public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.633837890625));
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.328125));
 
     public static final CANcoderConfiguration ArmCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.076904296875)
-            .withAbsoluteSensorDiscontinuityPoint(0.8));
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.004150)
+            .withAbsoluteSensorDiscontinuityPoint(0.2));
 
     public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
-        .withNeutralMode(NeutralModeValue.Coast)
-        .withInverted(InvertedValue.CounterClockwise_Positive);
+        .withNeutralMode(NeutralModeValue.Brake)
+        .withInverted(InvertedValue.Clockwise_Positive);
 
     public static final MotorOutputConfigs WristMotorConfig = new MotorOutputConfigs()
-        .withNeutralMode(NeutralModeValue.Coast)
-        .withInverted(InvertedValue.CounterClockwise_Positive);
+        .withNeutralMode(NeutralModeValue.Brake)
+        .withInverted(InvertedValue.Clockwise_Positive);
 
     public static final MotorOutputConfigs EEClimbedConfigs = new MotorOutputConfigs()
         .withNeutralMode(NeutralModeValue.Brake);
