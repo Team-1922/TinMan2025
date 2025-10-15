@@ -33,7 +33,6 @@ import frc.robot.Commands.MoveWrist;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StationCollect;
 import frc.robot.Commands.AutoScoreCommand;
-import frc.robot.Commands.AutoScoreCommandFORAUTO;
 import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
@@ -71,8 +70,8 @@ public class RobotContainer {
     //   private final Localization m_LocalizationRight = new Localization("right");
     // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
-    private final AutoScoreCommand m_RightAutoScoreForAuto = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem, m_EE,"right");
-    private final AutoScoreCommand m_LeftAutoScoreForAuto = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
+    private final Command m_RightAutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right", 2);
+    private final Command m_LeftAutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left", 2);
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
@@ -174,7 +173,7 @@ public class RobotContainer {
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.AlgaeArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position+7)
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L3Position+9)
     );
 
     public final SequentialCommandGroup m_L2algaeRemove = new SequentialCommandGroup(
@@ -243,23 +242,17 @@ public class RobotContainer {
 
  
    
-        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim("right", 2)); // Right Bumper 
 
-        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "right", 1)); // Right Bumper
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim("right", 1)); // Right Bumper
                 
-        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "right", 0)); // Right Bumper 
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim("right", 0)); // Right Bumper 
 
-        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "left", 2)); // left Bumper 
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim("left", 2)); // left Bumper 
     
-        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(1), "left", 1)); // left Bumper
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim("left", 1)); // left Bumper
                     
-        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(0), "left", 0)); // left Bumper 
+        m_driveController.button(5).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 0).whileTrue(m_AutoScoringSubsystem.TargetAndAim("left", 0)); // left Bumper 
           
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger

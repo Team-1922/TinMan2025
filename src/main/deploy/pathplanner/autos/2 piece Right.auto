@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "C Right to E"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "RightL4"
@@ -38,6 +32,12 @@
           "type": "named",
           "data": {
             "name": "LeftL4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Right to E"
           }
         }
       ]

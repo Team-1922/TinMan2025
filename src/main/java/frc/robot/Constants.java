@@ -36,7 +36,7 @@ public final class Constants {
     public static final double L3Position = FloorPosition + 21.3 / ConversionFactor; // 27.7;
     public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
-    public static final double AlgaeHighPosition = FloorPosition + 38.02 / ConversionFactor; // placeholder
+    public static final double AlgaeHighPosition = FloorPosition + 45.02 / ConversionFactor; // placeholder
     public static final double StationPosition = FloorPosition + 13.4 / ConversionFactor;// 11.5; // placeholder
     public static final double CoralStuckPosition = FloorPosition + 17 / ConversionFactor; // for if coral is stuck
     public static final double AlgaeL2 = FloorPosition + 13.17 / ConversionFactor;
@@ -47,7 +47,7 @@ public final class Constants {
     // motion magic configs
 
     public static final double MotionMagicAcceleration = 1;
-    public static final double MotionMagicCruiseVelocity = 3;
+    public static final double MotionMagicCruiseVelocity = 10;
 
     // motor configs (power/motion magic configs)
 
@@ -66,7 +66,7 @@ public final class Constants {
                                       // do. ;
 
     public static final Slot0Configs ElevatorSlot0Configs = new Slot0Configs()
-        .withKP(.75)
+        .withKP(.35)
         .withKG(0.0225)
         .withKD(0.03)
         .withKS(0.0137);
@@ -115,8 +115,8 @@ public final class Constants {
       public static final double L3ArmAngle = FloorArmAngle - 0.235;
       public static final double L4ArmAngle = FloorArmAngle - 0.19;                                                                                                                                                                      
       public static final double AlgaeArmAngle = FloorArmAngle - .21; // placeholder
-      public static final double StowedArmAngle = FloorArmAngle - .3; // the angle for starting configuration
-      public static final double VerticalArmAngle = FloorArmAngle - .28; 
+      public static final double StowedArmAngle = FloorArmAngle - .29; // the angle for starting configuration
+      public static final double VerticalArmAngle = FloorArmAngle - .29; 
       public static final double StationHalfwayArmAngle = FloorArmAngle - 0.296;
       public static final double StationArmAngle = FloorArmAngle - .309; // placeholder angle for collecting at the station
 
@@ -127,8 +127,8 @@ public final class Constants {
         .withSensorToMechanismRatio(1);
 
     public static final MotionMagicConfigs ArmMotionMagicConfigs = new MotionMagicConfigs()
-        .withMotionMagicExpo_kV(15)
-        .withMotionMagicExpo_kA(8);
+        .withMotionMagicExpo_kV(10)
+        .withMotionMagicExpo_kA(1);
 
     public static final MotionMagicConfigs WristMotionMagicConfigs = new MotionMagicConfigs()
         .withMotionMagicExpo_kA(0.1)
@@ -159,7 +159,7 @@ public final class Constants {
     public static final Slot0Configs ArmSlot0Configs = new Slot0Configs()
         .withGravityType(GravityTypeValue.Arm_Cosine)
         .withKG(0.019)
-        .withKP(3)
+        .withKP(9)
         .withKS(.02);
 
     public static final Slot0Configs WristSlot0Configs = new Slot0Configs()
