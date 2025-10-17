@@ -4,48 +4,37 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.AutoScoringSubsystem;
 import frc.robot.subsystems.EndEffector;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class StationCollect extends Command {
-
-  EndEffector m_EE = new EndEffector();
-  double m_speed;
-
-  /** Creates a new StationCollect. */
-  public StationCollect(EndEffector Collector, double speed) {
-    m_EE = Collector;
-    m_speed = speed;
+public class HoldCoral extends Command {
+  private EndEffector m_EE;
+  /** Creates a new HoldCoral. */
+  public HoldCoral(EndEffector EE ) {
+    m_EE = EE;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_EE.collect(-m_speed, m_speed, -m_speed);
-    // m_EE.collect(m_speed);
-    // m_AutoScoringSubsystem.StationPickupGroup();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_EE.stopCollector();
+    m_EE.m_leftCollect.setPosition(m_EE.m_leftCollect.getPosition().getValueAsDouble());
+    m_EE.m_rightCollect.setPosition(m_EE.m_rightCollect.getPosition().getValueAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_EE.stopCollector();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_EE.HasCoral() == true;
-    // m_EE.HasStationCoral() == true;
+    return false;
   }
 }

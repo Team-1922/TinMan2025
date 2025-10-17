@@ -37,6 +37,54 @@
         {
           "type": "path",
           "data": {
+            "pathName": "C C to Station.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StationCollect"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to C"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LeftL3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C C to Station.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StationCollect"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C Station to C"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RightL3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
             "pathName": "C Right to E"
           }
         }

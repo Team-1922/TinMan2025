@@ -97,7 +97,8 @@ public final class Constants {
     public static final double collectorRPM = 10; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = 0; //  angle to collect off the floor 
+      public static final double FloorWristAngle = 0; // 
+      public static final double FloorCollectWristAngle = FloorWristAngle -.01;
       public static final double TravelFloorAngle = FloorWristAngle - .01;
       public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
       public static final double L2WristAngle = FloorWristAngle - 0.217; 
@@ -109,7 +110,8 @@ public final class Constants {
       public static final double StationWristAngle = FloorWristAngle - 0.223633;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = 0;  
+      public static final double FloorArmAngle = 0;
+      public static final double FloorCollectArmAngle = FloorArmAngle - 0.008; 
       public static final double L1ArmAngle = FloorArmAngle - .14; 
       public static final double L2ArmAngle = FloorArmAngle - 0.235; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle - 0.235;

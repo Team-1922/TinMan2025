@@ -145,6 +145,20 @@
      "val":-1.0659352782008742
     }
    },
+   "Station":{
+    "x":{
+     "exp":"Front right station.x",
+     "val":1.0868844985961914
+    },
+    "y":{
+     "exp":"Front right station.y",
+     "val":0.8934488296508789
+    },
+    "heading":{
+     "exp":"Front right station.heading",
+     "val":0.9225776851209432
+    }
+   },
    "Station1":{
     "x":{
      "exp":"1.384568214416504 m",

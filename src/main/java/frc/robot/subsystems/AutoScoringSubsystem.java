@@ -147,9 +147,10 @@ public class AutoScoringSubsystem extends SubsystemBase {
               new SequentialCommandGroup(
                   new WaitCommand(0.25),
                   new ParallelRaceGroup(
-                    new WaitCommand(0.65),
+                    new WaitCommand(0.35),
                     new Collect(m_EE, -0.4)))),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
+          new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
     }
@@ -162,7 +163,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     } else {
       LL = m_LimelightSubsystemRight;
     }
-    
+
     return new SequentialCommandGroup( // L4
           new SequentialCommandGroup(
               new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
@@ -174,9 +175,10 @@ public class AutoScoringSubsystem extends SubsystemBase {
               new SequentialCommandGroup(
                   new WaitCommand(0.25),
                   new ParallelRaceGroup(
-                    new WaitCommand(0.65),
+                    new WaitCommand(0.35),
                     new Collect(m_EE, -0.4)))),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
+          new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
   }

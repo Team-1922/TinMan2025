@@ -26,12 +26,12 @@ import au.grapplerobotics.LaserCan;
 import au.grapplerobotics.ConfigurationFailedException;
 
 public class EndEffector extends SubsystemBase {
-  TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
-  TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
+  public TalonFX m_leftCollect = new TalonFX(EndEffectorConstants.leftCollectorMotorID, "Elevator");
+  public TalonFX m_rightCollect = new TalonFX(EndEffectorConstants.rightCollectorMotorID, "Elevator");
   TalonFX m_WristMotor = new TalonFX(EndEffectorConstants.endEffectorWristMotorID, "Elevator");
   TalonFX m_ArmMotor = new TalonFX(EndEffectorConstants.endEffectorArmMotorID, "Elevator");
   TalonFX m_TopCollect = new TalonFX(EndEffectorConstants.topCollectorMotorID, "Elevator");
-  LaserCan m_LC = new LaserCan(0);
+  public LaserCan m_LC = new LaserCan(0);
 
   // TimeOfFlight m_TOF = new TimeOfFlight(TOFConstants.TOFID);
   // TimeOfFlight m_TOF2 = new TimeOfFlight(TOFConstants.TOFID2);
@@ -60,10 +60,9 @@ public class EndEffector extends SubsystemBase {
     m_WristEncoder.getConfigurator().apply(EndEffectorConstants.WristCanCoderConfig);
     m_armEncoder.getConfigurator().apply(EndEffectorConstants.ArmCanCoderConfig);
 
-    // m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
-    // m_leftCollect.setControl(new
-    // Follower(EndEffectorConstants.rightCollectorMotorID, true));
+    m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
 
     try {
       m_LC.setRangingMode(LaserCan.RangingMode.SHORT);
@@ -116,16 +115,19 @@ public class EndEffector extends SubsystemBase {
   /** spins motor at speed given, percent output */
   public void collect(double rightSpeed, double leftSpeed, double topSpeed) {
     m_rightCollect.set(rightSpeed);
-    m_leftCollect.set(leftSpeed);
+   // m_leftCollect.set(leftSpeed);
     m_TopCollect.set(topSpeed);
 
   }
 
   public void stopCollector() {
-    m_rightCollect.set(0);
-    m_leftCollect.set(0);
-    m_TopCollect.set(0);
-
+    //m_rightCollect.set(0);
+    //m_leftCollect.set(0);
+    //m_TopCollect.set(0);
+    m_rightCollect.stopMotor();
+  //  m_leftCollect.stopMotor();
+    m_TopCollect.stopMotor();
+    m_rightCollect.setPosition(m_rightCollect.getPosition(true).getValueAsDouble());
   }
 
   public void stopWrist() {

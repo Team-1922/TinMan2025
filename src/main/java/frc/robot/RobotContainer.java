@@ -44,6 +44,7 @@ import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
+import frc.robot.Commands.HoldCoral;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -64,21 +65,25 @@ public class RobotContainer {
     final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     final EndEffector m_EE = new EndEffector();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
+    private final Collect m_L1Shoot = new Collect(m_EE,-0.2);
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
     //   private final Localization m_LocalizationRight = new Localization("right");
     // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
-    private final Command m_RightAutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right", 2);
-    private final Command m_LeftAutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left", 2);
-    private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
+    private final Command m_RightL4AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right");
+    private final Command m_LeftL4AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left");
+    private final Command m_LeftL3AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left", 1);
+    private final Command m_RightL3AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right", 1);
+    //private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
+    //private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
-    private final StationCollect m_StationCollect = new StationCollect(m_EE, -0.2);
+    private final StationCollect m_StationCollect = new StationCollect(m_EE, 0.075);
     // elavator commands
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
+    private final HoldCoral m_holdCoral = new HoldCoral(m_EE);
 
      final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
     // EE commands
@@ -122,8 +127,8 @@ public class RobotContainer {
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.TravelFloorAngle),
-        new MoveWrist(m_EE, EndEffectorConstants.FloorWristAngle)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorCollectArmAngle, EndEffectorConstants.TravelFloorAngle),
+        new MoveWrist(m_EE, EndEffectorConstants.FloorCollectWristAngle)
     );
 
 
@@ -152,7 +157,7 @@ public class RobotContainer {
 
         //new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
-        new StationCollect(m_EE, -0.2)
+        m_StationCollect
         /*new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
         new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
         new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
@@ -189,8 +194,10 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("VerticalStow", new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
     NamedCommands.registerCommand("Collect", m_FloorCollect); // put pathplanner commands here
-    NamedCommands.registerCommand("LeftL4", m_LeftAutoScoreForAuto);
-    NamedCommands.registerCommand("RightL4", m_RightAutoScoreForAuto);
+    NamedCommands.registerCommand("LeftL4", m_LeftL4AutoScoreForAuto);
+    NamedCommands.registerCommand("RightL4", m_RightL4AutoScoreForAuto);
+    NamedCommands.registerCommand("LeftL3", m_LeftL3AutoScoreForAuto);
+    NamedCommands.registerCommand("RightL3", m_RightL3AutoScoreForAuto);
     //NamedCommands.registerCommand("EeFloor", ); // the end effector to floor, does not controll elevator
     NamedCommands.registerCommand("AimPrep", m_AutoL4Group); // Re-get these numbers and test this before adding into autos
     NamedCommands.registerCommand("StationCollect", m_stationCollect);
@@ -213,10 +220,14 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         m_drivetrain.setDefaultCommand(
-            m_drivetrain.applyRequest(() -> drive
-                .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
-                .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
-                .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            new SequentialCommandGroup(
+                m_drivetrain.applyRequest(() -> drive
+                    .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    ),
+                    m_holdCoral
+
             )
         );
 
@@ -258,6 +269,7 @@ public class RobotContainer {
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
         m_driveController.button(2).onTrue(m_L1Group);
+        m_driveController.button(3).whileTrue(m_L1Shoot); // X
         
 
         // OPERATOR CONTROLS

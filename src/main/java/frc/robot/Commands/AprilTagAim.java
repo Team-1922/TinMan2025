@@ -71,9 +71,9 @@ public class AprilTagAim extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_LimelightSubsystem.targetXError()) < 0.0041 // 0.05
-        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.015 // 0.108
-        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.025// 0.05
+    return (Math.abs(m_LimelightSubsystem.targetXError()) < 0.006 // 0.05
+        && Math.abs(m_LimelightSubsystem.targetZError()) < 0.03 // 0.108
+        && Math.abs(m_LimelightSubsystem.targetYawError()) < 0.04// 0.05
     ) || TimeSinceLastSeenTag.hasElapsed(1);
   }
 }
