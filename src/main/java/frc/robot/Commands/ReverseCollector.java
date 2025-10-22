@@ -24,7 +24,7 @@ public class ReverseCollector extends Command {
   @Override
   public void initialize() {
     // m_StartedWithCoral = m_EE.HasCoral();
-    m_EE.collect(.25, -.25, .15);
+    m_EE.collect(.25, .25, .15);
     m_Timer.reset();
   }
 

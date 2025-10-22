@@ -138,7 +138,8 @@ public class RobotContainer {
     );
 
     private final SequentialCommandGroup m_verticalStowGroup = new SequentialCommandGroup(
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle),
+        new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
     );
 
@@ -222,9 +223,9 @@ public class RobotContainer {
         m_drivetrain.setDefaultCommand(
             new SequentialCommandGroup(
                 m_drivetrain.applyRequest(() -> drive
-                    .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * (MaxSpeed*.35)) // Drive forward with negative Y (forward)
+                    .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * (MaxSpeed*.35)) // Drive left with negative X (left)
+                    .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * (MaxAngularRate*.75)) // Drive counterclockwise with negative X (left)
                     ),
                     m_holdCoral
 

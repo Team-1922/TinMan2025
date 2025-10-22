@@ -107,11 +107,11 @@ public final class Constants {
       public static final double AlgaeWristAngle = FloorWristAngle + .106; // placeholder
       public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
       public static final double VerticalWristAngle = FloorWristAngle + .07;
-      public static final double StationWristAngle = FloorWristAngle - 0.223633;//.18; // placeholder angle for collecting at station
+      public static final double StationWristAngle = FloorWristAngle - 0.21;//.18; // placeholder angle for collecting at station
 
       //arm angles
       public static final double FloorArmAngle = 0;
-      public static final double FloorCollectArmAngle = FloorArmAngle - 0.008; 
+      public static final double FloorCollectArmAngle = FloorArmAngle - 0.01; 
       public static final double L1ArmAngle = FloorArmAngle - .14; 
       public static final double L2ArmAngle = FloorArmAngle - 0.235; // underflows at -0.2
       public static final double L3ArmAngle = FloorArmAngle - 0.235;

@@ -62,7 +62,7 @@ public class EndEffector extends SubsystemBase {
 
     m_leftCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
     m_rightCollect.getConfigurator().apply(EndEffectorConstants.CollectorCurrentLimitConfigs);
-    m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
+    //m_leftCollect.setControl(new Follower(EndEffectorConstants.rightCollectorMotorID, true));
 
     try {
       m_LC.setRangingMode(LaserCan.RangingMode.SHORT);
@@ -115,7 +115,7 @@ public class EndEffector extends SubsystemBase {
   /** spins motor at speed given, percent output */
   public void collect(double rightSpeed, double leftSpeed, double topSpeed) {
     m_rightCollect.set(rightSpeed);
-   // m_leftCollect.set(leftSpeed);
+   m_leftCollect.set(leftSpeed);
     m_TopCollect.set(topSpeed);
 
   }
@@ -125,7 +125,7 @@ public class EndEffector extends SubsystemBase {
     //m_leftCollect.set(0);
     //m_TopCollect.set(0);
     m_rightCollect.stopMotor();
-  //  m_leftCollect.stopMotor();
+    m_leftCollect.stopMotor();
     m_TopCollect.stopMotor();
     m_rightCollect.setPosition(m_rightCollect.getPosition(true).getValueAsDouble());
   }
