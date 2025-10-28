@@ -19,6 +19,7 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 public final class Constants {
   /** Creates a new Constants. */
@@ -34,7 +35,7 @@ public final class Constants {
     public static final double L1Position = FloorPosition;
     public static final double L2Position = FloorPosition + 4.8 / ConversionFactor;// 10.9 ; // placeholder?
     public static final double L3Position = FloorPosition + 21.3 / ConversionFactor; // 27.7;
-    public static final double L4Position = FloorPosition + 54.3 / ConversionFactor;// 54.5;
+    public static final double L4Position = FloorPosition + 53.8 / ConversionFactor;// 54.5;
     public static final double AlgaeLowPosition = FloorPosition + 30.88 / ConversionFactor; // placeholder
     public static final double AlgaeHighPosition = FloorPosition + 45.02 / ConversionFactor; // placeholder
     public static final double StationPosition = FloorPosition + 13.4 / ConversionFactor;// 11.5; // placeholder
@@ -94,33 +95,33 @@ public final class Constants {
                                                          // so can't have the same ID
     public static final int endEffectorWristEncoderID = 5;
 
-    public static final double collectorRPM = 10; // check this
+    public static final double collectorRPM = 40; // check this
 
       // wrist angles
-      public static final double FloorWristAngle = 0; // 
-      public static final double FloorCollectWristAngle = FloorWristAngle -.01;
-      public static final double TravelFloorAngle = FloorWristAngle - .01;
-      public static final double L1WristAngle = FloorWristAngle - .35; // angle to score L1 
-      public static final double L2WristAngle = FloorWristAngle - 0.217; 
-      public static final double L3WristAngle = FloorWristAngle - 0.217;
-      public static final double L4WristAngle = FloorWristAngle - 0.106; 
-      public static final double AlgaeWristAngle = FloorWristAngle + .106; // placeholder
-      public static final double StowedWristAngle =  FloorWristAngle + .07; // the angle for defence 
-      public static final double VerticalWristAngle = FloorWristAngle + .07;
-      public static final double StationWristAngle = FloorWristAngle - 0.21;//.18; // placeholder angle for collecting at station
+      public static final double ZeroWristAngle = 0; // 
+      public static final double FloorCollectWristAngle = ZeroWristAngle -0.124268;
+      public static final double TravelFloorAngle = ZeroWristAngle - .0;
+      public static final double L1WristAngle = ZeroWristAngle - 0.483398; // angle to score L1 
+      public static final double L2WristAngle = ZeroWristAngle - 0.34; 
+      public static final double L3WristAngle = ZeroWristAngle - 0.34;
+      public static final double L4WristAngle = ZeroWristAngle - .2; 
+      public static final double AlgaeWristAngle = ZeroWristAngle - .2; // placeholder
+      public static final double StowedWristAngle =  ZeroWristAngle - .07; // the angle for defence 
+      public static final double VerticalWristAngle = ZeroWristAngle - .07;
+      public static final double StationWristAngle = ZeroWristAngle - 0.337646;//.18; // placeholder angle for collecting at station
 
       //arm angles
-      public static final double FloorArmAngle = 0;
-      public static final double FloorCollectArmAngle = FloorArmAngle - 0.01; 
-      public static final double L1ArmAngle = FloorArmAngle - .14; 
-      public static final double L2ArmAngle = FloorArmAngle - 0.235; // underflows at -0.2
-      public static final double L3ArmAngle = FloorArmAngle - 0.235;
-      public static final double L4ArmAngle = FloorArmAngle - 0.19;                                                                                                                                                                      
-      public static final double AlgaeArmAngle = FloorArmAngle - .21; // placeholder
-      public static final double StowedArmAngle = FloorArmAngle - .29; // the angle for starting configuration
-      public static final double VerticalArmAngle = FloorArmAngle - .29; 
-      public static final double StationHalfwayArmAngle = FloorArmAngle - 0.296;
-      public static final double StationArmAngle = FloorArmAngle - .309; // placeholder angle for collecting at the station
+      public static final double ZeroArmAngle = 0;
+      public static final double FloorCollectArmAngle = ZeroArmAngle - 0.00543;
+      public static final double L1ArmAngle = ZeroArmAngle - .14; 
+      public static final double L2ArmAngle = ZeroArmAngle - 0.235; // underflows at -0.2
+      public static final double L3ArmAngle = ZeroArmAngle - 0.235;
+      public static final double L4ArmAngle = ZeroArmAngle - 0.21;                                                                                                                                                                      
+      public static final double AlgaeArmAngle = ZeroArmAngle - .21; // placeholder
+      public static final double StowedArmAngle = ZeroArmAngle - .27; // the angle for starting configuration
+      public static final double VerticalArmAngle = ZeroArmAngle - .27; 
+      public static final double StationHalfwayArmAngle = ZeroArmAngle - 0.296;
+      public static final double StationArmAngle = ZeroArmAngle - .309; // placeholder angle for collecting at the station
 
     public static final FeedbackConfigs ArmFeedbackConfigs = new FeedbackConfigs()
         .withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)
@@ -177,15 +178,17 @@ public final class Constants {
         .withDutyCycleClosedLoopRampPeriod(0);
 
     public static final CANcoderConfiguration WristCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(-0.328125));
-
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.190430)
+        .withSensorDirection(SensorDirectionValue.Clockwise_Positive));
+        
     public static final CANcoderConfiguration ArmCanCoderConfig = new CANcoderConfiguration()
-        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.004150)
+        .withMagnetSensor(new MagnetSensorConfigs().withMagnetOffset(0.001221)
             .withAbsoluteSensorDiscontinuityPoint(0.2));
+            
 
     public static final MotorOutputConfigs ArmMotorConfig = new MotorOutputConfigs()
         .withNeutralMode(NeutralModeValue.Brake)
-        .withInverted(InvertedValue.Clockwise_Positive);
+        .withInverted(InvertedValue.CounterClockwise_Positive);
 
     public static final MotorOutputConfigs WristMotorConfig = new MotorOutputConfigs()
         .withNeutralMode(NeutralModeValue.Brake)

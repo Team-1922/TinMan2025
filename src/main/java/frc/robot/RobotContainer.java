@@ -119,9 +119,9 @@ public class RobotContainer {
     );
 
     private final SequentialCommandGroup m_L4Group = new SequentialCommandGroup(
-        //new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
-        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position)
-        //new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.L4ArmAngle, EndEffectorConstants.L4WristAngle)
     );
 
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
@@ -223,9 +223,9 @@ public class RobotContainer {
         m_drivetrain.setDefaultCommand(
             new SequentialCommandGroup(
                 m_drivetrain.applyRequest(() -> drive
-                    .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * (MaxSpeed*.35)) // Drive forward with negative Y (forward)
-                    .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * (MaxSpeed*.35)) // Drive left with negative X (left)
-                    .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * (MaxAngularRate*.75)) // Drive counterclockwise with negative X (left)
+                    .withVelocityX(-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) * (MaxSpeed*.4)) // Drive forward with negative Y (forward)
+                    .withVelocityY(-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) * (MaxSpeed*.4)) // Drive left with negative X (left)
+                    .withRotationalRate(-MathUtil.applyDeadband(m_driveController.getRightX(),0.15) * (MaxAngularRate*.8)) // Drive counterclockwise with negative X (left)
                     ),
                     m_holdCoral
 
@@ -269,7 +269,7 @@ public class RobotContainer {
    
         m_driveController.leftTrigger().whileTrue(m_FloorCollect); // Left Trigger
         m_driveController.rightTrigger().whileTrue(m_ReverseCollector); // right trigger 
-        m_driveController.button(2).onTrue(m_L1Group);
+        m_driveController.button(2).onTrue(m_L1Group); //B
         m_driveController.button(3).whileTrue(m_L1Shoot); // X
         
 
@@ -302,7 +302,7 @@ public class RobotContainer {
 
       OPERATOR
          chose scoring target   - LB
-         end effector to L1 - Y
+         end effector to L1 - Yu3e                                          
          move arm to Collect position/the floor - A
          move arm to stowed position (for defence/moving around) - X
          stop elevator/arm/collector   - B

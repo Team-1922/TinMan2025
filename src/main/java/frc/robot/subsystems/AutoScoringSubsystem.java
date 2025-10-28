@@ -113,7 +113,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle),
           new WaitCommand(.1),
           new ParallelRaceGroup(new WaitCommand(0.55), new Collect(m_EE, -0.4)),                      
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
+          new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
           new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
       );
@@ -131,7 +132,8 @@ public class AutoScoringSubsystem extends SubsystemBase {
               new WaitCommand(0.25),
               new ParallelRaceGroup(new WaitCommand(0.65),
                   new Collect(m_EE, -0.4)))),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+                  new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
+                  new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
     
