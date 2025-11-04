@@ -165,9 +165,7 @@ public class LimelightSubsystem extends SubsystemBase {
   public double RobotXDutyCycle() {
     if (!HasTarget())
       return 0;
-    double target = MathUtil.clamp((-Math.sin(getYaw()) * AimTargetXDutyCycle()) + (Math.cos(getYaw())
-
-        * AimTargetZDutyCycle()), -.8, .8);
+    double target = MathUtil.clamp((-Math.sin(getYaw()) * AimTargetXDutyCycle()) + (Math.cos(getYaw()) * AimTargetZDutyCycle()), -.8, .8);
     SmartDashboard.putNumber("LlRobotX", target);
     return target;
 

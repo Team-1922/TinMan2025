@@ -98,7 +98,7 @@ public class RobotContainer {
     // private final EeL3 m_L3 = new EeL3(m_EE);
     // private final EeL4 m_L4 = new EeL4( m_EE);
     // private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle);
+    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
     private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
 
     // sequential command groups for the elevator/EE, used for testing.
@@ -127,7 +127,7 @@ public class RobotContainer {
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorCollectArmAngle, EndEffectorConstants.TravelFloorAngle),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorCollectArmAngle, EndEffectorConstants.ZeroWristAngle),
         new MoveWrist(m_EE, EndEffectorConstants.FloorCollectWristAngle)
     );
 
@@ -171,9 +171,9 @@ public class RobotContainer {
     new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
     new ParallelCommandGroup(
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
+        new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle)
      ),
-     new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
+     new MoveArmAndWrist(m_EE,EndEffectorConstants.VerticalArmAngle,EndEffectorConstants.VerticalWristAngle)
     );
 
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(

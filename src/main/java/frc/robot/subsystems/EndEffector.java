@@ -107,15 +107,15 @@ public class EndEffector extends SubsystemBase {
   public void ConfigEeBrake() {
     m_WristMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);
     m_ArmMotor.getConfigurator().apply(EndEffectorConstants.EEClimbedConfigs);
-    m_leftCollect.getConfigurator().apply(EndEffectorConstants.EECollectorConfigs);
-    m_rightCollect.getConfigurator().apply(EndEffectorConstants.EECollectorConfigs);
+    m_leftCollect.getConfigurator().apply(EndEffectorConstants.LeftEECollectorConfigs);
+    m_rightCollect.getConfigurator().apply(EndEffectorConstants.RightEECollectorConfigs);
   }
 
   // COLLECTOR CODE
   /** spins motor at speed given, percent output */
   public void collect(double rightSpeed, double leftSpeed, double topSpeed) {
     m_rightCollect.set(rightSpeed);
-   m_leftCollect.set(leftSpeed);
+    m_leftCollect.set(leftSpeed);
     m_TopCollect.set(topSpeed);
 
   }

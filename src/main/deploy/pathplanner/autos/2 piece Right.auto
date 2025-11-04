@@ -39,54 +39,6 @@
           "data": {
             "name": "LeftL4"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C C to Station"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StationCollect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Station to C"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "LeftL3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C D to Station"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StationCollect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C Station to C"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RightL3"
-          }
         }
       ]
     }

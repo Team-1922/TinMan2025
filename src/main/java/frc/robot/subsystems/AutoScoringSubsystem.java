@@ -103,7 +103,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
     }
 
     if (TargetLevel == 0) {
-      return new SequentialCommandGroup( // L2
+      /*return new SequentialCommandGroup( // L2
 
           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.L3Position),
@@ -116,8 +116,25 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
           new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle)
-      );
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle)
+      );*/
+      return new SequentialCommandGroup( // L2 like L3
+        new SequentialCommandGroup(
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
+          new MoveElevator(m_Elevator, ElevatorConstants.L2Position),
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.L2ArmAngle, EndEffectorConstants.L2WristAngle),
+          new ParallelRaceGroup(new AprilTagAim(LL, m_Drivetrain), new WaitCommand(3))),
+        new ParallelRaceGroup(
+          new CloseToReef(LL), // checks if the robot is close enough to the reef to score
+          new SequentialCommandGroup(
+              new WaitCommand(0.25),
+              new ParallelRaceGroup(new WaitCommand(0.65),
+                  new Collect(m_EE, -0.4)))),
+                  new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
+                  new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
+        new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
+    
 
     } else if(TargetLevel == 1) {
       return new SequentialCommandGroup( // L3
@@ -135,7 +152,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
                   new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
                   new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
     
     } else {
       return new SequentialCommandGroup( // L4
@@ -154,7 +171,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
           new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
     }
   }
 
@@ -182,7 +199,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
           new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle), 
           new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
   }
 
   /*
@@ -202,9 +219,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * //new WaitCommand(5), // to act as collect for now
    * new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
    * new ParallelCommandGroup(
-   * new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
+   * new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle),
    * new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition)),
-   * new MoveWrist(m_EE, EndEffectorConstants.StowedWristAngle)
+   * new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle)
    * // send arm and wrist back , not all the way to the position?
    * // send elevator up
    * // move arm and wrist to position
