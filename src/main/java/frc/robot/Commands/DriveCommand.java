@@ -22,7 +22,8 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain.*;
 import frc.robot.subsystems.*;
-import frc.robot.Constants.DriveTrainConstants.*;
+import frc.robot.subsystems.LimelightSubsystem.*;
+//import frc.robot.Constants.DriveTrainConstants.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveCommand extends Command {
@@ -31,14 +32,16 @@ private CommandSwerveDrivetrain m_drivetrain;
 private CommandXboxController m_driveController;
 private Pigeon2 m_pigeon2;
 private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond);
+private LimelightSubsystem m_LL;
 private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
  
-  public DriveCommand(CommandSwerveDrivetrain Drivetrain, CommandXboxController driveController, Pigeon2 Pigeon) {
+  public DriveCommand(CommandSwerveDrivetrain Drivetrain, CommandXboxController driveController, Pigeon2 Pigeon, LimelightSubsystem limelightSubsystem) {
     m_drivetrain = Drivetrain;
     m_driveController = driveController;
     m_pigeon2 = Pigeon;
+    m_LL = limelightSubsystem;
     addRequirements(m_drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -51,15 +54,25 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pitch = m_pigeon2.getPitch().getValueAsDouble();
-    double roll = m_pigeon2.getRoll().getValueAsDouble();
+    double roll = m_pigeon2.getPitch().getValueAsDouble();
+    double pitch = m_pigeon2.getRoll().getValueAsDouble();
     double xAdjustment = 0;
     double yAdjustment = 0;
-    if(roll > 3){
-      xAdjustment = .5; //placeholder
+    if(pitch > 3){
+      xAdjustment = .1 * Math.sin(m_LL.getYaw()); //placeholder
+      yAdjustment = .1 * Math.cos(m_LL.getYaw());
+    }
+    else if(pitch < -3){
+      xAdjustment = -.1 * Math.sin(m_LL.getYaw()); //placeholder
+      yAdjustment = -.1 * Math.cos(m_LL.getYaw());
+    }
+    else if(roll > 3){
+      xAdjustment = .1 * Math.sin(m_LL.getYaw() + Math.PI/2); //placeholder
+      yAdjustment = .1 * Math.cos(m_LL.getYaw() + Math.PI/2);
     }
     else if(roll < -3){
-      xAdjustment = -.1; 
+      xAdjustment = -.1 * Math.sin(m_LL.getYaw() + Math.PI/2); //placeholder
+      yAdjustment = -.1 * Math.cos(m_LL.getYaw() + Math.PI/2);
     }
     final double xAdj = xAdjustment;
     final double yAdj = yAdjustment;

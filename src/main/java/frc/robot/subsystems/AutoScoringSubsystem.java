@@ -151,7 +151,7 @@ public class AutoScoringSubsystem extends SubsystemBase {
 
           new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
           new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition),
-          new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle));
+          new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle));
     }
   }
 
@@ -172,9 +172,9 @@ public class AutoScoringSubsystem extends SubsystemBase {
    * //new WaitCommand(5), // to act as collect for now
    * new MoveWrist(m_EE, EndEffectorConstants.L3WristAngle),
    * new ParallelCommandGroup(
-   * new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
+   * new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle),
    * new MoveElevator(m_Elevator, ElevatorConstants.FloorPosition)),
-   * new MoveWrist(m_EE, EndEffectorConstants.StowedWristAngle)
+   * new MoveWrist(m_EE, EndEffectorConstants.VerticalWristAngle)
    * // send arm and wrist back , not all the way to the position?
    * // send elevator up
    * // move arm and wrist to position

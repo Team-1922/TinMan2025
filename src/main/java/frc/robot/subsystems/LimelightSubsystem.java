@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.Constants.scoringPositions;
+//import frc.robot.Constants.scoringPositions;
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -104,7 +104,7 @@ public class LimelightSubsystem extends SubsystemBase {
   public double targetYawError() {
     return LimelightConstants.TargetYaw - getYaw();
   }
-
+/* 
   public Pose2d getScoringPose2d(){
     if(m_targetID == 17){
       return scoringPositions.BLUE_FRONT_RIGHT;
@@ -144,7 +144,7 @@ public class LimelightSubsystem extends SubsystemBase {
     }
     return null;
   }
-
+*/
   /** the value to use for apriltag aiming lattarlly */
   public double AimTargetXDutyCycle() {
     if (!HasTarget()) {

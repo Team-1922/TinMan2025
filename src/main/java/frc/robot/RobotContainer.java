@@ -48,7 +48,7 @@ import frc.robot.Constants.*;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 public class RobotContainer {
-    private Pigeon2 m_Pigeon2 = new Pigeon2(0);
+    private Pigeon2 m_Pigeon2 = new Pigeon2(0, "Drivebase");
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     // was 0.75
@@ -67,8 +67,7 @@ public class RobotContainer {
     //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2);
- //   private final Localization m_LocalizationRight = new Localization("right");
+     //   private final Localization m_LocalizationRight = new Localization("right");
 // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
@@ -85,6 +84,7 @@ public class RobotContainer {
     // EE commands
 
     private final StopArm m_StopArm = new StopArm(m_EE);
+    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2, m_AutoScoringSubsystem.m_LimelightSubsystemLeft);
     private final SendableChooser<Command> autoChooser;
 
     // EE+elevator commands
@@ -94,7 +94,7 @@ public class RobotContainer {
     // private final EeL3 m_L3 = new EeL3(m_EE);
     // private final EeL4 m_L4 = new EeL4( m_EE);
     // private final EeFloor m_Floor = new EeFloor( m_EE);
-    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.StowedArmAngle, EndEffectorConstants.StowedWristAngle);
+    private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
     private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
 
     // sequential command groups for the elevator/EE, used for testing.
@@ -124,7 +124,7 @@ public class RobotContainer {
     private final SequentialCommandGroup m_FloorGroup = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition),
-        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorArmAngle, EndEffectorConstants.FloorWristAngle)
+        new MoveArmAndWrist(m_EE, EndEffectorConstants.FloorCollectArmAngle, EndEffectorConstants.FloorCollectWristAngle)
     );
 
 
@@ -161,9 +161,9 @@ public class RobotContainer {
         new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
         new ParallelCommandGroup(
             new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-            new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
+            new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle)
         ),
-        new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
+        new MoveArmAndWrist(m_EE,EndEffectorConstants.VerticalArmAngle,EndEffectorConstants.VerticalWristAngle)
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
@@ -172,9 +172,9 @@ public class RobotContainer {
     new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
     new ParallelCommandGroup(
         new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
-        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle)
+        new MoveArm(m_EE, EndEffectorConstants.VerticalArmAngle)
      ),
-     new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
+     new MoveArmAndWrist(m_EE,EndEffectorConstants.VerticalArmAngle,EndEffectorConstants.VerticalWristAngle)
     );
 
     public final SequentialCommandGroup m_algaeRemove = new SequentialCommandGroup(
@@ -282,7 +282,7 @@ public class RobotContainer {
 
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing. 
-        m_operatorController.pov(180).onTrue(m_L3Group); // manual L4 just incase LL fails 
+        m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
         // m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
@@ -306,7 +306,7 @@ public class RobotContainer {
          chose scoring target   - LB
          end effector to L1 - Y
          move arm to Collect position/the floor - A
-         move arm to stowed position (for defence/moving around) - X
+         move arm to Vertical position (for defence/moving around) - X
          stop elevator/arm/collector   - B
          collect from station - RT
          move arm back from station (incase it gets stuck there) - LT
