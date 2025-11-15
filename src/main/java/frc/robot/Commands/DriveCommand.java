@@ -58,21 +58,22 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     double pitch = m_pigeon2.getRoll().getValueAsDouble();
     double xAdjustment = 0;
     double yAdjustment = 0;
+    double yaw = m_LL.getYaw();
     if(pitch > 3){
-      xAdjustment = .1 * Math.sin(m_LL.getYaw()); //placeholder
-      yAdjustment = .1 * Math.cos(m_LL.getYaw());
+      xAdjustment = .1 * Math.sin(yaw); //placeholder
+      yAdjustment = .1 * Math.cos(yaw);
     }
     else if(pitch < -3){
-      xAdjustment = -.1 * Math.sin(m_LL.getYaw()); //placeholder
-      yAdjustment = -.1 * Math.cos(m_LL.getYaw());
+      xAdjustment = -.1 * Math.sin(yaw); //placeholder
+      yAdjustment = -.1 * Math.cos(yaw);
     }
-    else if(roll > 3){
-      xAdjustment = .1 * Math.sin(m_LL.getYaw() + Math.PI/2); //placeholder
-      yAdjustment = .1 * Math.cos(m_LL.getYaw() + Math.PI/2);
+     else if(roll > 3){
+      xAdjustment = .1 * Math.sin(yaw + Math.PI/2); //placeholder
+      yAdjustment = .1 * Math.cos(yaw + Math.PI/2);
     }
     else if(roll < -3){
-      xAdjustment = -.1 * Math.sin(m_LL.getYaw() + Math.PI/2); //placeholder
-      yAdjustment = -.1 * Math.cos(m_LL.getYaw() + Math.PI/2);
+      xAdjustment = -.1 * Math.sin(yaw + Math.PI/2); //placeholder
+      yAdjustment = -.1 * Math.cos(yaw + Math.PI/2);
     }
     final double xAdj = xAdjustment;
     final double yAdj = yAdjustment;

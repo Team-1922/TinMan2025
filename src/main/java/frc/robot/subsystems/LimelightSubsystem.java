@@ -38,12 +38,11 @@ public class LimelightSubsystem extends SubsystemBase {
   public LimelightSubsystem(String LimelightSide) {
     m_LimelightSide = LimelightSide;
     m_LLNetworkTable = NetworkTableInstance.getDefault().getTable("limelight-" + m_LimelightSide);
+    m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     if (LimelightSide == "left") {
       m_TargetCenter = LimelightConstants.rightTargetCenter;
-      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     } else {
       m_TargetCenter = LimelightConstants.leftTargetCenter;
-      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     }
     SmartDashboard.putData("Field", m_Field2d);
   }
@@ -58,7 +57,8 @@ public class LimelightSubsystem extends SubsystemBase {
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
     m_Rotation = new Rotation2d(getYaw());
     m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation);
-    
+    SmartDashboard.putNumber("yaw", getYaw());
+    SmartDashboard.putNumber("testnumber", Math.random());
     if(HasTarget()){
       //m_Field2d.setRobotPose(m_Pos2D);
     }

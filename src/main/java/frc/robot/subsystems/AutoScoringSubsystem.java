@@ -35,16 +35,18 @@ public class AutoScoringSubsystem extends SubsystemBase {
   private final EndEffector m_EE = new EndEffector();
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
   CommandSwerveDrivetrain m_Drivetrain;
-  public LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("right");
-  public LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("left");
+  public LimelightSubsystem m_LimelightSubsystemLeft;
+  public LimelightSubsystem m_LimelightSubsystemRight;
 
   int TargetLevel; // target for the elevator/EE, also known as the main reason this subsystem
                    // exists
 
   /** Creates a new AutoScoringSubsystem. */
-  public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain) {
+  public AutoScoringSubsystem(CommandSwerveDrivetrain drivetrain, LimelightSubsystem leftlimelightsubsystem, LimelightSubsystem rightlimelightsubsystem) {
     TargetLevel = 2;
     m_Drivetrain = drivetrain;
+    m_LimelightSubsystemLeft = leftlimelightsubsystem;
+    m_LimelightSubsystemRight = rightlimelightsubsystem;
   }
 
   /**

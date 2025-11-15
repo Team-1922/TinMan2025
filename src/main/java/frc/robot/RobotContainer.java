@@ -69,7 +69,9 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
      //   private final Localization m_LocalizationRight = new Localization("right");
 // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
-    private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
+    private final LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("left");
+    private final LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("right");
+    private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain, m_LimelightSubsystemLeft, m_LimelightSubsystemRight);
     private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
     private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
@@ -80,11 +82,11 @@ public class RobotContainer {
     private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
 
-     final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_AutoScoringSubsystem.m_LimelightSubsystemLeft, m_AutoScoringSubsystem.m_LimelightSubsystemRight);
+     final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_LimelightSubsystemLeft, m_LimelightSubsystemRight);
     // EE commands
 
     private final StopArm m_StopArm = new StopArm(m_EE);
-    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2, m_AutoScoringSubsystem.m_LimelightSubsystemLeft);
+    public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2, m_LimelightSubsystemLeft);
     private final SendableChooser<Command> autoChooser;
 
     // EE+elevator commands
