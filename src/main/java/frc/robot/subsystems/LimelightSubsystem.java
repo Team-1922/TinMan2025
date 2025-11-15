@@ -57,8 +57,6 @@ public class LimelightSubsystem extends SubsystemBase {
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
     m_Rotation = new Rotation2d(getYaw());
     m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation);
-    SmartDashboard.putNumber("yaw", getYaw());
-    SmartDashboard.putNumber("testnumber", Math.random());
     if(HasTarget()){
       //m_Field2d.setRobotPose(m_Pos2D);
     }

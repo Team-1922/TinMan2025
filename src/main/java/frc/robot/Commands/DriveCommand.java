@@ -11,6 +11,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import static edu.wpi.first.units.Units.*;
@@ -33,6 +35,7 @@ private CommandXboxController m_driveController;
 private Pigeon2 m_pigeon2;
 private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond);
 private LimelightSubsystem m_LL;
+private double m_yawOffset;
 private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
@@ -43,6 +46,7 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     m_pigeon2 = Pigeon;
     m_LL = limelightSubsystem;
     addRequirements(m_drivetrain);
+    m_yawOffset = -(m_pigeon2.getYaw().getValueAsDouble() * Math.PI/180);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -56,9 +60,11 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
   public void execute() {
     double roll = m_pigeon2.getPitch().getValueAsDouble();
     double pitch = m_pigeon2.getRoll().getValueAsDouble();
+    double yaw = ((m_pigeon2.getYaw().getValueAsDouble() * Math.PI/180) + m_yawOffset)%(Math.PI*2);
     double xAdjustment = 0;
     double yAdjustment = 0;
-    double yaw = m_LL.getYaw();
+    SmartDashboard.putNumber("yaw", yaw);
+
     if(pitch > 3){
       xAdjustment = .1 * Math.sin(yaw); //placeholder
       yAdjustment = .1 * Math.cos(yaw);

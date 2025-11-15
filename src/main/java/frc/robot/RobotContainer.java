@@ -51,6 +51,7 @@ public class RobotContainer {
     private Pigeon2 m_Pigeon2 = new Pigeon2(0, "Drivebase");
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    public boolean m_yawOffsetNeeded = true;
     // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -247,7 +248,7 @@ public class RobotContainer {
        // DRIVER CONTROLS
        
         // reset the field-centric heading on Y press
-        m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));
+        m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));//.andThen(new NeedYawOffsetTrue()));
 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
             m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
