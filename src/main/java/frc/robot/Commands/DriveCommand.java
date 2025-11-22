@@ -64,25 +64,29 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     double xAdjustment = 0;
     double yAdjustment = 0;
     SmartDashboard.putNumber("yaw", yaw);
+    SmartDashboard.putNumber("pitch", pitch);
+    SmartDashboard.putNumber("roll", roll);
 
     if(pitch > 3){
-      xAdjustment = .1 * Math.sin(yaw); //placeholder
-      yAdjustment = .1 * Math.cos(yaw);
+      xAdjustment = .1 * Math.cos(yaw); //placeholder
+      yAdjustment = .1 * Math.sin(yaw);
     }
     else if(pitch < -3){
-      xAdjustment = -.1 * Math.sin(yaw); //placeholder
-      yAdjustment = -.1 * Math.cos(yaw);
+      xAdjustment = -.1 * Math.cos(yaw); //placeholder
+      yAdjustment = -.1 * Math.sin(yaw);
     }
      else if(roll > 3){
-      xAdjustment = .1 * Math.sin(yaw + Math.PI/2); //placeholder
-      yAdjustment = .1 * Math.cos(yaw + Math.PI/2);
+      xAdjustment = -.1 * Math.sin(yaw); //placeholder
+      yAdjustment = .1 * Math.cos(yaw);
     }
     else if(roll < -3){
-      xAdjustment = -.1 * Math.sin(yaw + Math.PI/2); //placeholder
-      yAdjustment = -.1 * Math.cos(yaw + Math.PI/2);
+      xAdjustment = .1 * Math.sin(yaw); //placeholder
+      yAdjustment = -.1 * Math.cos(yaw);
     }
     final double xAdj = xAdjustment;
     final double yAdj = yAdjustment;
+    SmartDashboard.putNumber("xAdj", xAdj);
+    SmartDashboard.putNumber("yAdj", yAdj);
     m_drivetrain.applyRequest(() ->
         drive.withVelocityX((-MathUtil.applyDeadband(m_driveController.getLeftY(),0.15) + xAdj) * MaxSpeed) // Drive forward with negative Y (forward)
             .withVelocityY((-MathUtil.applyDeadband(m_driveController.getLeftX(),0.15) + yAdj) * MaxSpeed) // Drive left with negative X (left)
