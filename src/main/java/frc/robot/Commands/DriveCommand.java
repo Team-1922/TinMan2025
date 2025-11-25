@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.XboxController;
@@ -67,21 +68,21 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     SmartDashboard.putNumber("pitch", pitch);
     SmartDashboard.putNumber("roll", roll);
 
-    if(pitch > 3){
-      xAdjustment = .1 * Math.cos(yaw); //placeholder
-      yAdjustment = .1 * Math.sin(yaw);
+    if(pitch > 2){
+      xAdjustment = pitch/50 * Math.cos(yaw); //placeholder
+      yAdjustment = pitch/50 * Math.sin(yaw);
     }
-    else if(pitch < -3){
-      xAdjustment = -.1 * Math.cos(yaw); //placeholder
-      yAdjustment = -.1 * Math.sin(yaw);
+    else if(pitch < -2){
+      xAdjustment = pitch/50 * Math.cos(yaw); //placeholder
+      yAdjustment = pitch/50 * Math.sin(yaw);
     }
-     else if(roll > 3){
-      xAdjustment = -.1 * Math.sin(yaw); //placeholder
-      yAdjustment = .1 * Math.cos(yaw);
+     else if(roll > 2){
+      xAdjustment = -roll/50 * Math.sin(yaw); //placeholder
+      yAdjustment = roll/50 * Math.cos(yaw);
     }
-    else if(roll < -3){
-      xAdjustment = .1 * Math.sin(yaw); //placeholder
-      yAdjustment = -.1 * Math.cos(yaw);
+    else if(roll < -2){
+      xAdjustment = -roll/50 * Math.sin(yaw); //placeholder
+      yAdjustment = roll/50 * Math.cos(yaw);
     }
     final double xAdj = xAdjustment;
     final double yAdj = yAdjustment;
