@@ -8,25 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.LinearVelocityUnit;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
-
 import static edu.wpi.first.units.Units.*;
-
-import com.ctre.phoenix6.swerve.SwerveDrivetrain;
-import com.ctre.phoenix6.swerve.SwerveDrivetrain.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
-import frc.robot.subsystems.CommandSwerveDrivetrain.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.LimelightSubsystem.*;
-//import frc.robot.Constants.DriveTrainConstants.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveCommand extends Command {
@@ -35,7 +22,6 @@ private CommandSwerveDrivetrain m_drivetrain;
 private CommandXboxController m_driveController;
 private Pigeon2 m_pigeon2;
 private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond);
-private LimelightSubsystem m_LL;
 private double m_yawOffset;
 private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric() 
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -45,7 +31,6 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     m_drivetrain = Drivetrain;
     m_driveController = driveController;
     m_pigeon2 = Pigeon;
-    m_LL = limelightSubsystem;
     addRequirements(m_drivetrain);
     m_yawOffset = -(m_pigeon2.getYaw().getValueAsDouble() * Math.PI/180);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -68,19 +53,11 @@ private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric(
     SmartDashboard.putNumber("pitch", pitch);
     SmartDashboard.putNumber("roll", roll);
 
-    if(pitch > 2){
+    if(Math.abs(pitch) > 2){
       xAdjustment = pitch/50 * Math.cos(yaw); //placeholder
       yAdjustment = pitch/50 * Math.sin(yaw);
     }
-    else if(pitch < -2){
-      xAdjustment = pitch/50 * Math.cos(yaw); //placeholder
-      yAdjustment = pitch/50 * Math.sin(yaw);
-    }
-     else if(roll > 2){
-      xAdjustment = -roll/50 * Math.sin(yaw); //placeholder
-      yAdjustment = roll/50 * Math.cos(yaw);
-    }
-    else if(roll < -2){
+     else if(Math.abs(roll) > 2){
       xAdjustment = -roll/50 * Math.sin(yaw); //placeholder
       yAdjustment = roll/50 * Math.cos(yaw);
     }

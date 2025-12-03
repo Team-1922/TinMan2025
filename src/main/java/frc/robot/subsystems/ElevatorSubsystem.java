@@ -4,11 +4,8 @@
 
 package frc.robot.subsystems;
 
-import java.beans.Encoder;
-
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.networktables.DoublePublisher;
@@ -26,8 +23,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   // DoublePublisher m_elevatorTarget =
   // m_networkTable.getDoubleTopic("ElevatorTarget").publish();
   DoublePublisher m_elevatorPos = m_networkTable.getDoubleTopic("ElevatorPos").publish();
-
-  private double m_ElevatorOffset;
 
   /** Creates a new Elevator. */
   public ElevatorSubsystem() {

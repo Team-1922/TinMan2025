@@ -8,8 +8,6 @@ import static edu.wpi.first.units.Units.*;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -22,7 +20,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.IncrementTargetLocation;
@@ -32,9 +29,6 @@ import frc.robot.Commands.MoveElevator;
 import frc.robot.Commands.MoveWrist;
 import frc.robot.Commands.ReverseCollector;
 import frc.robot.Commands.StationCollect;
-import frc.robot.Commands.AutoScoreCommand;
-import frc.robot.Commands.StopArm;
-import frc.robot.Commands.StopElevator;
 import frc.robot.Commands.StopElevatorAndEE;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoScoringSubsystem;
@@ -52,7 +46,6 @@ public class RobotContainer {
     private Pigeon2 m_Pigeon2 = new Pigeon2(0, "Drivebase");
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-    public boolean m_yawOffsetNeeded = true;
     // was 0.75
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -70,51 +63,29 @@ public class RobotContainer {
     final EndEffector m_EE = new EndEffector();
     private final Collect m_FloorCollect = new Collect(m_EE,-0.4);
     private final Collect m_L1Shoot = new Collect(m_EE,-0.2);
-    //private final Collect m_StationCollect = new Collect(m_EE,-0.2);
     private final ReverseCollector m_ReverseCollector = new ReverseCollector(m_EE);
     public final CommandSwerveDrivetrain m_drivetrain = TunerConstants.createDrivetrain();
-     //   private final Localization m_LocalizationRight = new Localization("right");
-// .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
     private final LimelightSubsystem m_LimelightSubsystemLeft = new LimelightSubsystem("left");
     private final LimelightSubsystem m_LimelightSubsystemRight = new LimelightSubsystem("right");
     private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain, m_LimelightSubsystemLeft, m_LimelightSubsystemRight);
-    //private final AutoScoreCommandFORAUTO m_RightAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    //private final AutoScoreCommandFORAUTO m_LeftAutoScoreForAuto = new AutoScoreCommandFORAUTO(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
-    private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
-    //   private final Localization m_LocalizationRight = new Localization("right");
-    // .addVisionMeasurement(new Pose2d(m_LocalizationLeft.getTx(), m_LocalizationLeft.getTy(), m_LocalizationLeft.getYaw()), 1);
-    //private final AutoScoringSubsystem m_AutoScoringSubsystem = new AutoScoringSubsystem(m_drivetrain);
     private final Command m_RightL4AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right");
     private final Command m_LeftL4AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left");
     private final Command m_LeftL3AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("left", 1);
     private final Command m_RightL3AutoScoreForAuto = m_AutoScoringSubsystem.TargetAndAim("right", 1);
-    //private final AutoScoreCommand m_RightAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem ,m_ElevatorSubsystem,m_EE,"right");
-    //private final AutoScoreCommand m_LeftAutoScore = new AutoScoreCommand(m_AutoScoringSubsystem, m_ElevatorSubsystem, m_EE, "left");
     private final IncrementTargetLocation m_IncrementTargetLocation = new IncrementTargetLocation(m_AutoScoringSubsystem);
     private final StationCollect m_StationCollect = new StationCollect(m_EE, 0.075);
+    final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_LimelightSubsystemLeft, m_LimelightSubsystemRight);
     // elavator commands
-    private final StopElevator m_StopElevator = new StopElevator(m_ElevatorSubsystem);
     private final StopElevatorAndEE m_StopElevatorAndEE = new StopElevatorAndEE(m_EE, m_ElevatorSubsystem);
     private final HoldCoral m_holdCoral = new HoldCoral(m_EE);
 
-     final LedSubsystem m_LED = new LedSubsystem(m_EE, m_AutoScoringSubsystem, m_LimelightSubsystemLeft, m_LimelightSubsystemRight);
     // EE commands
-
-    private final StopArm m_StopArm = new StopArm(m_EE);
     public final DriveCommand m_DriveCommand = new DriveCommand(m_drivetrain, m_driveController, m_Pigeon2, m_LimelightSubsystemLeft);
     private final SendableChooser<Command> autoChooser;
 
     // EE+elevator commands
-
-    // private final EeL1 m_L1 = new EeL1(m_EE);
-    // private final EeL2 m_L2 = new EeL2( m_EE);
-    // private final EeL3 m_L3 = new EeL3(m_EE);
-    // private final EeL4 m_L4 = new EeL4( m_EE);
-    // private final EeFloor m_Floor = new EeFloor( m_EE);
     private final MoveArmAndWrist m_StoweEE =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
-    private final MoveArmAndWrist m_EeVertical =  new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle);
-
+    
     // sequential command groups for the elevator/EE, used for testing.
     private final SequentialCommandGroup m_L1Group = new SequentialCommandGroup(
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L1Position),
@@ -157,26 +128,14 @@ public class RobotContainer {
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.FloorPosition)
     );
 
-   // private final SequentialCommandGroup m_AimGroup = new SequentialCommandGroup(
-
-   //     new EEVertical( m_EE),
-   //     new GoToLimelightPos(m_ElevatorSubsystem)
-   // );
-
     private final SequentialCommandGroup m_AutoL4Group = new SequentialCommandGroup(
         new MoveArmAndWrist(m_EE, EndEffectorConstants.VerticalArmAngle, EndEffectorConstants.VerticalWristAngle),
         new MoveElevator(m_ElevatorSubsystem, ElevatorConstants.L4Position)
     );
 
     private final SequentialCommandGroup m_stationCollect = new SequentialCommandGroup(
-
-        //new MoveElevator(m_ElevatorSubsystem,ElevatorConstants.FloorPosition),
         new MoveArmAndWrist(m_EE, EndEffectorConstants.StationArmAngle, EndEffectorConstants.StationWristAngle),
         m_StationCollect
-        /*new MoveWrist(m_EE,EndEffectorConstants.L3WristAngle),
-        new MoveArm(m_EE, EndEffectorConstants.StowedArmAngle),
-        new MoveArmAndWrist(m_EE,EndEffectorConstants.StowedArmAngle,EndEffectorConstants.StowedWristAngle)
-        */
     );
 
     /** if the arm is stuck at the station position from letting go of the button, this should send it back */
@@ -213,7 +172,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("RightL4", m_RightL4AutoScoreForAuto);
     NamedCommands.registerCommand("LeftL3", m_LeftL3AutoScoreForAuto);
     NamedCommands.registerCommand("RightL3", m_RightL3AutoScoreForAuto);
-    //NamedCommands.registerCommand("EeFloor", ); // the end effector to floor, does not controll elevator
     NamedCommands.registerCommand("AimPrep", m_AutoL4Group); // Re-get these numbers and test this before adding into autos
     NamedCommands.registerCommand("StationCollect", m_stationCollect);
     // the try catch loop makes the code not error, all this is doing is loading the paths into pathplanner
@@ -245,18 +203,6 @@ public class RobotContainer {
 
             )
         );
-
-       // m_driveController.a().whileTrue(m_drivetrain.applyRequest(() -> brake));
-    //   m_driveController.b().whileTrue(m_drivetrain.applyRequest(() ->
-     //      point.withModuleDirection(new Rotation2d(-m_driveController.getLeftY(), -m_driveController.getLeftX()))
-       // ));
-
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-       // m_driveController.back().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kForward));
-       // m_driveController.back().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdDynamic(Direction.kReverse));
-       // m_driveController.start().and(m_driveController.y()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kForward));
-       // m_driveController.start().and(m_driveController.x()).whileTrue(m_drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         m_drivetrain.registerTelemetry(logger::telemeterize); // commented out to reduce RIO CPU usage 
 
@@ -293,7 +239,6 @@ public class RobotContainer {
         m_operatorController.button(3).onTrue(m_StoweEE); // X
         m_operatorController.button(2).onTrue(m_StopElevatorAndEE);// B, the motors are not in brake mode, so the end effector might fall down if you do this before climbing. 
         m_operatorController.pov(180).onTrue(m_L4Group); // manual L4 just incase LL fails 
-        // m_operatorController.pov(270).whileTrue(m_stationCollect);
         m_operatorController.rightTrigger().whileTrue(m_stationCollect);// station pickup, hold the whole time
         m_operatorController.leftTrigger().whileTrue(m_backFromStation); // incase we get stuck at the station position 
         m_operatorController.pov(0).onTrue(m_CORALSTUCKgroup);// incase coral gets stuck or elevator gets stuck

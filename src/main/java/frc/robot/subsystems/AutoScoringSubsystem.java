@@ -4,34 +4,22 @@
 
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
-
-import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.AprilTagAim;
-import frc.robot.Commands.AprilTagAimReverse;
 import frc.robot.Commands.CloseToReef;
 import frc.robot.Commands.Collect;
 import frc.robot.Commands.MoveArm;
 import frc.robot.Commands.MoveArmAndWrist;
 import frc.robot.Commands.MoveElevator;
 import frc.robot.Commands.MoveWrist;
-import frc.robot.Commands.ReverseCollector;
 import frc.robot.Constants.*;
-
-import frc.robot.generated.TunerConstants;
 
 public class AutoScoringSubsystem extends SubsystemBase {
 
-  private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max
-                                                                                    // angular velocity
   private final EndEffector m_EE = new EndEffector();
   private final ElevatorSubsystem m_Elevator = new ElevatorSubsystem();
   CommandSwerveDrivetrain m_Drivetrain;

@@ -5,14 +5,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
-import edu.wpi.first.math.geometry.Rotation2d;
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -22,8 +20,6 @@ public class LimelightSubsystem extends SubsystemBase {
   NetworkTableEntry m_tv;
   double m_TargetCenter;
   double m_AimingSpeedMultiplier;
-  Rotation2d m_Rotation;
-  Pose2d m_Pos2D ;
 
   /**
    * Creates a new LimelightSubsystem.
@@ -44,13 +40,7 @@ public class LimelightSubsystem extends SubsystemBase {
   /** updates the target values */
   private void UpdateData() {
     m_tv = m_LLNetworkTable.getEntry("tv"); // 0 if no target, 1 if it has a target
-    // SmartDashboard.putBoolean("HasTarget");
     m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
-    m_Rotation = new Rotation2d(getYaw());
-    m_Pos2D = new Pose2d(getTx(), getTy(), m_Rotation);
-    if(HasTarget()){
-      //m_Field2d.setRobotPose(m_Pos2D);
-    }
   }
 
   /** @return limelight <b>tx</b> (meters) */
@@ -93,47 +83,7 @@ public class LimelightSubsystem extends SubsystemBase {
   public double targetYawError() {
     return LimelightConstants.TargetYaw - getYaw();
   }
-/* 
-  public Pose2d getScoringPose2d(){
-    if(m_targetID == 17){
-      return scoringPositions.BLUE_FRONT_RIGHT;
-    }
-    if(m_targetID == 18){
-      return scoringPositions.BLUE_FRONT;
-    }
-    if(m_targetID == 19){
-      return scoringPositions.BLUE_FRONT_LEFT;
-    }
-    if(m_targetID == 20){
-      return scoringPositions.BLUE_BACK_LEFT;
-    }
-    if(m_targetID == 21){
-      return scoringPositions.BLUE_BACK;
-    }
-    if(m_targetID == 22){
-      return scoringPositions.BLUE_BACK_RIGHT;
-    }
-    if(m_targetID == 6){
-      return scoringPositions.RED_FRONT_LEFT;
-    }
-    if(m_targetID == 7){
-      return scoringPositions.RED_FRONT;
-    }
-    if(m_targetID == 8){
-      return scoringPositions.RED_FRONT_RIGHT;
-    }
-    if(m_targetID == 9){
-      return scoringPositions.RED_BACK_RIGHT;
-    }
-    if(m_targetID == 10){
-      return scoringPositions.RED_BACK;
-    }
-    if(m_targetID == 11){
-      return scoringPositions.RED_BACK_LEFT;
-    }
-    return null;
-  }
-*/
+
   /** the value to use for apriltag aiming lattarlly */
   public double AimTargetXDutyCycle() {
     if (!HasTarget()) {
