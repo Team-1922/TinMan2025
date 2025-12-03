@@ -4,16 +4,10 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.led.CANdle;
-import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
-import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
-import frc.robot.Constants.TOFConstants;
-import frc.robot.generated.TunerConstants;
 
 public class LedSubsystem extends SubsystemBase {
   CANdle m_Candle; // candle is on RIO canbus

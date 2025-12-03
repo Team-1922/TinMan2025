@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -30,21 +29,18 @@ public class LimelightSubsystem extends SubsystemBase {
   public LimelightSubsystem(String LimelightSide) {
     m_LimelightSide = LimelightSide;
     m_LLNetworkTable = NetworkTableInstance.getDefault().getTable("limelight-" + m_LimelightSide);
+    m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     if (LimelightSide == "left") {
       m_TargetCenter = LimelightConstants.rightTargetCenter;
-      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     } else {
       m_TargetCenter = LimelightConstants.leftTargetCenter;
-      m_AimingSpeedMultiplier = LimelightConstants.AimingSpeedMultiplier;
     }
   }
 
   /** updates the target values */
   private void UpdateData() {
     m_tv = m_LLNetworkTable.getEntry("tv"); // 0 if no target, 1 if it has a target
-    // SmartDashboard.putBoolean("HasTarget");
-    m_Pos = m_LLNetworkTable.getEntry("targetpose_robotspace").getDoubleArray(new double[6]); // tx,ty,tz,pitch,yaw,roll
-                                                                                              // (meters, deg)
+    m_Pos = m_LLNetworkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[12]); // tx,ty,tz,pitch,yaw,roll (meters, deg)
   }
 
   /** @return limelight <b>tx</b> (meters) */
