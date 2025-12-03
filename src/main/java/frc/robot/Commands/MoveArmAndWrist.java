@@ -4,6 +4,7 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.EndEffector;
 
@@ -30,8 +31,8 @@ public class MoveArmAndWrist extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_EE.ToWristAngle(m_TargetWristPos);
     m_EE.ToArmAngle(m_TargetArmPos);
+    m_EE.ToWristAngle(m_TargetWristPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,7 +48,11 @@ public class MoveArmAndWrist extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos) <= 0.05 &&
-        Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos) <= 0.05;
+    // log current angle
+    Boolean done = Math.abs(m_EE.getCurrentArmAngle() - m_TargetArmPos) <= 0.05 && Math.abs(m_EE.getCurrentWristAngle() - m_TargetWristPos) <= 0.05;;
+    SmartDashboard.putNumber("ArmAngle", m_EE.getCurrentArmAngle() - m_TargetArmPos);
+    SmartDashboard.putNumber("WristAngle", m_EE.getCurrentWristAngle() - m_TargetWristPos);
+    SmartDashboard.putBoolean("MoveArmWrist", done);
+    return done;
   }
 }
