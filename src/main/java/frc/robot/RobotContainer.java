@@ -46,6 +46,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.Constants.*;
 import frc.robot.Commands.HoldCoral;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import frc.robot.Commands.DriveCommand;
 
 public class RobotContainer {
     private Pigeon2 m_Pigeon2 = new Pigeon2(0, "Drivebase");
@@ -265,8 +266,7 @@ public class RobotContainer {
         // reset the field-centric heading on Y press
         m_driveController.y().onTrue(m_drivetrain.runOnce(() -> m_drivetrain.seedFieldCentric()));//.andThen(new NeedYawOffsetTrue()));
 
-        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim(
-            m_AutoScoringSubsystem.GetTargetCommandGroup(2), "right", 2)); // Right Bumper 
+        m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 2).whileTrue(m_AutoScoringSubsystem.TargetAndAim( "right", 2)); // Right Bumper 
 
         m_driveController.button(6).and(() -> m_AutoScoringSubsystem.GetTargetLevel() == 1).whileTrue(m_AutoScoringSubsystem.TargetAndAim("right", 1)); // Right Bumper
                 

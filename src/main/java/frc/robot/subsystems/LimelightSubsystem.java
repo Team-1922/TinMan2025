@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -21,6 +22,8 @@ public class LimelightSubsystem extends SubsystemBase {
   NetworkTableEntry m_tv;
   double m_TargetCenter;
   double m_AimingSpeedMultiplier;
+  Rotation2d m_Rotation;
+  Pose2d m_Pos2D ;
 
   /**
    * Creates a new LimelightSubsystem.
